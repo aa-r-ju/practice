@@ -112,3 +112,16 @@ let join2 = coldDrinks.join("$");
 console.log(join);
 console.log(join1);
 console.log(join2);
+
+//Array Common Method IV
+// Concat method
+let fruit = ["Apple", "Orange", "Mango", "Banana", "Kiwi"];
+let dryFruits = ["Almonds", "Kaju", "Pista", "Walnut", "Kismish"];
+let mergedArray = fruit.concat(dryFruits);
+console.log(mergedArray);
+
+//Accessing Values in Multidi Mension Arrays
+let arr5 = [12, 23, 34, [45, 56], 67];
+console.log(arr5[3]);
+console.log(arr5[3][0]);
+console.log(arr5[3][1]);
