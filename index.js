@@ -125,3 +125,24 @@ let arr5 = [12, 23, 34, [45, 56], 67];
 console.log(arr5[3]);
 console.log(arr5[3][0]);
 console.log(arr5[3][1]);
+
+//Declaring and Object
+let obj = {
+  name: "Raju",
+  isFellow: true,
+  addrs: { city: "ktm", country: "Nepal" },
+};
+
+//Accessing values in obj
+console.log(obj["name"]);
+console.log(obj.name);
+console.log(obj.addrs.city);
+console.log(obj["addrs"]["city"]);
+
+// checking typeOf obj
+console.log(typeof obj);
+
+//Adding values in obj
+obj.age = 22;
+obj.gender = "Male";
+console.log(obj);
