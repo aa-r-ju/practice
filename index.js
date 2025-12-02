@@ -1,5 +1,5 @@
 //ChatGpt challenges
-//Beginner level questions
+//Beginner level question
 //🔹 Q1. Write a function called welcome() that prints "Welcome Aarju!".
 function welcome() {
   console.log("Welcome Aarju!");
