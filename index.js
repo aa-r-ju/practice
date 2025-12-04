@@ -1,142 +1,142 @@
 //ChatGpt challenges
-//Intermediate level questions
-//1️⃣ What will this print and why?
-function test(a, b) {
-  console.log(a, b);
-}
-test(5);
-//"this will print 5 undefined because there is no value for parameter b."
+//🔥 10 Advanced JavaScript Function Questions
+// 1️⃣ Closure Basics
 
-//❓ Q2. What is the output?
-function fun(x = 10, y = x * 2) {
-  return y;
-}
-console.log(fun());
-//this will print 20 cause the value of x is 10 and value of y is x * 2 and x's default value is 10 so it convert into 10 and multiply with 2 so it became 20 and return 20
+// What will this print and why?
 
-//🎯 Q3 — Your Next Question
-// ❓ Write a function isEven(num) that returns:
-
-// true → if the number is even
-
-// false → if the number is odd
-
-function isEven(num) {
-  if (num % 2 === 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
-console.log(isEven(2));
-console.log(isEven(3));
-
-//🔥 Q4 — Next Question
-// ❓ What will this print?
-let count = 0;
-
-function increase() {
-  count++;
-}
-
-increase();
-increase();
-console.log(count);
-
-//This will print 2 because the count variable is in the global scope, so it retains its value each time the function is called. If the count variable were inside the function, it would reset every time the function is called, and the output would always be 1.
-
-//Q5 — Next Question (Bug Fix)
-//❓ Why does this print undefined? Fix it.
-function greet(name) {
-  return "Hello " + name;
-}
-
-let msg = greet("Aarju");
-console.log(msg);
-
-// Before adding return, msg was undefined because the function didn’t return anything.
-// After adding return, msg stores "Hello Aarju" and prints correctly.
-
-//🔥 Q6 — Nested Function / Scope
 function outer() {
-  let x = 10;
+  let count = 0;
+  return function inner() {
+    count++;
+    return count;
+  };
+}
 
-  function inner() {
-    return x + 5;
+const fn = outer();
+console.log(fn());
+console.log(fn());
+console.log(fn());
+
+//this will print 1 in each function call cause there is a counter variable inside the outer function so it will reset the function in every functioncall
+
+//🚀 Let’s solve Q2 — Higher-Order Function.
+
+//Write a function repeat(fn, n) that executes a function fn exactly n times.
+
+function sayHi() {
+  console.log("Hi Aarju");
+}
+// repeat(sayHi, 3);
+// Output: Hi
+//         Hi
+//         Hi
+
+function repeat(fn, n) {
+  for (let i = 0; i < n; i++) {
+    fn();
   }
-
-  return inner();
 }
+repeat(sayHi, 3);
 
-console.log(outer());
+//Question 3 — Callback Function
 
-//outer() defines x = 10 in its local scope.
+// Write a function processArray(arr, callback) that applies the callback function to each element of arr and returns a new array.
 
-// inner() is a nested function (closure) and can access variables from its outer scope.
+// processArray([1,2,3], (x) => x * 2) → [2,4,6]
 
-// inner() returns x + 5 → 10 + 5 = 15.
+const call = (x) => x * 2;
 
-// outer() returns the value of inner(), which is 15.
-
-// console.log(outer()) prints 15.
-
-// ✅ Key Concept: Closures allow inner functions to access outer function variables.
-
-//🔥 Q7 — Arrow Function Conversion
-
-// function multiply(a, b) {
-//   return a * b;
-// }
-// Give your answer in arrow function syntax.
-
-const multiply = (a, b) => a * b;
-console.log(multiply(2, 3));
-
-//🔥 Q8 — Return Statement Tricky
-function show() {
-  console.log("A");
-  return "B";
-  console.log("C");
+function processArray(arr, callback) {
+  let newArray = [];
+  for (let i = 0; i < arr.length; i++) {
+    let num = callback(arr[i]);
+    newArray.push(num);
+  }
+  return newArray;
 }
-console.log(show());
+console.log(processArray([1, 2, 3], call));
 
-// console.log("A") → prints A
+//Question 4 — Function Returning Function
 
-// return "B" → stops the function and returns "B"
-
-// console.log("C") → never executes because the function already returned
-
-// console.log(show()) → prints the returned value "B"
-
-// ✅ Key Concept: Anything after return inside a function is unreachable.
-
-//🔥 Q9 — Sum Array Function
-
-// Write a function sumArray(arr) that returns the sum of all numbers in an array.
+// Create a function multiplyBy(x) that returns another function.
+// The returned function takes a number and multiplies it by x.
 
 // Example:
 
-// sumArray([1,2,3]) → 6
+// const double = multiplyBy(2);
+// console.log(double(5)); // 10
 
-function sumArray(arr) {
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    sum += arr[i];
+function multiplyBy(x) {
+  return function (num) {
+    return num * x;
+  };
+}
+
+const double = multiplyBy(2);
+console.log(double(5)); // 10
+
+//🔥 Q5 — IIFE (Immediately Invoked Function Expression)
+
+// What does this print?
+
+(function () {
+  let x = 10;
+  console.log(x);
+})();
+console.log(typeof x);
+
+// x does not exist outside the IIFE
+
+// Using typeof x does NOT throw an error
+
+// typeof x → returns "undefined" ✅
+
+//Q6 — Default Parameter with Function
+function greet(name = "Guest", msg = `Hello ${name}`) {
+  console.log(msg);
+}
+greet();
+greet("Aarju");
+
+// First call: greet()
+
+// name uses default → "Guest"
+
+// msg uses default → "Hello Guest"
+
+// Prints Hello Guest
+
+// Second call: greet("Aarju")
+
+// name is "Aarju"
+
+// msg uses default → "Hello Aarju"
+
+// Prints Hello Aarju
+
+// ✅ Key Concept:
+
+// Default parameters are used if the argument is undefined
+
+// Template literals can use other parameters in the function
+
+//Q7 — Code
+function test() {
+  for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 100);
   }
-  return sum;
 }
-console.log(sumArray([1, 2, 3]));
+test();
+// Step-by-Step Explanation
 
-//🔥 Q10 — Pass by Value vs Reference
-let a = 10;
+// var i is function-scoped, not block-scoped.
 
-function change(a) {
-  a = 20;
-}
+// So all 3 arrow functions share the same i.
 
-change(a);
-console.log(a);
-//a = 10 is a primitive value (number) stored in the global scope.When we call change(a), the function gets a copy of a (pass by value).Inside the function, a = 20 only changes the local copy, not the global a.console.log(a) prints the original value → 10.
+// The for loop runs synchronously:
 
-// ✅ Key Concept: Primitives are passed by value in JavaScript.
-// If it were an object, it would be passed by reference.
+// i = 0, 1, 2 → loop ends with i = 3
+
+// setTimeout executes after 100ms (asynchronously):
+
+// At that time, i = 3 for all 3 functions
