@@ -98,3 +98,64 @@ if (alwaysTrue) {
 } else {
   throw new Error("everything is broken");
 }
+
+function x() {
+  var a = 100;
+
+  return {
+    get: function () {
+      console.log(a);
+    },
+    set: function (num) {
+      a = num;
+    },
+  };
+}
+
+const obj = x();
+console.log(obj.get());
+console.log(obj.set(500));
+console.log(obj.get());
+
+// for (var i = 0; i <= 5; i++) {
+//   function close(x) {
+//     setTimeout(function () {
+//       console.log(x);
+//     }, i * 1000)
+//   }
+//   close(i)
+// }
+
+// for (var i = 1; i <= 5; i++) {
+//   setTimeout(function () {
+//     console.log(i);
+//   }, i * 1000);
+// }
+
+// for (var i = 1; i <= 3; i++) {
+//   console.log("inside:", i);
+// }
+
+// console.log("outside:", i);
+
+// for (var i = 0; i <= 5; i++) {
+//   function close(x) {
+//     setTimeout(function () {
+//       console.log(x);
+//     }, 1000); // no delay
+//   }
+//   close(i);
+// }
+
+function outer(b) {
+  function inner() {
+    console.log(a, b);
+  }
+  // let a = 10;
+  return inner;
+}
+// let a = 100;
+
+let copunt = outer("helloworld");
+copunt();
+let a = 120;
