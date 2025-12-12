@@ -1,161 +1,69 @@
-// //basic Scope
-// let wow = "wow";
-// console.log("i can access wow because it is in scope:", wow);
+//Array I
+let numbers = [1, 2, 3];
+let names = ["George", "John", "Thomas"];
+let aVariable = "a Value";
+let mixedBag = [30, true, "apples", null, aVariable];
 
-// let global = "ear";
-// console.log("outer", global);
+console.log(typeof names);
+//Array.isArray
+console.log(Array.isArray(numbers));
+console.log(Array.isArray("i am not an Array"));
 
-// function funFunction() {
-//   console.log("inner", global);
-// }
-// funFunction();
+//Bracket Access
+console.log(names[0]);
+console.log(names[1]);
+console.log(names[2]);
+console.log(names[3]);
 
-// // console.log(waitForIt);
-// let waitForIt = "Here i am";
-// console.log(waitForIt);
+//Bracket Assignment
+names[0] = "Ram";
+names[1] = "Sita";
+names[2] = "Laxman";
+console.log(names);
 
-// function happyFunction() {
-//   let message = "I am so happy";
-//   console.log(message);
-// }
-// happyFunction();
-// // console.log(message);
+//.length property
+console.log(names.length);
 
-// let message = "think globally";
-// function logAMessage() {
-//   let message = "Act locally";
-//   console.log(message);
-// }
-// logAMessage();
+//.push method
+let newName = names.push("Bharat");
+console.log(names);
+console.log(newName);
 
-// function logAMessage1() {
-//   let msg = "Act locally";
-//   console.log(message);
-// }
-// logAMessage1();
+//.pop method
+let removeLastName = names.pop();
+console.log(names);
+console.log(removeLastName);
 
-// function logAMessage2(message) {
-//   console.log(message);
-// }
-// logAMessage2("act locally");
+//.shift method
+let removeFirstName = names.shift();
+console.log(names);
+console.log(removeFirstName);
 
-// let globalVar = "global";
-// function outer() {
-//   let outerVar = "outer";
-//   function inner() {
-//     let innerVar = "inner";
-//     console.log(globalVar, outerVar, innerVar);
-//   }
-//   inner();
-// }
+//.unShift method
+let addAtFirst = names.unshift("Narayan");
+console.log(names);
+console.log(addAtFirst);
 
-// outer();
+//.indexOf method
+console.log(names.indexOf("Narayan"));
+console.log(names.indexOf("Shiv"));
 
-// let collision = "Global";
-// function outer1(collision) {
-//   function inner1() {
-//     let collision = "inner";
-//     console.log(collision);
-//   }
-//   inner1();
-// }
-// outer1("outer");
+//.slice method
+let sliceName = names.slice(1, 2);
+console.log(names);
+console.log(sliceName);
 
-// function outer2(collision) {
-//   function inner2() {
-//     console.log(collision);
-//   }
-//   inner2();
-// }
-// outer2("outer");
+let newArray = names.slice();
+newArray[2] = "Radha";
+newArray.push("saraswati");
+console.log(names);
+console.log(newArray);
 
-// function outer3() {
-//   function inner3() {
-//     console.log(collision);
-//   }
-//   inner3();
-// }
-// outer3("outer");
+//.includes method
+console.log(newArray.includes("Ram"));
+console.log(newArray.includes("Sita"));
 
-function outer() {
-  let outerVar = "outer";
-  function inner(outerVar) {
-    let innerVar = "inner";
-    console.log(outerVar, innerVar);
-  }
-  inner();
-}
-outer();
-
-let alwaysTrue = true;
-function dontMindMe() {
-  // alwaysTrue = false;
-  let alwaysTrue = false;
-}
-dontMindMe();
-if (alwaysTrue) {
-  console.log("All is well");
-} else {
-  throw new Error("everything is broken");
-}
-
-function x() {
-  var a = 100;
-
-  return {
-    get: function () {
-      console.log(a);
-    },
-    set: function (num) {
-      a = num;
-    },
-  };
-}
-
-const obj = x();
-console.log(obj.get());
-console.log(obj.set(500));
-console.log(obj.get());
-
-// for (var i = 0; i <= 5; i++) {
-//   function close(x) {
-//     setTimeout(function () {
-//       console.log(x);
-//     }, i * 1000)
-//   }
-//   close(i)
-// }
-
-// for (var i = 1; i <= 5; i++) {
-//   setTimeout(function () {
-//     console.log(i);
-//   }, i * 1000);
-// }
-
-// for (var i = 1; i <= 3; i++) {
-//   console.log("inside:", i);
-// }
-
-// console.log("outside:", i);
-
-// for (var i = 0; i <= 5; i++) {
-//   function close(x) {
-//     setTimeout(function () {
-//       console.log(x);
-//     }, 1000); // no delay
-//   }
-//   close(i);
-// }
-
-function outer(b) {
-  function inner() {
-    console.log(a, b);
-  }
-  // let a = 10;
-  return inner;
-}
-// let a = 100;
-
-let copunt = outer("helloworld");
-copunt();
-let a = 120;
+//.reverse method
+let prac = newArray.reverse();
+console.log(newArray);
+console.log(prac);
