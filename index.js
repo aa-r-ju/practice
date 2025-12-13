@@ -67,3 +67,32 @@ console.log(newArray.includes("Sita"));
 let prac = newArray.reverse();
 console.log(newArray);
 console.log(prac);
+
+// const factorial = function fact(n) {
+//   if (n === 1) return 1;
+//   return n * fact(n - 1);
+// };
+
+// console.log(factorial(5)); // ✅ works
+// // fact(5); // ❌ ReferenceError
+
+const factorial = function (n) {
+  if (n === 1) return 1;
+  return console.log(n * factorial(n - 1));
+};
+factorial(9);
+
+// const f = factorial;
+// // factorial = null;
+// f(5); // ❌ breaks
+
+// let factorial = function (n) {
+//   if (n === 1) return 1;
+//   return console.log(n * factorial(n - 1));
+// };
+
+// const f = factorial;
+// factorial = 9; // ✅ allowed with let
+// f(5); // ❌ breaks
+
+// console.log(factorial);
