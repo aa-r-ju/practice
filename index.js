@@ -1,98 +1,71 @@
-//Array I
-let numbers = [1, 2, 3];
+//Array II
 let names = ["George", "John", "Thomas"];
-let aVariable = "a Value";
-let mixedBag = [30, true, "apples", null, aVariable];
-
-console.log(typeof names);
-//Array.isArray
-console.log(Array.isArray(numbers));
-console.log(Array.isArray("i am not an Array"));
-
-//Bracket Access
-console.log(names[0]);
-console.log(names[1]);
-console.log(names[2]);
-console.log(names[3]);
-
-//Bracket Assignment
-names[0] = "Ram";
-names[1] = "Sita";
-names[2] = "Laxman";
+let singleTermPresident = names.splice(1, 1);
 console.log(names);
+console.log(singleTermPresident);
 
-//.length property
-console.log(names.length);
+let names1 = ["Paul", "George", "John", "Thomas"];
+let acrossTheUniverse = names1.splice(1, 2);
+console.log(names1);
+console.log(acrossTheUniverse);
 
-//.push method
-let newName = names.push("Bharat");
-console.log(names);
-console.log(newName);
+//add new elements to the index
+let names2 = ["Paul", "George", "Pete", "John"];
+let formerMembers = names2.splice(2, 1, "Ringo");
+console.log(names2);
+console.log(formerMembers);
 
-//.pop method
-let removeLastName = names.pop();
-console.log(names);
-console.log(removeLastName);
+//you don't have to remove any elements
+let names3 = ["Paul", "George", "Ringo", "John"];
+let removeElements = names3.splice(2, 0, "Pete", "Stuart");
+console.log(names3);
+console.log(removeElements);
 
-//.shift method
-let removeFirstName = names.shift();
-console.log(names);
-console.log(removeFirstName);
+//.join method
+let names4 = ["Paul", "George", "Ringo", "John"];
+let joinedString = names4.join();
+console.log(names4);
+console.log(joinedString);
 
-//.unShift method
-let addAtFirst = names.unshift("Narayan");
-console.log(names);
-console.log(addAtFirst);
+let names5 = ["Paul", "George", "Ringo", "John"];
+let jointMethod = names5.join(" and ");
+console.log(names5);
+console.log(jointMethod);
 
-//.indexOf method
-console.log(names.indexOf("Narayan"));
-console.log(names.indexOf("Shiv"));
+//concat merges two or more arrays into one
+let older = ["Ringo", "John"];
+let younger = ["Paul", "George"];
+let allTogetherNow = older.concat(younger);
+console.log(allTogetherNow);
+console.log(older);
 
-//.slice method
-let sliceName = names.slice(1, 2);
-console.log(names);
-console.log(sliceName);
+//Nested array
+//arrays can contain any types of value, including other arrays
+let relatedThings = [
+  ["Windows", "MacOS"],
+  ["New York", "Chicago"],
+];
+console.log(relatedThings[0]);
+console.log(relatedThings[1][0]);
+console.log(relatedThings.length);
 
-let newArray = names.slice();
-newArray[2] = "Radha";
-newArray.push("saraswati");
-console.log(names);
-console.log(newArray);
+//Nested array: Looping
+let rsvpGroups = [["Jane", "Mel"], "Jack", ["Rohan", "Debit", "Meg"]];
+for (let i = 0; i < rsvpGroups.length; i++) {
+  if (Array.isArray(rsvpGroups[i])) {
+    for (let j = 0; j < rsvpGroups[i].length; j++) {
+      let name = rsvpGroups[i][j];
+      console.log(name);
+    }
+  } else {
+    console.log(rsvpGroups[i]);
+  }
+}
 
-//.includes method
-console.log(newArray.includes("Ram"));
-console.log(newArray.includes("Sita"));
-
-//.reverse method
-let prac = newArray.reverse();
-console.log(newArray);
-console.log(prac);
-
-// const factorial = function fact(n) {
-//   if (n === 1) return 1;
-//   return n * fact(n - 1);
-// };
-
-// console.log(factorial(5)); // ✅ works
-// // fact(5); // ❌ ReferenceError
-
-const factorial = function (n) {
-  if (n === 1) return 1;
-  return console.log(n * factorial(n - 1));
-};
-factorial(9);
-
-// const f = factorial;
-// // factorial = null;
-// f(5); // ❌ breaks
-
-// let factorial = function (n) {
-//   if (n === 1) return 1;
-//   return console.log(n * factorial(n - 1));
-// };
-
-// const f = factorial;
-// factorial = 9; // ✅ allowed with let
-// f(5); // ❌ breaks
-
-// console.log(factorial);
+let grid = [
+  [1, 2, 3],
+  [1, 2, 3],
+  [1, 2, 3],
+];
+let firstColumn = [grid[0][0], grid[1][0], grid[2][0]];
+console.log(firstColumn);
