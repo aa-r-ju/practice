@@ -1,71 +1,77 @@
-//Array II
-let names = ["George", "John", "Thomas"];
-let singleTermPresident = names.splice(1, 1);
-console.log(names);
-console.log(singleTermPresident);
+// Object
+let myArray = ["Value1", "Value2"];
+let myObj = {
+  key1: "Value1",
+  key2: "Value2",
+};
+console.log(myArray[0]);
+console.log(myObj["key1"]);
 
-let names1 = ["Paul", "George", "John", "Thomas"];
-let acrossTheUniverse = names1.splice(1, 2);
-console.log(names1);
-console.log(acrossTheUniverse);
+let pusheen = {
+  name: "Pusheen",
+  age: 7,
+  color: "Gray and Tabby",
+};
+console.log(typeof pusheen);
 
-//add new elements to the index
-let names2 = ["Paul", "George", "Pete", "John"];
-let formerMembers = names2.splice(2, 1, "Ringo");
-console.log(names2);
-console.log(formerMembers);
+console.log(pusheen["name"]);
+console.log(pusheen["age"]);
+console.log(pusheen["color"]);
+console.log(pusheen["notAKeyInTheObject"]);
 
-//you don't have to remove any elements
-let names3 = ["Paul", "George", "Ringo", "John"];
-let removeElements = names3.splice(2, 0, "Pete", "Stuart");
-console.log(names3);
-console.log(removeElements);
+let keyToCheck = "name";
+console.log(pusheen[keyToCheck]);
+console.log(pusheen["col" + "or"]);
+console.log(pusheen[1]);
 
-//.join method
-let names4 = ["Paul", "George", "Ringo", "John"];
-let joinedString = names4.join();
-console.log(names4);
-console.log(joinedString);
+// accessing value using dot notation
+console.log(pusheen.name);
+console.log(pusheen.age);
+console.log(pusheen.color);
+console.log(pusheen.keyToCheck);
 
-let names5 = ["Paul", "George", "Ringo", "John"];
-let jointMethod = names5.join(" and ");
-console.log(names5);
-console.log(jointMethod);
+//Adding a key value pair
+pusheen["sister"] = "Stormy";
+pusheen.brother = "Pip";
+console.log(pusheen);
 
-//concat merges two or more arrays into one
-let older = ["Ringo", "John"];
-let younger = ["Paul", "George"];
-let allTogetherNow = older.concat(younger);
-console.log(allTogetherNow);
-console.log(older);
+//changing a value
+pusheen["age"] = 8;
+pusheen.age++;
+console.log(pusheen["age"]);
 
-//Nested array
-//arrays can contain any types of value, including other arrays
-let relatedThings = [
-  ["Windows", "MacOS"],
-  ["New York", "Chicago"],
-];
-console.log(relatedThings[0]);
-console.log(relatedThings[1][0]);
-console.log(relatedThings.length);
+//deleting a key value pair
+delete pusheen["age"];
+delete pusheen.color;
+console.log(pusheen);
 
-//Nested array: Looping
-let rsvpGroups = [["Jane", "Mel"], "Jack", ["Rohan", "Debit", "Meg"]];
-for (let i = 0; i < rsvpGroups.length; i++) {
-  if (Array.isArray(rsvpGroups[i])) {
-    for (let j = 0; j < rsvpGroups[i].length; j++) {
-      let name = rsvpGroups[i][j];
-      console.log(name);
-    }
-  } else {
-    console.log(rsvpGroups[i]);
-  }
+//in operator
+console.log("name" in pusheen);
+console.log("sadness" in pusheen);
+
+//for in loop
+for (let key in pusheen) {
+  console.log(key);
+  console.log("Pusheen's", key, "is", pusheen[key]);
+  console.log("Pusheen's", key, "is", pusheen.key);
 }
 
-let grid = [
-  [1, 2, 3],
-  [1, 2, 3],
-  [1, 2, 3],
-];
-let firstColumn = [grid[0][0], grid[1][0], grid[2][0]];
-console.log(firstColumn);
+//object.keys()
+console.log(Object.keys(pusheen));
+
+//Nested Arrays
+let aarju = {
+  name: "Aarju",
+  age: 25,
+  color: ["pale", "fair"],
+  siblings: {
+    brother: "Arbin",
+    sister: "Aarushi",
+  },
+};
+console.log(aarju["color"][0]);
+console.log(aarju["color"][1]);
+
+//Nested Objects
+console.log(aarju.siblings.brother);
+console.log(aarju.siblings.sister);
