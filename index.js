@@ -1,77 +1,60 @@
-// Object
-let myArray = ["Value1", "Value2"];
-let myObj = {
-  key1: "Value1",
-  key2: "Value2",
-};
-console.log(myArray[0]);
-console.log(myObj["key1"]);
+let countries = ["Argentina", "Bolivia", "Brazil", "Chile"];
+console.log(countries.indexOf("Brazil"));
+console.log(countries.indexOf("Nepal"));
 
-let pusheen = {
-  name: "Pusheen",
-  age: 7,
-  color: "Gray and Tabby",
-};
-console.log(typeof pusheen);
-
-console.log(pusheen["name"]);
-console.log(pusheen["age"]);
-console.log(pusheen["color"]);
-console.log(pusheen["notAKeyInTheObject"]);
-
-let keyToCheck = "name";
-console.log(pusheen[keyToCheck]);
-console.log(pusheen["col" + "or"]);
-console.log(pusheen[1]);
-
-// accessing value using dot notation
-console.log(pusheen.name);
-console.log(pusheen.age);
-console.log(pusheen.color);
-console.log(pusheen.keyToCheck);
-
-//Adding a key value pair
-pusheen["sister"] = "Stormy";
-pusheen.brother = "Pip";
-console.log(pusheen);
-
-//changing a value
-pusheen["age"] = 8;
-pusheen.age++;
-console.log(pusheen["age"]);
-
-//deleting a key value pair
-delete pusheen["age"];
-delete pusheen.color;
-console.log(pusheen);
-
-//in operator
-console.log("name" in pusheen);
-console.log("sadness" in pusheen);
-
-//for in loop
-for (let key in pusheen) {
-  console.log(key);
-  console.log("Pusheen's", key, "is", pusheen[key]);
-  console.log("Pusheen's", key, "is", pusheen.key);
-}
-
-//object.keys()
-console.log(Object.keys(pusheen));
-
-//Nested Arrays
-let aarju = {
-  name: "Aarju",
-  age: 25,
-  color: ["pale", "fair"],
-  siblings: {
-    brother: "Arbin",
-    sister: "Aarushi",
+let graceHopper = {
+  first: "Grace",
+  last: "Hopper",
+  rank: "Rear Admiral",
+  myMethod: function () {
+    console.log("I am from a Method");
+  },
+  sayQuote: function () {
+    console.log("It's easier to ask fogiveness than it is to get permission.");
+  },
+  getAge: function (year) {
+    return year - 1906;
+  },
+  greet: function (name) {
+    console.log("Hi", name, "I am Rear Admiral Hopper");
+  },
+  greet1: function (name) {
+    console.log("Hi", name, "I am ", graceHopper.rank, graceHopper.last);
+  },
+  tellName: function (name) {
+    console.log("Hey my name is", this.first);
   },
 };
-console.log(aarju["color"][0]);
-console.log(aarju["color"][1]);
+graceHopper.myMethod();
+graceHopper.sayQuote();
+console.log(graceHopper.getAge(2025));
+graceHopper.greet("Karen");
+graceHopper.greet1("Gabe");
+graceHopper.tellName();
 
-//Nested Objects
-console.log(aarju.siblings.brother);
-console.log(aarju.siblings.sister);
+// let graceHopper = {
+//   first: "Grace",
+//   last: "Hopper",
+//   rank: "Rear Admiral",
+//   getThis: function () {
+//     return this;
+//   },
+// };
+
+// let returnedObj = graceHopper.getThis();
+// console.log(returnedObj.first);
+// console.log(returnedObj === graceHopper);
+
+let calc = {
+  num1: 20,
+  num2: 30,
+  sum: function () {
+    return this.num1 + this.num2;
+  },
+  difference: function () {
+    return this.num1 - this.num2;
+  },
+};
+console.log(calc.sum());
+calc.num2 = 15;
+console.log(calc.difference());
