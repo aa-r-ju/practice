@@ -1,13 +1,12 @@
 //higher-order-function I
-function callsACallback(callback) {
-  callback();
+function sayHi(name) {
+  console.log("Hi!,", name);
 }
-function happyFunction() {
-  console.log(" I am happy");
+function sayBye(name) {
+  console.log("Bye:)", name);
 }
-
-function greatFunction() {
-  console.log("I am Great");
+function callsWithName(name, callback) {
+  callback(name);
 }
-callsACallback(happyFunction);
-callsACallback(greatFunction);
+callsWithName("Sadie", sayHi);
+callsWithName("Sadie", sayBye);
