@@ -1,10 +1,5 @@
 //higher-order-function I
-function happyFunction() {
-  console.log("I am Happy");
+function logsAType(value) {
+  console.log(typeof value);
 }
-let amazingArray = [happyFunction, happyFunction, happyFunction];
-
-for (let i = 0; i < amazingArray.length; i++) {
-  let element = amazingArray[i];
-  element();
-}
+logsAType("Happy String");
