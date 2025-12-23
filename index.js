@@ -1,8 +1,10 @@
 //higher-order-function I
 let amazingArray = [];
-let happyString = "Happy";
-amazingArray.push(happyString);
-amazingArray.push(happyString);
-amazingArray.push(happyString);
-amazingArray.push(happyString);
+function happyFunction() {
+  console.log("I am Happy");
+}
+amazingArray.push(happyFunction);
+amazingArray.push(happyFunction);
+amazingArray.push(happyFunction);
+amazingArray.push(happyFunction);
 console.log(amazingArray);
