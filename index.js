@@ -6,7 +6,6 @@ function sayToAll(names, sayWithNameFunc) {
 }
 let group = ["jane", "Jill", "Pip", "Mike"];
 
-function sayHelloWithName(name) {
-  console.log("Hello, ", name + "!");
-}
-sayToAll(group, sayHelloWithName);
+sayToAll(group, function (name) {
+  console.log("Bye, ", name + "!");
+});
