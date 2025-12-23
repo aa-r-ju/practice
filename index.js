@@ -2,4 +2,9 @@
 function logsAType(value) {
   console.log(typeof value);
 }
-logsAType("Happy String");
+
+function happyFunction() {
+  console.log("I am happy");
+}
+
+logsAType(happyFunction);
