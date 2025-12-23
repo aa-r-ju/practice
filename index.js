@@ -1,10 +1,8 @@
 //higher-order-function I
-function logsAType(value) {
-  console.log(typeof value);
+function callsAFunction(anotherFunction) {
+  anotherFunction();
 }
-
 function happyFunction() {
-  console.log("I am happy");
+  console.log("I am a callback function");
 }
-
-logsAType(happyFunction);
+callsAFunction(happyFunction);
