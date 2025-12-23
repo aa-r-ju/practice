@@ -1,11 +1,12 @@
 //higher-order-function I
-function sayToAll(names, sayWithNameFunc) {
-  for (let i = 0; i < names.length; i++) {
-    sayWithNameFunc(names[i]);
-  }
+function plus(num1, num2) {
+  return num1 + num2;
 }
-let group = ["jane", "Jill", "Pip", "Mike"];
-
-sayToAll(group, function (name) {
-  console.log("Bye, ", name + "!");
-});
+function minus(num1, num2) {
+  return num1 - num2;
+}
+function calc(num1, operationFunc, num2) {
+  return operationFunc(num1, num2);
+}
+console.log(calc(10, plus, 20));
+console.log(calc(50, minus, 10));
