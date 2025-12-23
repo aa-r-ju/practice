@@ -1,8 +1,13 @@
 //higher-order-function I
-function callsAFunction(anotherFunction) {
-  anotherFunction();
+function callsACallback(callback) {
+  callback();
 }
 function happyFunction() {
-  console.log("I am a callback function");
+  console.log(" I am happy");
 }
-callsAFunction(happyFunction);
+
+function greatFunction() {
+  console.log("I am Great");
+}
+callsACallback(happyFunction);
+callsACallback(greatFunction);
