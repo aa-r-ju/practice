@@ -1,10 +1,9 @@
 //higher-order-function II
 
 function getGreeter() {
-  function greetMe() {
+  return function () {
     console.log("Hi!");
-  }
-  return greetMe;
+  };
 }
 let greeter = getGreeter();
 greeter();
