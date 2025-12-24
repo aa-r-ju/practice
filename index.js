@@ -3,9 +3,9 @@ function greetMe() {
   console.log("Hi!");
 }
 function getGreeter() {
-  return greetMe;
+  return greetMe();
 }
 let greeter = getGreeter();
 console.log(typeof greeter);
 console.log(greeter);
-greeter();
+// greeter();
