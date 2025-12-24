@@ -1,6 +1,11 @@
-//higher-order-function I
-let bridges = ["Brooklyn", "Golden Gate", "London"];
-function logUpperCase(string, idx) {
-  console.log(string, "is at index", idx);
+//higher-order-function II
+function greetMe() {
+  console.log("Hi!");
 }
-bridges.forEach(logUpperCase);
+function getGreeter() {
+  return greetMe;
+}
+let greeter = getGreeter();
+console.log(typeof greeter);
+console.log(greeter);
+greeter();
