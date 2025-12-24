@@ -5,5 +5,10 @@ function getGreeter(name1) {
   };
 }
 
-let greeter = getGreeter("Marie");
-greeter("Rosalind");
+let introduceMarieTo = getGreeter("Marie");
+let introduceRosalindTo = getGreeter("Rosalind");
+introduceMarieTo("Dorothy");
+introduceMarieTo("Albert");
+
+introduceRosalindTo("Barbara");
+introduceRosalindTo("Isaac");
