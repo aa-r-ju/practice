@@ -1,11 +1,9 @@
 //higher-order-function II
-
-function getGreeter() {
-  return function (name) {
+function greeter() {
+  let name = "Marie";
+  let saysHi = function () {
     console.log("Hi!", name);
   };
+  saysHi();
 }
-let greeter = getGreeter();
-greeter("Marie");
-greeter("Rosalind");
 greeter();
