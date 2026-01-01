@@ -1,14 +1,11 @@
-//higher-order-function II
-function getGreeter(name1) {
-  return function (name2) {
-    console.log("Hi", name1 + " meet " + name2);
-  };
+let arr = [1, 2, 3, 4, 5, 6];
+function findMax(arr) {
+  let max = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+  return max;
 }
-
-let introduceMarieTo = getGreeter("Marie");
-let introduceRosalindTo = getGreeter("Rosalind");
-introduceMarieTo("Dorothy");
-introduceMarieTo("Albert");
-
-introduceRosalindTo("Barbara");
-introduceRosalindTo("Isaac");
+console.log(findMax(arr));
