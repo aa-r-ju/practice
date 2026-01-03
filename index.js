@@ -1,8 +1,20 @@
-// 🔥 Question 4 (map vs filter confusion)
-const nums = [1, 2, 3, 4];
+// 🔥 Question 5 (reduce replacing map + filter)
 
-const result = nums.map((num) => num > 2);
-console.log(result);
+// Without using map() or filter(), use only reduce() to get:
 
-// 👉 Why is this NOT filtering the array? What is the output?
-//ans => This code does not filter the array because map() transforms each element into a boolean instead of removing elements. map() always returns a new array of the same length.
+// Output:
+[4, 8];
+
+from: [1, 2, 3, 4];
+
+// 👉 Write the reduce code
+
+let arr = [1, 2, 3, 4];
+let double = arr.reduce((acc, curr) => {
+  if (curr % 2 === 0) {
+    acc.push(curr * 2);
+  }
+  return acc;
+}, []);
+
+console.log(double);
