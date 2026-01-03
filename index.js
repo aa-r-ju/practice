@@ -1,11 +1,8 @@
-// 🔥 Question 3 (reduce without initial value)
-const nums = [5, 10, 15];
+// 🔥 Question 4 (map vs filter confusion)
+const nums = [1, 2, 3, 4];
 
-const result = nums.reduce((acc, curr) => {
-  return acc + curr;
-});
-
+const result = nums.map((num) => num > 2);
 console.log(result);
 
-// 👉 What is acc and curr in the first iteration?
-//ans => Without an initial value, reduce assigns the first array element to the accumulator and begins iteration from the second element.
+// 👉 Why is this NOT filtering the array? What is the output?
+//ans => This code does not filter the array because map() transforms each element into a boolean instead of removing elements. map() always returns a new array of the same length.
