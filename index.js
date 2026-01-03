@@ -1,11 +1,11 @@
-let arr = [1, 2, 3, 4, 5, 6];
-function findMax(arr) {
-  let max = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > max) {
-      max = arr[i];
-    }
-  }
-  return max;
-}
-console.log(findMax(arr));
+// 🔥 Question 1 (map trap)
+const arr = [1, 2, 3];
+
+const result = arr.map((num) => {
+  num * 2;
+});
+
+console.log(result);
+
+// 👉 What is the output and WHY?
+// ans => The callback function does not return any value because curly braces are used without a return statement, so map() fills the resulting array with undefined.
