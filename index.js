@@ -1,20 +1,17 @@
-// 🔥 Question 5 (reduce replacing map + filter)
+// 🔥 Question 6 (object mutation trap)
+const users = [
+  { name: "Aarju", age: 20 },
+  { name: "Bibek", age: 21 },
+];
 
-// Without using map() or filter(), use only reduce() to get:
+const result = users.map((user) => {
+  user.age += 1;
+  return user;
+});
 
-// Output:
-[4, 8];
+console.log(users);
 
-from: [1, 2, 3, 4];
+Question;
 
-// 👉 Write the reduce code
-
-let arr = [1, 2, 3, 4];
-let double = arr.reduce((acc, curr) => {
-  if (curr % 2 === 0) {
-    acc.push(curr * 2);
-  }
-  return acc;
-}, []);
-
-console.log(double);
+// Did map() mutate the original array? Why or why not?
+//ans => Map is non-mutating in terms of array structure, but mutating objects inside it will change the original elements if you’re modifying references.
