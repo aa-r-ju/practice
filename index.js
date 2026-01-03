@@ -1,11 +1,8 @@
-// 🔥 Question 1 (map trap)
-const arr = [1, 2, 3];
+// 🔥 Question 2 (filter truthy / falsy)
+const arr = [0, 1, false, 2, "", 3];
 
-const result = arr.map((num) => {
-  num * 2;
-});
-
+const result = arr.filter(Boolean);
 console.log(result);
 
-// 👉 What is the output and WHY?
-// ans => The callback function does not return any value because curly braces are used without a return statement, so map() fills the resulting array with undefined.
+// 👉 What will be printed and why does this work
+//filter(Boolean) removes all falsy values from an array because Boolean converts each element to true or false, and filter keeps only the elements that evaluate to true.
