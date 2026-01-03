@@ -1,8 +1,11 @@
-// 🔥 Question 2 (filter truthy / falsy)
-const arr = [0, 1, false, 2, "", 3];
+// 🔥 Question 3 (reduce without initial value)
+const nums = [5, 10, 15];
 
-const result = arr.filter(Boolean);
+const result = nums.reduce((acc, curr) => {
+  return acc + curr;
+});
+
 console.log(result);
 
-// 👉 What will be printed and why does this work
-//filter(Boolean) removes all falsy values from an array because Boolean converts each element to true or false, and filter keeps only the elements that evaluate to true.
+// 👉 What is acc and curr in the first iteration?
+//ans => Without an initial value, reduce assigns the first array element to the accumulator and begins iteration from the second element.
