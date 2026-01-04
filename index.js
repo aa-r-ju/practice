@@ -1,17 +1,21 @@
-// 🔥 Question 6 (object mutation trap)
-const users = [
-  { name: "Aarju", age: 20 },
-  { name: "Bibek", age: 21 },
-];
+//Find the first non-repeating character in a string
 
-const result = users.map((user) => {
-  user.age += 1;
-  return user;
-});
+// let input = "google";
+// Output: "l";
 
-console.log(users);
+function uniqueChar(input) {
+  let obj = {};
+  // for (let i = 0; i < input.length; i++) {
+  //   console.log(input[i]);
+  // }
+  for (let char of input) {
+    obj[char] = (obj[char] || 0) + 1;
+  }
 
-Question;
-
-// Did map() mutate the original array? Why or why not?
-//ans => Map is non-mutating in terms of array structure, but mutating objects inside it will change the original elements if you’re modifying references.
+  for (let char of input) {
+    if (obj[char] === 1) {
+      return char;
+    }
+  }
+}
+console.log(uniqueChar("google"));
