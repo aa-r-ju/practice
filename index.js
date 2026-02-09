@@ -1,21 +1,9 @@
-//Find the first non-repeating character in a string
-
-// let input = "google";
-// Output: "l";
-
-function uniqueChar(input) {
-  let obj = {};
-  // for (let i = 0; i < input.length; i++) {
-  //   console.log(input[i]);
-  // }
-  for (let char of input) {
-    obj[char] = (obj[char] || 0) + 1;
+function sumAll() {
+  let values = Array.from(arguments);
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i];
   }
-
-  for (let char of input) {
-    if (obj[char] === 1) {
-      return char;
-    }
-  }
+  return sum;
 }
-console.log(uniqueChar("google"));
+console.log(sumAll(1, 2, 3, 4));
