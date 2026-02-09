@@ -1,9 +1,18 @@
-describe("countArgs: counting function arguments", () => {
-  it("returns how many arguments were passed in", () => {
-    expect(countArgs("a", "b", "c")).toBe(3);
+describe("multiplyAll: multiply using arguments", () => {
+  beforeEach(() => {
+    spyOn(Array, "from").and.callThrough();
   });
 
-  it("returns 0 when no arguments are passed", () => {
-    expect(countArgs()).toBe(0);
+  it("multiplies all arguments together", () => {
+    expect(multiplyAll(2, 3, 4)).toBe(24);
+  });
+
+  it("returns 1 when only one number is passed", () => {
+    expect(multiplyAll(5)).toBe(5);
+  });
+
+  it("uses Array.from", () => {
+    multiplyAll(1, 2);
+    expect(Array.from).toHaveBeenCalled();
   });
 });
