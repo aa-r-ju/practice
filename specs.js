@@ -1,18 +1,18 @@
-describe("multiplyAll: multiply using arguments", () => {
+describe("onlyStrings: filter arguments", () => {
   beforeEach(() => {
     spyOn(Array, "from").and.callThrough();
   });
 
-  it("multiplies all arguments together", () => {
-    expect(multiplyAll(2, 3, 4)).toBe(24);
+  it("returns only string arguments joined together", () => {
+    expect(onlyStrings("Hi", 1, " ", true, "there")).toBe("Hi there");
   });
 
-  it("returns 1 when only one number is passed", () => {
-    expect(multiplyAll(5)).toBe(5);
+  it("returns an empty string if no strings are passed", () => {
+    expect(onlyStrings(1, 2, false)).toBe("");
   });
 
   it("uses Array.from", () => {
-    multiplyAll(1, 2);
+    onlyStrings("A", "B");
     expect(Array.from).toHaveBeenCalled();
   });
 });

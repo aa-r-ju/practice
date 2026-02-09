@@ -1,11 +1,13 @@
-function multiplyAll() {
+function onlyStrings() {
   let values = Array.from(arguments);
+  let str = "";
 
-  let all = 1;
   for (let i = 0; i < values.length; i++) {
-    all *= values[i];
+    if (typeof values[i] === "string") {
+      str += values[i];
+    }
   }
-  return all;
+  return str;
 }
-console.log(multiplyAll(2, 3, 4));
-console.log(multiplyAll(5));
+
+console.log(onlyStrings("Hi", 1, " ", true, "there"));
