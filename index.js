@@ -15,11 +15,6 @@ function callAllFunctions() {
   }
   return concat;
 }
-const f1 = () => "A";
-const f2 = () => "B";
-const f3 = () => "C";
-console.log(callAllFunctions(f1, f2, f3));
-
 function callWithArguments() {
   let values = Array.from(arguments);
   let fn = values[0];
@@ -31,3 +26,21 @@ const product = (a, b) => a * b;
 
 console.log(callWithArguments(sum, 2, 3));
 console.log(callWithArguments(product, 2, 3));
+
+function chainFunctions() {
+  let values = Array.from(arguments);
+  let result = values[0];
+  let rest = values.splice(1);
+  for (let i = 0; i < rest.length; i++) {
+    result = rest[i](result);
+  }
+  return result;
+}
+
+const f1 = (x) => x + 2;
+const f2 = (x) => x * 3;
+const f3 = (x) => x - 1;
+
+console.log(chainFunctions(5, f1, f2, f3));
+console.log(chainFunctions(10, f1, f2, f3));
+console.log(chainFunctions(10, f1));
