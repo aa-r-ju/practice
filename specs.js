@@ -1,20 +1,9 @@
-describe("sumAll: using the arguments object", () => {
-  beforeEach(() => {
-    spyOn(Array, "from").and.callThrough();
+describe("countArgs: counting function arguments", () => {
+  it("returns how many arguments were passed in", () => {
+    expect(countArgs("a", "b", "c")).toBe(3);
   });
 
-  it("returns the sum of all numbers passed in", () => {
-    const result = sumAll(1, 2, 3, 4);
-    expect(result).toBe(10);
-  });
-
-  it("works with any number of arguments", () => {
-    const result = sumAll(5, 10);
-    expect(result).toBe(15);
-  });
-
-  it("uses Array.from to convert arguments into an array", () => {
-    sumAll(1, 2, 3);
-    expect(Array.from).toHaveBeenCalled();
+  it("returns 0 when no arguments are passed", () => {
+    expect(countArgs()).toBe(0);
   });
 });
