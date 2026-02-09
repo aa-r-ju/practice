@@ -1,13 +1,8 @@
-function onlyStrings() {
-  let values = Array.from(arguments);
-  let str = "";
-
-  for (let i = 0; i < values.length; i++) {
-    if (typeof values[i] === "string") {
-      str += values[i];
-    }
-  }
-  return str;
+function callAndReturn(fun) {
+  return fun();
 }
+const hello = () => {
+  return "Hello!";
+};
 
-console.log(onlyStrings("Hi", 1, " ", true, "there"));
+console.log(callAndReturn(hello));
