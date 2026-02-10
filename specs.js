@@ -1,59 +1,102 @@
-describe("callAndReturn - single function", () => {
-  it("calls a function and returns its return value", () => {
-    const hello = () => "Hello!";
-    expect(callAndReturn(hello)).toBe("Hello!");
+//one
+
+describe("callTwice", () => {
+  it("calls the given function two times", () => {
+    let count = 0;
+    const fn = () => count++;
+
+    callTwice(fn);
+
+    expect(count).toBe(2);
   });
 
-  it("works with different return types", () => {
-    const num = () => 42;
-    expect(callAndReturn(num)).toBe(42);
-  });
-});
+  it("returns the result of the second call", () => {
+    const fn = () => "Hi";
 
-//second
-
-describe("callAllFunctions - multiple functions", () => {
-  const f1 = () => "A";
-  const f2 = () => "B";
-  const f3 = () => "C";
-
-  it("calls multiple functions and concatenates their results", () => {
-    expect(callAllFunctions(f1, f2, f3)).toBe("ABC");
-  });
-
-  it("works with a single function", () => {
-    expect(callAllFunctions(f1)).toBe("A");
+    expect(callTwice(fn)).toBe("Hi");
   });
 });
 
-///third
+//two
 
-describe("callWithArguments - passing arguments to functions", () => {
-  const sum = (a, b) => a + b;
-  const product = (a, b) => a * b;
+describe("once", () => {
+  it("calls a function only once", () => {
+    let count = 0;
+    const fn = () => ++count;
 
-  it("calls functions with provided arguments", () => {
-    expect(callWithArguments(sum, 2, 3)).toBe(5);
-    expect(callWithArguments(product, 2, 3)).toBe(6);
+    const callOnce = once(fn);
+
+    callOnce();
+    callOnce();
+    callOnce();
+
+    expect(count).toBe(1);
   });
 
-  it("can handle more than one function (call only first)", () => {
-    expect(callWithArguments(sum, 4, 5, product)).toBe(9);
+  it("returns the first result every time", () => {
+    const fn = () => "Hello";
+
+    const callOnce = once(fn);
+
+    expect(callOnce()).toBe("Hello");
+    expect(callOnce()).toBe("Hello");
   });
 });
 
-//fourth
-
-describe("chainFunctions - chaining function results", () => {
-  const f1 = (x) => x + 2;
-  const f2 = (x) => x * 3;
-  const f3 = (x) => x - 1;
-
-  it("applies functions in order to an initial value", () => {
-    expect(chainFunctions(5, f1, f2, f3)).toBe(20); // ((5+2)*3)-1 = 20
+//three
+describe("makeCounter", () => {
+  it("returns a function", () => {
+    const counter = makeCounter();
+    expect(typeof counter).toBe("function");
   });
 
-  it("works with only one function", () => {
-    expect(chainFunctions(10, f1)).toBe(12);
+  it("increments count each time it is called", () => {
+    const counter = makeCounter();
+
+    expect(counter()).toBe(1);
+    expect(counter()).toBe(2);
+    expect(counter()).toBe(3);
+  });
+
+  it("each counter has its own independent state", () => {
+    const c1 = makeCounter();
+    const c2 = makeCounter();
+
+    expect(c1()).toBe(1);
+    expect(c1()).toBe(2);
+
+    expect(c2()).toBe(1);
+  });
+});
+
+//four
+describe("compose", () => {
+  const add2 = (x) => x + 2;
+  const double = (x) => x * 2;
+
+  it("returns a new function", () => {
+    const fn = compose(add2, double);
+    expect(typeof fn).toBe("function");
+  });
+
+  it("applies functions from right to left", () => {
+    const fn = compose(add2, double);
+
+    // double(5) = 10 → add2(10) = 12
+    expect(fn(5)).toBe(12);
+  });
+});
+
+//five
+
+describe("makeLogger", () => {
+  it("logs all values passed to the returned function", () => {
+    const logger = makeLogger();
+
+    logger("a");
+    logger("b");
+    logger("c");
+
+    expect(logger.getLogs()).toEqual(["a", "b", "c"]);
   });
 });
