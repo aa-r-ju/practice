@@ -29,3 +29,18 @@ function makeCounter() {
 const counter = makeCounter();
 console.log(counter());
 console.log(counter());
+
+function compose() {
+  let funs = Array.from(arguments);
+  return function (num) {
+    let sum = num;
+    for (let i = funs.length - 1; i >= 0; i--) {
+      sum = funs[i](sum);
+    }
+    return sum;
+  };
+}
+const add2 = (x) => x + 2;
+const double = (x) => x * 2;
+const fn = compose(add2, double);
+console.log(fn(5));
