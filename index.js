@@ -3,8 +3,19 @@ function callTwice(fun) {
   let second = fun();
   return second;
 }
-const fn1 = () => "Hi";
+
+function once(fn) {
+  let called = false;
+  let savedValue;
+
+  return function () {
+    if (called === false) {
+      savedValue = fn();
+      called = true;
+    }
+
+    return savedValue;
+  };
+}
+
 let count = 0;
-const fn = () => ++count;
-console.log(callTwice(fn));
-console.log(callTwice(fn1));
