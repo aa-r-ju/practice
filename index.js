@@ -44,3 +44,36 @@ const add2 = (x) => x + 2;
 const double = (x) => x * 2;
 const fn = compose(add2, double);
 console.log(fn(5));
+
+// function makeLogger() {
+//   let arr = [];
+//   function logger(val) {
+//     arr.push(val);
+//   }
+//   logger.getLogs = function () {
+//     return arr;
+//   };
+//   return logger;
+// }
+
+function makeLogger() {
+  let logs = [];
+
+  function logger(value) {
+    logs.push(value);
+  }
+
+  logger.getLogs = function () {
+    return logs;
+  };
+
+  return logger;
+}
+
+const logger = makeLogger();
+// console.log(logger());
+console.log(logger("a"));
+console.log(logger("b"));
+console.log(logger("c"));
+console.log(logger("d"));
+console.log(logger.getLogs());
