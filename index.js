@@ -1,51 +1,17 @@
-function limitedCounter(val) {
-  let count = 0;
+function createPasswordManager(str) {
+  let password = str;
+  console.log(password);
   return {
-    increment: function () {
-      if (count < val) {
-        count++;
-      }
+    checkPassword: function (input) {
+      return input === password;
     },
-    getCount: function () {
-      return count;
+    setPassword: function (newPass) {
+      password = newPass;
     },
   };
 }
 
-function toggleMaker(value) {
-  let result = value;
-  return {
-    toggle: function () {
-      result = !result;
-    },
-    getState: function () {
-      return result;
-    },
-  };
-}
-
-function callLimiter(fun, limit) {
-  let count = 0;
-  return function () {
-    if (count < limit) {
-      count++;
-      return fun();
-    } else {
-      return "limit reached";
-    }
-  };
-}
-
-let num = 0;
-const add = () => {
-  num += 1;
-  return num;
-};
-
-const limited = callLimiter(add, 5);
-console.log(limited());
-console.log(limited());
-console.log(limited());
-console.log(limited());
-console.log(limited());
-console.log(limited());
+let manager = createPasswordManager("123");
+console.log(manager.checkPassword(123));
+console.log(manager.setPassword("Aarju"));
+console.log(createPasswordManager());
