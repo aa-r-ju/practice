@@ -28,9 +28,14 @@ function createBankAccount(value) {
   };
 }
 
-let account = createBankAccount(100);
-console.log(account.deposit(50));
-console.log(account.withdraw(70));
-console.log(account.getBalance());
-// console.log(account.withdraw(50));
-// console.log(account.getBalance());
+function createSecretCounter() {
+  let count = 0;
+  return {
+    increment: function () {
+      count++;
+    },
+    reveal: function () {
+      return count;
+    },
+  };
+}
