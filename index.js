@@ -11,7 +11,26 @@ function createPasswordManager(str) {
   };
 }
 
-let manager = createPasswordManager("123");
-console.log(manager.checkPassword(123));
-console.log(manager.setPassword("Aarju"));
-console.log(createPasswordManager());
+function createBankAccount(value) {
+  let balance = value;
+  return {
+    deposit: function (add) {
+      balance += add;
+    },
+    withdraw: function (minus) {
+      if (minus <= balance) {
+        balance -= minus;
+      }
+    },
+    getBalance: function () {
+      return balance;
+    },
+  };
+}
+
+let account = createBankAccount(100);
+console.log(account.deposit(50));
+console.log(account.withdraw(70));
+console.log(account.getBalance());
+// console.log(account.withdraw(50));
+// console.log(account.getBalance());
