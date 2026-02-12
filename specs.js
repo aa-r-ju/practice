@@ -1,102 +1,105 @@
 //one
+describe("limitedCounter", () => {
+  let counter;
 
-describe("callTwice", () => {
-  it("calls the given function two times", () => {
-    let count = 0;
-    const fn = () => count++;
-
-    callTwice(fn);
-
-    expect(count).toBe(2);
+  beforeEach(() => {
+    counter = limitedCounter(3);
   });
 
-  it("returns the result of the second call", () => {
-    const fn = () => "Hi";
+  it("returns an object with increment and getCount methods", () => {
+    expect(typeof counter.increment).toBe("function");
+    expect(typeof counter.getCount).toBe("function");
+    expect(Object.keys(counter).length).toBe(2);
+  });
 
-    expect(callTwice(fn)).toBe("Hi");
+  it("increments count until limit is reached", () => {
+    counter.increment();
+    counter.increment();
+    counter.increment();
+    counter.increment(); // should NOT increase past limit
+
+    expect(counter.getCount()).toBe(3);
+  });
+
+  it("different counters have separate states", () => {
+    const counter2 = limitedCounter(5);
+
+    counter.increment();
+    counter2.increment();
+    counter2.increment();
+
+    expect(counter.getCount()).toBe(1);
+    expect(counter2.getCount()).toBe(2);
   });
 });
 
-//two
+// two
+describe("toggleMaker", () => {
+  let toggle;
 
-describe("once", () => {
-  it("calls a function only once", () => {
-    let count = 0;
-    const fn = () => ++count;
-
-    const callOnce = once(fn);
-
-    callOnce();
-    callOnce();
-    callOnce();
-
-    expect(count).toBe(1);
+  beforeEach(() => {
+    toggle = toggleMaker(true);
   });
 
-  it("returns the first result every time", () => {
-    const fn = () => "Hello";
+  it("returns an object with toggle and getState methods", () => {
+    expect(typeof toggle.toggle).toBe("function");
+    expect(typeof toggle.getState).toBe("function");
+    expect(Object.keys(toggle).length).toBe(2);
+  });
 
-    const callOnce = once(fn);
+  it("toggle switches between true and false", () => {
+    expect(toggle.getState()).toBe(true);
 
-    expect(callOnce()).toBe("Hello");
-    expect(callOnce()).toBe("Hello");
+    toggle.toggle();
+    expect(toggle.getState()).toBe(false);
+
+    toggle.toggle();
+    expect(toggle.getState()).toBe(true);
+  });
+
+  it("each toggle instance has its own state", () => {
+    const toggle2 = toggleMaker(false);
+
+    toggle.toggle(); // false
+    toggle2.toggle(); // true
+
+    expect(toggle.getState()).toBe(false);
+    expect(toggle2.getState()).toBe(true);
   });
 });
 
 //three
-describe("makeCounter", () => {
-  it("returns a function", () => {
-    const counter = makeCounter();
-    expect(typeof counter).toBe("function");
+describe("callLimiter", () => {
+  it("allows a function to be called only N times", () => {
+    let num = 0;
+
+    const add = () => {
+      num += 1;
+      return num;
+    };
+
+    const limited = callLimiter(add, 2);
+
+    expect(limited()).toBe(1);
+    expect(limited()).toBe(2);
+    expect(limited()).toBe("limit reached");
+    expect(limited()).toBe("limit reached");
   });
 
-  it("increments count each time it is called", () => {
-    const counter = makeCounter();
+  it("different limited functions track separately", () => {
+    let numA = 0;
+    let numB = 0;
 
-    expect(counter()).toBe(1);
-    expect(counter()).toBe(2);
-    expect(counter()).toBe(3);
-  });
+    const limitedA = callLimiter(() => ++numA, 1);
+    const limitedB = callLimiter(() => ++numB, 3);
 
-  it("each counter has its own independent state", () => {
-    const c1 = makeCounter();
-    const c2 = makeCounter();
+    limitedA();
+    limitedA();
 
-    expect(c1()).toBe(1);
-    expect(c1()).toBe(2);
+    limitedB();
+    limitedB();
 
-    expect(c2()).toBe(1);
-  });
-});
-
-//four
-describe("compose", () => {
-  const add2 = (x) => x + 2;
-  const double = (x) => x * 2;
-
-  it("returns a new function", () => {
-    const fn = compose(add2, double);
-    expect(typeof fn).toBe("function");
-  });
-
-  it("applies functions from right to left", () => {
-    const fn = compose(add2, double);
-
-    // double(5) = 10 → add2(10) = 12
-    expect(fn(5)).toBe(12);
-  });
-});
-
-//five
-
-describe("makeLogger", () => {
-  it("logs all values passed to the returned function", () => {
-    const logger = makeLogger();
-
-    logger("a");
-    logger("b");
-    logger("c");
-
-    expect(logger.getLogs()).toEqual(["a", "b", "c"]);
+    expect(numA).toBe(1);
+    expect(numB).toBe(2);
   });
 });
