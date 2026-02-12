@@ -23,8 +23,29 @@ function toggleMaker(value) {
     },
   };
 }
-let toggle = toggleMaker(false);
-console.log(toggle.toggle());
-console.log(toggle.getState());
-console.log(toggle.toggle());
-console.log(toggle.getState());
+
+function callLimiter(fun, limit) {
+  let count = 0;
+  return function () {
+    if (count < limit) {
+      count++;
+      return fun();
+    } else {
+      return "limit reached";
+    }
+  };
+}
+
+let num = 0;
+const add = () => {
+  num += 1;
+  return num;
+};
+
+const limited = callLimiter(add, 5);
+console.log(limited());
+console.log(limited());
+console.log(limited());
+console.log(limited());
+console.log(limited());
+console.log(limited());
