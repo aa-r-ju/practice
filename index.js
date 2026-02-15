@@ -24,5 +24,32 @@ function indexOf(array, num) {
   }
   return -1;
 }
-let arr = [10, 20, 30];
-console.log(indexOf(arr, 50));
+
+function flatten(array) {
+  let newArray = [];
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i])) {
+      for (let j = 0; j < array[i].length; j++) {
+        newArray.push(array[i][j]);
+      }
+    } else {
+      newArray.push(array[i]);
+    }
+  }
+  return newArray;
+}
+
+function flattenDeep(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      newArr.push(...flattenDeep(arr[i]));
+    } else {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
+let va = [1, [2, [3, 4]], 5];
+console.log(flattenDeep(va));
