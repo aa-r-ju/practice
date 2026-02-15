@@ -1,55 +1,18 @@
-function some(array, callback) {
-  for (let i = 0; i < array.length; i++) {
-    if (callback(array[i])) {
-      return true;
-    }
-  }
-  return false;
-}
+function reverseMap(arr, callback) {
+  if (Array.isArray(arr)) {
+    let newArr = [];
 
-function find(array, callback) {
-  for (let i = 0; i < array.length; i++) {
-    if (callback(array[i], i, array)) {
-      return array[i];
+    for (let i = 0; i < arr.length; i++) {
+      newArr.push(callback(arr[i]));
     }
+    return newArr;
   }
-  return undefined;
+  return callback(arr);
 }
+let val = 5;
+let arr = [1, 2, 3, 4];
+const negate = (num) => -num;
+console.log(reverseMap(arr, negate));
+console.log(reverseMap(val, negate));
 
-function indexOf(array, num) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === num) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-function flatten(array) {
-  let newArray = [];
-  for (let i = 0; i < array.length; i++) {
-    if (Array.isArray(array[i])) {
-      for (let j = 0; j < array[i].length; j++) {
-        newArray.push(array[i][j]);
-      }
-    } else {
-      newArray.push(array[i]);
-    }
-  }
-  return newArray;
-}
-
-function flattenDeep(arr) {
-  let newArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i])) {
-      newArr.push(...flattenDeep(arr[i]));
-    } else {
-      newArr.push(arr[i]);
-    }
-  }
-  return newArr;
-}
-
-let va = [1, [2, [3, 4]], 5];
-console.log(flattenDeep(va));
+console.log(reverseMap([1, 2, 3], (num) => num * num));
