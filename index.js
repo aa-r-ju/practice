@@ -1,18 +1,16 @@
-function includes(base, checkedvalue) {
-  if (Array.isArray(base)) {
-    for (let i = 0; i < base.length; i++) {
-      if (base[i] === checkedvalue) {
-        return true;
-      }
-    }
-  } else if (typeof base === "object" && base !== null) {
-    for (let keys in base) {
-      if (base[keys] === checkedvalue) {
-        return true;
-      }
-    }
-  } else {
-    return base === checkedvalue;
+function reduce(arr, callback, start) {
+  let sum1 = start;
+  for (let i = 0; i < arr.length; i++) {
+    sum1 = callback(sum1, arr[i], i, arr);
   }
-  return false;
+  return sum1;
 }
+const sum = (acc, el) => acc + el;
+const multiply = (acc, el) => acc * el;
+const join = (acc, el) => acc + el;
+
+let arr = [1, 2, 3, 4];
+let str = ["a", "b", "c"];
+console.log(reduce(arr, sum, 0));
+console.log(reduce(arr, multiply, 1));
+console.log(reduce(str, join, ""));

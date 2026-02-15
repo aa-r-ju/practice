@@ -1,27 +1,25 @@
-describe("advanced includes", () => {
+describe("the function reduce", () => {
   beforeEach(() => {
-    spyOn(Array.prototype, "includes").and.callThrough();
+    spyOn(Array.prototype, "reduce").and.callThrough();
   });
 
-  it("works with arrays", () => {
-    expect(includes([1, 2, 3], 3)).toBe(true);
+  it("sums numbers in an array", () => {
+    const sum = (acc, el) => acc + el;
+    expect(reduce([1, 2, 3, 4], sum, 0)).toBe(10);
   });
 
-  it("works with objects", () => {
-    expect(includes({ x: 10, y: 20 }, 20)).toBe(true);
+  it("multiplies numbers in an array", () => {
+    const multiply = (acc, el) => acc * el;
+    expect(reduce([1, 2, 3, 4], multiply, 1)).toBe(24);
   });
 
-  it("works with single numbers", () => {
-    expect(includes(7, 7)).toBe(true);
-    expect(includes(7, 8)).toBe(false);
+  it("concatenates strings", () => {
+    const join = (acc, el) => acc + el;
+    expect(reduce(["a", "b", "c"], join, "")).toBe("abc");
   });
 
-  it("works with strings", () => {
-    expect(includes("hello", "hello")).toBe(true);
-  });
-
-  it("does not use Array.prototype.includes", () => {
-    includes([1, 2, 3], 2);
-    expect(Array.prototype.includes.calls.any()).toBe(false);
+  it("does not use Array.prototype.reduce", () => {
+    reduce([1, 2, 3], (a, b) => a + b, 0);
+    expect(Array.prototype.reduce.calls.any()).toBe(false);
   });
 });
