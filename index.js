@@ -18,3 +18,18 @@ function select(arr, callback) {
   }
   return newArr;
 }
+
+function mapFilterCombo(arr, callback1, callback2) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    let val = callback1(arr[i]);
+    if (callback2(val)) {
+      newArr.push(val);
+    }
+  }
+  return newArr;
+}
+let array = [1, 2, 3];
+const multiplyByTwo = (x) => x * 2;
+const greaterThanThree = (x) => x > 3;
+console.log(mapFilterCombo(array, multiplyByTwo, greaterThanThree));
