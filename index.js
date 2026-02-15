@@ -6,10 +6,17 @@ function some(array, callback) {
   }
   return false;
 }
-let nums = [2, 4, 6, 8];
-let arr = [];
-let nums2 = [2, 4, 6, 7];
-const isOdd = (num) => num % 2 !== 0;
-console.log(some(nums, isOdd));
-console.log(some(nums2, isOdd));
-console.log(some(arr, isOdd));
+
+function find(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i], i, array)) {
+      return array[i];
+    }
+  }
+  return undefined;
+}
+const isGreaterThanTen = (num) => num > 10;
+let ar = [5, 12, 8, 20];
+let kk = [1, 2, 3];
+console.log(find(ar, isGreaterThanTen));
+console.log(find(kk, isGreaterThanTen));
