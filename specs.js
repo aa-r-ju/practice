@@ -1,61 +1,51 @@
-describe("the function reverseMap", () => {
-  beforeEach(() => {
-    spyOn(Array.prototype, "map").and.callThrough();
-  });
-
-  // pure function to negate a number
-  const negate = (num) => -num;
-
-  it("negates a single number", () => {
-    expect(negate(5)).toBe(-5);
-  });
-
-  it("applies negation to all elements using reverseMap", () => {
-    expect(reverseMap([1, 2, 3, 4], negate)).toEqual([-1, -2, -3, -4]);
-  });
-
-  it("applies a square function to all elements", () => {
-    expect(reverseMap([1, 2, 3], (num) => num * num)).toEqual([1, 4, 9]);
-  });
-
-  it("does not use Array.prototype.map", () => {
-    reverseMap([1, 2, 3], negate);
-    expect(Array.prototype.map.calls.any()).toBe(false);
-  });
-});
-
-describe("the function select", () => {
+describe("the function filter", () => {
   beforeEach(() => {
     spyOn(Array.prototype, "filter").and.callThrough();
   });
 
-  const isPositive = (num) => num > 0;
-  const isEven = (num) => num % 2 === 0;
+  // Example callbacks
+  const evenFilter = (el) => el % 2 === 0;
+  const oddFilter = (el) => el % 2 !== 0;
+  const positiveFilter = (el) => el > 0;
+  const negativeFilter = (el) => el < 0;
+  const stringFilter = (el) => typeof el === "string";
+  const longerThanThree = (el) => typeof el === "string" && el.length > 3;
 
-  it("filters positive numbers from an array", () => {
-    expect(select([-2, -1, 0, 1, 2, 3], isPositive)).toEqual([1, 2, 3]);
+  it("filters an array for even numbers", () => {
+    expect(filter([1, 2, 3, 4, 5, 6], evenFilter)).toEqual([2, 4, 6]);
   });
 
-  it("filters even numbers from an array", () => {
-    expect(select([1, 2, 3, 4, 5, 6], isEven)).toEqual([2, 4, 6]);
+  it("filters an array for odd numbers", () => {
+    expect(filter([1, 2, 3, 4, 5, 6], oddFilter)).toEqual([1, 3, 5]);
   });
 
-  it("returns empty array if no elements match", () => {
-    expect(select([-3, -2, -1], isPositive)).toEqual([]);
+  it("filters an array for positive numbers", () => {
+    expect(filter([-2, -1, 0, 1, 2, 3], positiveFilter)).toEqual([1, 2, 3]);
+  });
+
+  it("filters an array for negative numbers", () => {
+    expect(filter([-5, -4, -3, 0, 1, 2], negativeFilter)).toEqual([-5, -4, -3]);
+  });
+
+  it("filters an array for strings only", () => {
+    expect(filter([1, "apple", true, "banana", null], stringFilter)).toEqual([
+      "apple",
+      "banana",
+    ]);
+  });
+
+  it("filters strings longer than 3 characters", () => {
+    expect(filter(["hi", "hello", "cat", "elephant"], longerThanThree)).toEqual(
+      ["hello", "elephant"],
+    );
+  });
+
+  it("returns an empty array if no element matches", () => {
+    expect(filter([1, 3, 5], evenFilter)).toEqual([]);
   });
 
   it("does not use Array.prototype.filter", () => {
-    select([1, 2, 3], isPositive);
+    filter([1, 2, 3, 4], evenFilter);
     expect(Array.prototype.filter.calls.any()).toBe(false);
-  });
-});
-
-describe("the function mapFilterCombo", () => {
-  it("first maps then filters an array", () => {
-    const multiplyByTwo = (x) => x * 2;
-    const greaterThanThree = (x) => x > 3;
-
-    const result = mapFilterCombo([1, 2, 3], multiplyByTwo, greaterThanThree);
-    expect(result).toEqual([4, 6]);
   });
 });
