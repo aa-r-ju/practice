@@ -1,115 +1,89 @@
-// 🧪 1️⃣ "Password Manager"
-describe("Password Manager", () => {
-  let manager;
-
+//one
+describe("the function some", () => {
   beforeEach(() => {
-    manager = createPasswordManager("1234");
+    spyOn(Array.prototype, "some").and.callThrough();
   });
 
-  it("returns an object", () => {
-    expect(typeof manager).toBe("object");
+  const isOdd = (num) => num % 2 !== 0;
+
+  it("returns true if at least one element passes", () => {
+    expect(some([2, 4, 6, 7], isOdd)).toBe(true);
   });
 
-  it("has checkPassword and setPassword methods", () => {
-    expect(typeof manager.checkPassword).toBe("function");
-    expect(typeof manager.setPassword).toBe("function");
-    expect(Object.keys(manager).length).toBe(2);
+  it("returns false if no elements pass", () => {
+    expect(some([2, 4, 6, 8], isOdd)).toBe(false);
   });
 
-  it("checkPassword returns true only for correct password", () => {
-    expect(manager.checkPassword("1234")).toBe(true);
-    expect(manager.checkPassword("wrong")).toBe(false);
+  it("returns false for empty array", () => {
+    expect(some([], isOdd)).toBe(false);
   });
 
-  it("setPassword changes the password", () => {
-    manager.setPassword("abcd");
-    expect(manager.checkPassword("1234")).toBe(false);
-    expect(manager.checkPassword("abcd")).toBe(true);
+  it("should not use Array.prototype.some", () => {
+    some([1, 2, 3], isOdd);
+    expect(Array.prototype.some.calls.any()).toBe(false);
   });
 });
 
-//🧪 2️⃣ "Bank Account"
-describe("Bank Account", () => {
-  let account;
-
+//two
+describe("the function find", () => {
   beforeEach(() => {
-    account = createBankAccount(100);
+    spyOn(Array.prototype, "find").and.callThrough();
   });
 
-  it("returns object with deposit, withdraw, and getBalance", () => {
-    expect(typeof account.deposit).toBe("function");
-    expect(typeof account.withdraw).toBe("function");
-    expect(typeof account.getBalance).toBe("function");
-    expect(Object.keys(account).length).toBe(3);
+  const isGreaterThanTen = (num) => num > 10;
+
+  it("returns the first matching element", () => {
+    expect(find([5, 12, 8, 20], isGreaterThanTen)).toBe(12);
   });
 
-  it("deposit increases balance", () => {
-    account.deposit(50);
-    expect(account.getBalance()).toBe(150);
+  it("returns undefined if no match found", () => {
+    expect(find([1, 2, 3], isGreaterThanTen)).toBe(undefined);
   });
 
-  it("withdraw decreases balance", () => {
-    account.withdraw(30);
-    expect(account.getBalance()).toBe(70);
-  });
-
-  it("cannot withdraw more than balance", () => {
-    account.withdraw(200);
-    expect(account.getBalance()).toBe(100);
+  it("should not use Array.prototype.find", () => {
+    find([1, 2, 3], isGreaterThanTen);
+    expect(Array.prototype.find.calls.any()).toBe(false);
   });
 });
 
-//🧪 3️⃣ "Secret Counter"
+//three
 
-describe("Secret Counter", () => {
-  let counter;
-
+describe("the function indexOf", () => {
   beforeEach(() => {
-    counter = createSecretCounter();
+    spyOn(Array.prototype, "indexOf").and.callThrough();
   });
 
-  it("returns object with increment and reveal methods", () => {
-    expect(typeof counter.increment).toBe("function");
-    expect(typeof counter.reveal).toBe("function");
-    expect(Object.keys(counter).length).toBe(2);
+  it("returns the index of the element", () => {
+    expect(indexOf([10, 20, 30], 20)).toBe(1);
   });
 
-  it("increment increases hidden count", () => {
-    counter.increment();
-    counter.increment();
-    expect(counter.reveal()).toBe(2);
+  it("returns -1 if element not found", () => {
+    expect(indexOf([10, 20, 30], 40)).toBe(-1);
   });
 
-  it("each counter is independent", () => {
-    const counter2 = createSecretCounter();
-    counter.increment();
-    counter2.increment();
-    counter2.increment();
-
-    expect(counter.reveal()).toBe(1);
-    expect(counter2.reveal()).toBe(2);
+  it("should not use Array.prototype.indexOf", () => {
+    indexOf([1, 2, 3], 2);
+    expect(Array.prototype.indexOf.calls.any()).toBe(false);
   });
 });
 
-// 🧪 4️⃣ (Slightly Harder) "Message Logger With Limit"
-describe("Message Logger With Limit", () => {
-  let logger;
+///four
 
+describe("the function flatten", () => {
   beforeEach(() => {
-    logger = createLogger(2);
+    spyOn(Array.prototype, "flat").and.callThrough();
   });
 
-  it("returns object with log and getLogs methods", () => {
-    expect(typeof logger.log).toBe("function");
-    expect(typeof logger.getLogs).toBe("function");
-    expect(Object.keys(logger).length).toBe(2);
+  it("flattens one level of nested arrays", () => {
+    expect(flatten([1, [2, 3], 4])).toEqual([1, 2, 3, 4]);
   });
 
-  it("stores only up to limit number of messages", () => {
-    logger.log("a");
-    logger.log("b");
-    logger.log("c");
+  it("handles empty array", () => {
+    expect(flatten([])).toEqual([]);
+  });
 
-    expect(logger.getLogs()).toEqual(["a", "b"]);
+  it("should not use Array.prototype.flat", () => {
+    flatten([1, [2]]);
+    expect(Array.prototype.flat.calls.any()).toBe(false);
   });
 });
