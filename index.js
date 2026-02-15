@@ -15,8 +15,14 @@ function find(array, callback) {
   }
   return undefined;
 }
-const isGreaterThanTen = (num) => num > 10;
-let ar = [5, 12, 8, 20];
-let kk = [1, 2, 3];
-console.log(find(ar, isGreaterThanTen));
-console.log(find(kk, isGreaterThanTen));
+
+function indexOf(array, num) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === num) {
+      return i;
+    }
+  }
+  return -1;
+}
+let arr = [10, 20, 30];
+console.log(indexOf(arr, 50));
