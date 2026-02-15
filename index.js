@@ -9,10 +9,12 @@ function reverseMap(arr, callback) {
   }
   return callback(arr);
 }
-let val = 5;
-let arr = [1, 2, 3, 4];
-const negate = (num) => -num;
-console.log(reverseMap(arr, negate));
-console.log(reverseMap(val, negate));
-
-console.log(reverseMap([1, 2, 3], (num) => num * num));
+function select(arr, callback) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (callback(arr[i])) {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
