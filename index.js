@@ -1,16 +1,30 @@
-function reduce(arr, callback, start) {
-  let sum1 = start;
-  for (let i = 0; i < arr.length; i++) {
-    sum1 = callback(sum1, arr[i], i, arr);
+function reduce(arr, callback, initialValue) {
+  let accumulator;
+  let startIndex;
+
+  // If initialValue is provided
+  if (initialValue !== undefined) {
+    accumulator = initialValue;
+    startIndex = 0;
   }
-  return sum1;
+  // If initialValue is NOT provided
+  else {
+    if (arr.length === 0) {
+      throw new TypeError("Reduce of empty array with no initial value");
+    }
+    accumulator = arr[0];
+    startIndex = 1;
+  }
+
+  // Loop from correct index
+  for (let i = startIndex; i < arr.length; i++) {
+    accumulator = callback(accumulator, arr[i], i, arr);
+  }
+
+  return accumulator;
 }
+
 const sum = (acc, el) => acc + el;
-const multiply = (acc, el) => acc * el;
-const join = (acc, el) => acc + el;
 
 let arr = [1, 2, 3, 4];
-let str = ["a", "b", "c"];
-console.log(reduce(arr, sum, 0));
-console.log(reduce(arr, multiply, 1));
-console.log(reduce(str, join, ""));
+console.log(reduce(arr, sum));
