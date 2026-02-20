@@ -1,124 +1,186 @@
-describe("the function reduce", () => {
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("Practice Calculator using reverse polish notation", () => {
+  let calc;
+
   beforeEach(() => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
+    // Create a new instance before each test
+    calc = new RPNCalculator();
   });
 
-  it("sums numbers in an array", () => {
-    const sum = (acc, el) => acc + el;
-    expect(reduce([1, 2, 3, 4], sum, 0)).toBe(10);
+  it("should add two numbers", () => {
+    calc.push(10);
+    calc.push(5);
+    calc.plus();
+    expect(calc.value()).toBe(15);
   });
 
-  it("multiplies numbers in an array", () => {
-    const multiply = (acc, el) => acc * el;
-    expect(reduce([1, 2, 3, 4], multiply, 1)).toBe(24);
+  it("should subtract two numbers", () => {
+    calc.push(20);
+    calc.push(7);
+    calc.minus();
+    expect(calc.value()).toBe(13);
   });
 
-  it("concatenates strings", () => {
-    const join = (acc, el) => acc + el;
-    expect(reduce(["a", "b", "c"], join, "")).toBe("abc");
+  it("should multiply two numbers", () => {
+    calc.push(4);
+    calc.push(6);
+    calc.times();
+    expect(calc.value()).toBe(24);
   });
 
-  it("does not use Array.prototype.reduce", () => {
-    reduce([1, 2, 3], (a, b) => a + b, 0);
-    expect(Array.prototype.reduce.calls.any()).toBe(false);
+  it("should divide two numbers", () => {
+    calc.push(12);
+    calc.push(4);
+    calc.divide();
+    expect(calc.value()).toBe(3);
+  });
+
+  it("should chain multiple operations", () => {
+    // Example: 2 3 + 4 *
+    calc.push(2);
+    calc.push(3);
+    calc.plus(); // 5
+    calc.push(4);
+    calc.times(); // 20
+    expect(calc.value()).toBe(20);
+  });
+
+  it("should throw error if not enough values for operation", () => {
+    expect(() => calc.plus()).toThrow("rpnCalculatorInstance is empty");
+    expect(() => calc.minus()).toThrow("rpnCalculatorInstance is empty");
+    expect(() => calc.times()).toThrow("rpnCalculatorInstance is empty");
+    expect(() => calc.divide()).toThrow("rpnCalculatorInstance is empty");
+  });
+
+  it("all methods should be on prototype", () => {
+    expect(typeof RPNCalculator.prototype.plus).toBe("function");
+    expect(typeof RPNCalculator.prototype.minus).toBe("function");
+    expect(typeof RPNCalculator.prototype.times).toBe("function");
+    expect(typeof RPNCalculator.prototype.divide).toBe("function");
+    expect(typeof RPNCalculator.prototype.value).toBe("function");
+  });
+
+  it("should be instance of RPNCalculator", () => {
+    expect(calc instanceof RPNCalculator).toBe(true);
+  });
+
+  it("should handle negative numbers", () => {
+    calc.push(-5);
+    calc.push(3);
+    calc.plus();
+    expect(calc.value()).toBe(-2);
+  });
+
+  it("should handle decimals", () => {
+    calc.push(2.5);
+    calc.push(1.5);
+    calc.plus();
+    expect(calc.value()).toBe(4);
+  });
+
+  it("should handle multiple sequential operations", () => {
+    calc.push(10);
+    calc.push(2);
+    calc.divide(); // 5
+    calc.push(3);
+    calc.times(); // 15
+    calc.push(4);
+    calc.minus(); // 11
+    expect(calc.value()).toBe(11);
   });
 });
 
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
 
-//GOOD 😈🔥
-Now we go full interview mode.
+describe("Advanced RPNCalculator practice specs", () => {
+  let calc;
 
-We’re going to implement real reduce behavior — the tricky version.
+  beforeEach(() => {
+    calc = new RPNCalculator();
+  });
 
-🎯 Real Reduce Rules (Important)
+  it("adds multiple numbers sequentially", () => {
+    calc.push(1);
+    calc.push(2);
+    calc.plus(); // 3
+    calc.push(3);
+    calc.plus(); // 6
+    calc.push(4);
+    calc.plus(); // 10
+    expect(calc.value()).toBe(10);
+  });
 
-If initialValue is provided:
+  it("performs subtraction with negative result", () => {
+    calc.push(5);
+    calc.push(10);
+    calc.minus(); // -5
+    expect(calc.value()).toBe(-5);
+  });
 
-reduce([1,2,3], fn, 0)
+  it("performs multiplication with zero", () => {
+    calc.push(7);
+    calc.push(0);
+    calc.times(); // 0
+    expect(calc.value()).toBe(0);
+  });
 
+  it("performs division resulting in decimal", () => {
+    calc.push(7);
+    calc.push(2);
+    calc.divide(); // 3.5
+    expect(calc.value()).toBe(3.5);
+  });
 
-accumulator = 0
+  it("chains multiple operations", () => {
+    // 5 2 + 3 * 4 -
+    calc.push(5);
+    calc.push(2);
+    calc.plus(); // 7
+    calc.push(3);
+    calc.times(); // 21
+    calc.push(4);
+    calc.minus(); // 17
+    expect(calc.value()).toBe(17);
+  });
 
-loop starts at index 0
+  it("throws error if not enough values for plus", () => {
+    calc.push(1);
+    expect(() => calc.plus()).toThrow("rpnCalculatorInstance is empty");
+  });
 
-If initialValue is NOT provided:
+  it("throws error if not enough values for minus", () => {
+    expect(() => calc.minus()).toThrow("rpnCalculatorInstance is empty");
+  });
 
-reduce([1,2,3], fn)
+  it("works with negative and decimal numbers", () => {
+    calc.push(-2.5);
+    calc.push(3.5);
+    calc.plus(); // 1
+    expect(calc.value()).toBe(1);
+  });
 
+  it("performs sequential operations with mix of +, -, *, /", () => {
+    // 8 2 / 3 + 4 * 5 -
+    calc.push(8);
+    calc.push(2);
+    calc.divide(); // 4
+    calc.push(3);
+    calc.plus(); // 7
+    calc.push(4);
+    calc.times(); // 28
+    calc.push(5);
+    calc.minus(); // 23
+    expect(calc.value()).toBe(23);
+  });
 
-accumulator = first element (1)
-
-loop starts at index 1
-
-If:
-
-No initialValue
-
-And array is empty
-
-👉 It should throw an error.
-
-That’s how native reduce behaves.
-
-🧠 Your Task
-
-Write:
-
-function reduce(arr, callback, initialValue)
-
-
-That:
-
-Detects if initialValue is undefined
-
-Uses first element as accumulator if missing
-
-Starts loop at correct index
-
-Throws error if array empty & no initialValue
-
-Does NOT use .reduce()
-
-🧪 You Must Pass These Tests
-console.log(reduce([1,2,3,4], (a,b)=>a+b, 0)); 
-// 10
-
-console.log(reduce([1,2,3,4], (a,b)=>a+b)); 
-// 10
-
-console.log(reduce([5], (a,b)=>a+b)); 
-// 5
-
-console.log(reduce([], (a,b)=>a+b, 10)); 
-// 10
-
-console.log(reduce([], (a,b)=>a+b)); 
-// should throw error
-
-💡 HINT
-
-You’ll need something like:
-
-let accumulator;
-let startIndex;
-
-
-Then decide:
-
-if (initialValue !== undefined) {
-   accumulator = initialValue;
-   startIndex = 0;
-} else {
-   accumulator = arr[0];
-   startIndex = 1;
-}
-
-
-Then loop from startIndex.
-
-Now write it.
-
-Take your time.
-
-This is where beginners become strong.
-I’ll review it carefully.
+  it("stack is independent between instances", () => {
+    const calc2 = new RPNCalculator();
+    calc.push(1);
+    calc2.push(100);
+    expect(calc.value()).toBe(1);
+    expect(calc2.value()).toBe(100);
+  });
+});

@@ -1,30 +1,50 @@
-function reduce(arr, callback, initialValue) {
-  let accumulator;
-  let startIndex;
-
-  // If initialValue is provided
-  if (initialValue !== undefined) {
-    accumulator = initialValue;
-    startIndex = 0;
+class RPNCalculator {
+  constructor() {
+    this.state = [];
   }
-  // If initialValue is NOT provided
-  else {
-    if (arr.length === 0) {
-      throw new TypeError("Reduce of empty array with no initial value");
+  push(num) {
+    this.state.push(num);
+  }
+  value() {
+    return this.state[this.state.length - 1];
+  }
+  checkLength() {
+    if (this.state.length < 2) {
+      throw "rpnCalculatorInstance is empty";
     }
-    accumulator = arr[0];
-    startIndex = 1;
   }
-
-  // Loop from correct index
-  for (let i = startIndex; i < arr.length; i++) {
-    accumulator = callback(accumulator, arr[i], i, arr);
+  plus() {
+    this.checkLength();
+    let b = this.state.pop();
+    let a = this.state.pop();
+    let val = a + b;
+    this.state.push(val);
   }
-
-  return accumulator;
+  minus() {
+    this.checkLength();
+    let b = this.state.pop();
+    let a = this.state.pop();
+    let val = a - b;
+    this.state.push(val);
+  }
+  times() {
+    this.checkLength();
+    let b = this.state.pop();
+    let a = this.state.pop();
+    let val = a * b;
+    this.state.push(val);
+  }
+  divide() {
+    this.checkLength();
+    let b = this.state.pop();
+    let a = this.state.pop();
+    let val = a / b;
+    this.state.push(val);
+  }
 }
+let calc = new RPNCalculator();
+calc.push(10);
+calc.push(2);
+calc.divide();
 
-const sum = (acc, el) => acc + el;
-
-let arr = [1, 2, 3, 4];
-console.log(reduce(arr, sum));
+console.log(calc.value());
