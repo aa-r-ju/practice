@@ -18,3 +18,22 @@ class Bird {
     return child;
   }
 }
+
+class Eagle extends Bird {
+  constructor(name, wingspan) {
+    super(name);
+    this.wingspan = wingspan;
+  }
+
+  hunt() {
+    return "Hunting prey!";
+  }
+  introduce() {
+    return `Hi, I'm ${this.name} the Eagle`;
+  }
+  layEgg(wingspan) {
+    const babyEagle = new Eagle(`Baby ${this.name}`, wingspan);
+    this.chicks.push(babyEagle);
+    return babyEagle;
+  }
+}
