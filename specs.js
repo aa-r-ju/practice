@@ -1,186 +1,108 @@
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("Practice Calculator using reverse polish notation", () => {
-  let calc;
+describe("Bird class", () => {
+  let myBird;
 
   beforeEach(() => {
-    // Create a new instance before each test
-    calc = new RPNCalculator();
+    myBird = new Bird("Sky");
   });
 
-  it("should add two numbers", () => {
-    calc.push(10);
-    calc.push(5);
-    calc.plus();
-    expect(calc.value()).toBe(15);
+  it("should be an instance of Bird", () => {
+    expect(myBird instanceof Bird).toBe(true);
   });
 
-  it("should subtract two numbers", () => {
-    calc.push(20);
-    calc.push(7);
-    calc.minus();
-    expect(calc.value()).toBe(13);
+  it("should take name as a parameter", () => {
+    expect(myBird.name).toBe("Sky");
   });
 
-  it("should multiply two numbers", () => {
-    calc.push(4);
-    calc.push(6);
-    calc.times();
-    expect(calc.value()).toBe(24);
+  it("should have an array called chicks", () => {
+    expect(myBird.chicks).toEqual([]);
   });
 
-  it("should divide two numbers", () => {
-    calc.push(12);
-    calc.push(4);
-    calc.divide();
-    expect(calc.value()).toBe(3);
+  it("should have a fly method on its prototype", () => {
+    expect(myBird.hasOwnProperty("fly")).toBe(false);
+    expect(myBird.fly()).toBe("I am flying");
   });
 
-  it("should chain multiple operations", () => {
-    // Example: 2 3 + 4 *
-    calc.push(2);
-    calc.push(3);
-    calc.plus(); // 5
-    calc.push(4);
-    calc.times(); // 20
-    expect(calc.value()).toBe(20);
+  it("should have a introduce method that uses dynamic class name", () => {
+    expect(myBird.introduce()).toBe("Hi, I'm Sky the Bird");
   });
 
-  it("should throw error if not enough values for operation", () => {
-    expect(() => calc.plus()).toThrow("rpnCalculatorInstance is empty");
-    expect(() => calc.minus()).toThrow("rpnCalculatorInstance is empty");
-    expect(() => calc.times()).toThrow("rpnCalculatorInstance is empty");
-    expect(() => calc.divide()).toThrow("rpnCalculatorInstance is empty");
-  });
-
-  it("all methods should be on prototype", () => {
-    expect(typeof RPNCalculator.prototype.plus).toBe("function");
-    expect(typeof RPNCalculator.prototype.minus).toBe("function");
-    expect(typeof RPNCalculator.prototype.times).toBe("function");
-    expect(typeof RPNCalculator.prototype.divide).toBe("function");
-    expect(typeof RPNCalculator.prototype.value).toBe("function");
-  });
-
-  it("should be instance of RPNCalculator", () => {
-    expect(calc instanceof RPNCalculator).toBe(true);
-  });
-
-  it("should handle negative numbers", () => {
-    calc.push(-5);
-    calc.push(3);
-    calc.plus();
-    expect(calc.value()).toBe(-2);
-  });
-
-  it("should handle decimals", () => {
-    calc.push(2.5);
-    calc.push(1.5);
-    calc.plus();
-    expect(calc.value()).toBe(4);
-  });
-
-  it("should handle multiple sequential operations", () => {
-    calc.push(10);
-    calc.push(2);
-    calc.divide(); // 5
-    calc.push(3);
-    calc.times(); // 15
-    calc.push(4);
-    calc.minus(); // 11
-    expect(calc.value()).toBe(11);
+  it("should have a layEgg method", () => {
+    const baby = myBird.layEgg();
+    expect(baby.name).toBe("Baby Sky");
+    expect(baby.chicks).toEqual([]);
+    expect(myBird.chicks).toEqual([baby]);
   });
 });
 
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("Advanced RPNCalculator practice specs", () => {
-  let calc;
+describe("Eagle class", () => {
+  let eagle;
 
   beforeEach(() => {
-    calc = new RPNCalculator();
+    eagle = new Eagle("Hunter", 200);
   });
 
-  it("adds multiple numbers sequentially", () => {
-    calc.push(1);
-    calc.push(2);
-    calc.plus(); // 3
-    calc.push(3);
-    calc.plus(); // 6
-    calc.push(4);
-    calc.plus(); // 10
-    expect(calc.value()).toBe(10);
+  it("should extend Bird", () => {
+    expect(eagle instanceof Eagle).toBe(true);
+    expect(eagle instanceof Bird).toBe(true);
   });
 
-  it("performs subtraction with negative result", () => {
-    calc.push(5);
-    calc.push(10);
-    calc.minus(); // -5
-    expect(calc.value()).toBe(-5);
+  it("should have name and chicks from Bird", () => {
+    expect(eagle.name).toBe("Hunter");
+    expect(eagle.chicks).toEqual([]);
   });
 
-  it("performs multiplication with zero", () => {
-    calc.push(7);
-    calc.push(0);
-    calc.times(); // 0
-    expect(calc.value()).toBe(0);
+  it("should have a wingspan property", () => {
+    expect(eagle.wingspan).toBe(200);
   });
 
-  it("performs division resulting in decimal", () => {
-    calc.push(7);
-    calc.push(2);
-    calc.divide(); // 3.5
-    expect(calc.value()).toBe(3.5);
+  it("should have a hunt method on prototype", () => {
+    expect(eagle.hunt()).toBe("Hunting prey!");
   });
 
-  it("chains multiple operations", () => {
-    // 5 2 + 3 * 4 -
-    calc.push(5);
-    calc.push(2);
-    calc.plus(); // 7
-    calc.push(3);
-    calc.times(); // 21
-    calc.push(4);
-    calc.minus(); // 17
-    expect(calc.value()).toBe(17);
+  it("should override introduce method", () => {
+    expect(eagle.introduce()).toBe("Hi, I'm Hunter the Eagle");
   });
 
-  it("throws error if not enough values for plus", () => {
-    calc.push(1);
-    expect(() => calc.plus()).toThrow("rpnCalculatorInstance is empty");
+  it("should have its own layEgg method that takes wingspan", () => {
+    const babyEagle = eagle.layEgg(150);
+    expect(eagle.chicks).toEqual([babyEagle]);
+    expect(babyEagle.name).toBe("Baby Hunter");
+    expect(babyEagle.wingspan).toBe(150);
+  });
+});
+
+describe("Parrot class", () => {
+  let parrot;
+
+  beforeEach(() => {
+    parrot = new Parrot("Polly", "red");
   });
 
-  it("throws error if not enough values for minus", () => {
-    expect(() => calc.minus()).toThrow("rpnCalculatorInstance is empty");
+  it("should extend Bird", () => {
+    expect(parrot instanceof Parrot).toBe(true);
+    expect(parrot instanceof Bird).toBe(true);
+    expect(parrot instanceof Eagle).toBe(false);
   });
 
-  it("works with negative and decimal numbers", () => {
-    calc.push(-2.5);
-    calc.push(3.5);
-    calc.plus(); // 1
-    expect(calc.value()).toBe(1);
+  it("should have a color property", () => {
+    expect(parrot.color).toBe("red");
   });
 
-  it("performs sequential operations with mix of +, -, *, /", () => {
-    // 8 2 / 3 + 4 * 5 -
-    calc.push(8);
-    calc.push(2);
-    calc.divide(); // 4
-    calc.push(3);
-    calc.plus(); // 7
-    calc.push(4);
-    calc.times(); // 28
-    calc.push(5);
-    calc.minus(); // 23
-    expect(calc.value()).toBe(23);
+  it("should have a speak method", () => {
+    expect(parrot.speak()).toBe("Squawk!");
   });
 
-  it("stack is independent between instances", () => {
-    const calc2 = new RPNCalculator();
-    calc.push(1);
-    calc2.push(100);
-    expect(calc.value()).toBe(1);
-    expect(calc2.value()).toBe(100);
+  it("should inherit fly method from Bird", () => {
+    expect(parrot.fly()).toBe("I am flying");
+  });
+
+  it("should override layEgg method to accept color", () => {
+    const babyParrot = parrot.layEgg("green");
+    expect(parrot.chicks).toEqual([babyParrot]);
+    expect(babyParrot.name).toBe("Baby Polly");
+    expect(babyParrot.color).toBe("green");
   });
 });
