@@ -37,3 +37,18 @@ class Eagle extends Bird {
     return babyEagle;
   }
 }
+
+class Parrot extends Bird {
+  constructor(name, color) {
+    super(name);
+    this.color = color;
+  }
+  speak() {
+    return "Squawk!";
+  }
+  layEgg(color) {
+    const babyParrot = new Parrot(`Baby ${this.name}`, color);
+    this.chicks.push(babyParrot);
+    return babyParrot;
+  }
+}
