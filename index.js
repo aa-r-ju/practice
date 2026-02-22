@@ -14,4 +14,12 @@ class Car extends Vehicle {
     super(speed, fuelType);
     this.doors = doors;
   }
+
+  getDetails() {
+    return `Speed: ${this.speed}, Fuel: ${this.fuelType},Doors: ${this.doors}`;
+  }
+  //we can also do this instead
+  getDetails() {
+    return `${super.getDetails()}, Doors: ${this.doors}`;
+  }
 }
