@@ -1,108 +1,53 @@
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("Bird class", () => {
-  let myBird;
+// Note: The ES2015 Class Keyword should be used.
+
+describe("Vehicle class", () => {
+  let myVehicle;
 
   beforeEach(() => {
-    myBird = new Bird("Sky");
+    myVehicle = new Vehicle(120, "diesel");
   });
 
-  it("should be an instance of Bird", () => {
-    expect(myBird instanceof Bird).toBe(true);
+  it("is a Constructor Function", () => {
+    expect(typeof Vehicle).toBe("function");
   });
 
-  it("should take name as a parameter", () => {
-    expect(myBird.name).toBe("Sky");
+  it("should take speed and fuelType as parameters", () => {
+    expect(myVehicle.speed).toBe(120);
+    expect(myVehicle.fuelType).toBe("diesel");
   });
 
-  it("should have an array called chicks", () => {
-    expect(myBird.chicks).toEqual([]);
-  });
-
-  it("should have a fly method on its prototype", () => {
-    expect(myBird.hasOwnProperty("fly")).toBe(false);
-    expect(myBird.fly()).toBe("I am flying");
-  });
-
-  it("should have a introduce method that uses dynamic class name", () => {
-    expect(myBird.introduce()).toBe("Hi, I'm Sky the Bird");
-  });
-
-  it("should have a layEgg method", () => {
-    const baby = myBird.layEgg();
-    expect(baby.name).toBe("Baby Sky");
-    expect(baby.chicks).toEqual([]);
-    expect(myBird.chicks).toEqual([baby]);
+  it("should have a getDetails function on its prototype", () => {
+    expect(myVehicle.getDetails()).toBe("Speed: 120, Fuel: diesel");
+    expect(myVehicle.hasOwnProperty("getDetails")).toEqual(false);
   });
 });
 
-describe("Eagle class", () => {
-  let eagle;
+describe("Car class extends from Vehicle", () => {
+  let myCar;
 
   beforeEach(() => {
-    eagle = new Eagle("Hunter", 200);
+    myCar = new Car(180, "petrol", 4);
   });
 
-  it("should extend Bird", () => {
-    expect(eagle instanceof Eagle).toBe(true);
-    expect(eagle instanceof Bird).toBe(true);
+  it("is a Constructor Function", () => {
+    expect(typeof Car).toBe("function");
   });
 
-  it("should have name and chicks from Bird", () => {
-    expect(eagle.name).toBe("Hunter");
-    expect(eagle.chicks).toEqual([]);
+  it("should have speed, fuelType, and doors", () => {
+    expect(myCar.speed).toBe(180);
+    expect(myCar.fuelType).toBe("petrol");
+    expect(myCar.doors).toBe(4);
   });
 
-  it("should have a wingspan property", () => {
-    expect(eagle.wingspan).toBe(200);
+  it("extends the Vehicle Class", () => {
+    expect(myCar instanceof Vehicle).toBe(true);
+    expect(myCar instanceof Car).toBe(true);
   });
 
-  it("should have a hunt method on prototype", () => {
-    expect(eagle.hunt()).toBe("Hunting prey!");
-  });
-
-  it("should override introduce method", () => {
-    expect(eagle.introduce()).toBe("Hi, I'm Hunter the Eagle");
-  });
-
-  it("should have its own layEgg method that takes wingspan", () => {
-    const babyEagle = eagle.layEgg(150);
-    expect(eagle.chicks).toEqual([babyEagle]);
-    expect(babyEagle.name).toBe("Baby Hunter");
-    expect(babyEagle.wingspan).toBe(150);
-  });
-});
-
-describe("Parrot class", () => {
-  let parrot;
-
-  beforeEach(() => {
-    parrot = new Parrot("Polly", "red");
-  });
-
-  it("should extend Bird", () => {
-    expect(parrot instanceof Parrot).toBe(true);
-    expect(parrot instanceof Bird).toBe(true);
-    expect(parrot instanceof Eagle).toBe(false);
-  });
-
-  it("should have a color property", () => {
-    expect(parrot.color).toBe("red");
-  });
-
-  it("should have a speak method", () => {
-    expect(parrot.speak()).toBe("Squawk!");
-  });
-
-  it("should inherit fly method from Bird", () => {
-    expect(parrot.fly()).toBe("I am flying");
-  });
-
-  it("should override layEgg method to accept color", () => {
-    const babyParrot = parrot.layEgg("green");
-    expect(parrot.chicks).toEqual([babyParrot]);
-    expect(babyParrot.name).toBe("Baby Polly");
-    expect(babyParrot.color).toBe("green");
+  it("has access to the getDetails function from Vehicle", () => {
+    expect(myCar.getDetails()).toBe("Speed: 180, Fuel: petrol");
   });
 });
