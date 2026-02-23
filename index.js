@@ -5,4 +5,14 @@ class InvisibleWord {
     this.guesses = [];
     this.status = "playing";
   }
+
+  guessLetter(val) {
+    const letter = this.word.toLowerCase();
+    if (!this.guesses.includes(letter)) {
+      this.guesses.push(letter);
+      if (!this.word.includes(letter)) {
+        this.remainingGuesses -= 1;
+      }
+    }
+  }
 }
