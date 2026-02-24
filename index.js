@@ -33,6 +33,7 @@ class InvisibleWord {
     }
     if (winner) {
       this.status = "won";
+      return;
     }
   }
 
@@ -55,6 +56,6 @@ const kk = new InvisibleWord("Banana");
 console.log(kk.guessLetter("h"));
 console.log(kk.guessLetter("b"));
 console.log(kk.guessLetter("a"));
-console.log(kk.checkStatus());
+console.log(kk.checkStatus(), "pp");
 console.log(kk.getPuzzle());
 console.log(kk);
