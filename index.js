@@ -50,12 +50,35 @@ class InvisibleWord {
     }
     return puzzle;
   }
+  getStatusMessage() {
+    if (this.status === "won") {
+      return "You cracked the code!";
+    }
+
+    if (this.status === "lost") {
+      const word = this.word.join("");
+
+      return `You lost! The word was "${word}"
+
+  X
+=====
+`;
+    }
+
+    return `Guesses left: ${this.remainingGuesses}
+
+=====
+`;
+  }
 }
 
 const kk = new InvisibleWord("Banana");
 console.log(kk.guessLetter("h"));
 console.log(kk.guessLetter("b"));
 console.log(kk.guessLetter("a"));
-console.log(kk.checkStatus(), "pp");
+console.log(kk.guessLetter("n"));
+console.log(kk.guessLetter("j"));
+console.log(kk.checkStatus());
 console.log(kk.getPuzzle());
+console.log(kk.getStatusMessage());
 console.log(kk);
