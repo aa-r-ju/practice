@@ -1,133 +1,108 @@
-/* eslint-disable no-useless-escape, no-unused-vars, no-prototype-builtins, no-undef */
+// 🧪 1️⃣ consonantsCount
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
 
-describe("InvisibleWord Class", () => {
-  it("attaches a constructor to InvisibleWord", () => {
-    expect(typeof InvisibleWord.constructor).toBe("function");
+describe("consonantsCount", () => {
+  it("returns an Object", () => {
+    expect(typeof consonantsCount("Hello")).toBe("object");
   });
 
-  it("instance has word, remainingGuesses, guesses, and status properties", () => {
-    const game = new InvisibleWord("banana");
-
-    expect(game.word).toEqual(["b", "a", "n", "a", "n", "a"]);
-    expect(game.remainingGuesses).toBe(5);
-    expect(game.guesses).toEqual([]);
-    expect(game.status).toBe("playing");
-  });
-
-  describe("guessLetter method", () => {
-    it("is a prototype method", () => {
-      const game = new InvisibleWord("apple");
-      expect(game.hasOwnProperty("guessLetter")).toBe(false);
-    });
-
-    it("stores unique guesses only", () => {
-      const game = new InvisibleWord("apple");
-      game.guessLetter("a");
-      game.guessLetter("a");
-      game.guessLetter("p");
-
-      expect(game.guesses).toEqual(["a", "p"]);
-    });
-
-    it("reduces remainingGuesses for incorrect unique guesses", () => {
-      const game = new InvisibleWord("cat");
-
-      game.guessLetter("z");
-      game.guessLetter("x");
-      game.guessLetter("c");
-      game.guessLetter("v");
-
-      expect(game.remainingGuesses).toBe(3);
+  it("handles empty string", () => {
+    expect(consonantsCount("")).toEqual({
+      total: 0,
     });
   });
 
-  describe("checkStatus method", () => {
-    it("is a prototype method", () => {
-      const game = new InvisibleWord("dog");
-      expect(game.hasOwnProperty("checkStatus")).toBe(false);
-    });
-
-    it("sets status to lost if remainingGuesses is 0", () => {
-      const game = new InvisibleWord("dog");
-
-      game.guessLetter("a");
-      game.guessLetter("b");
-      game.guessLetter("c");
-      game.guessLetter("e");
-      game.guessLetter("f");
-
-      game.checkStatus();
-
-      expect(game.status).toBe("lost");
-    });
-
-    it("sets status to won if all letters guessed", () => {
-      const game = new InvisibleWord("hi");
-
-      game.guessLetter("h");
-      game.guessLetter("i");
-
-      game.checkStatus();
-
-      expect(game.status).toBe("won");
+  it("counts consonants correctly", () => {
+    expect(consonantsCount("Hello")).toEqual({
+      h: 1,
+      l: 2,
+      total: 3,
     });
   });
 
-  describe("getPuzzle method", () => {
-    it('returns puzzle using "_" for hidden letters', () => {
-      const game = new InvisibleWord("apple");
-      expect(game.getPuzzle()).toBe("_____");
-    });
-
-    it("reveals correct letters", () => {
-      const game = new InvisibleWord("apple");
-
-      game.guessLetter("p");
-
-      expect(game.getPuzzle()).toBe("_pp__");
-    });
-
-    it("handles spaces", () => {
-      const game = new InvisibleWord("ice cream");
-      expect(game.getPuzzle()).toBe("___ _____");
+  it("ignores numbers and symbols", () => {
+    expect(consonantsCount("h3ll0!!")).toEqual({
+      h: 1,
+      l: 2,
+      total: 3,
     });
   });
 
-  describe("getStatusMessage method", () => {
-    it("returns correct playing message", () => {
-      const game = new InvisibleWord("car");
-
-      expect(game.getStatusMessage()).toBe(`Guesses left: 5
-
-=====
-`);
+  it("is case insensitive", () => {
+    expect(consonantsCount("ABC")).toEqual({
+      b: 1,
+      c: 1,
+      total: 2,
     });
+  });
 
-    it("returns lost message with revealed word", () => {
-      const game = new InvisibleWord("hat");
+  it("should call Array.prototype.reduce", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+    consonantsCount("Hello");
+    expect(Array.prototype.reduce).toHaveBeenCalled();
+  });
+});
 
-      game.guessLetter("x");
-      game.guessLetter("y");
-      game.guessLetter("z");
-      game.guessLetter("q");
-      game.guessLetter("w");
-      game.checkStatus();
+//🧪 2️⃣ characterFrequency
+describe("characterFrequency", () => {
+  it("returns an Object", () => {
+    expect(typeof characterFrequency("abc")).toBe("object");
+  });
 
-      expect(game.getStatusMessage()).toBe(`You lost! The word was "hat"
+  it("handles empty string", () => {
+    expect(characterFrequency("")).toEqual({});
+  });
 
-  X
-=====
-`);
+  it("counts characters correctly", () => {
+    expect(characterFrequency("aab")).toEqual({
+      a: 2,
+      b: 1,
     });
+  });
 
-    it("returns winning message", () => {
-      const game = new InvisibleWord("ok");
-
-      game.guessLetter("o");
-      game.guessLetter("k");
-      game.checkStatus();
-
-      expect(game.getStatusMessage()).toBe("You cracked the code!");
+  it("ignores spaces", () => {
+    expect(characterFrequency("a a b")).toEqual({
+      a: 2,
+      b: 1,
     });
+  });
+
+  it("is case insensitive", () => {
+    expect(characterFrequency("Aa")).toEqual({
+      a: 2,
+    });
+  });
+
+  it("should call Array.prototype.reduce", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+    characterFrequency("hello");
+    expect(Array.prototype.reduce).toHaveBeenCalled();
+  });
+});
+
+//🧪 3️⃣ wordLengthStats
+
+describe("wordLengthStats", () => {
+  it("returns an Object", () => {
+    expect(typeof wordLengthStats("hello world")).toBe("object");
+  });
+
+  it("handles empty string", () => {
+    expect(wordLengthStats("")).toEqual({});
+  });
+
+  it("counts word lengths correctly", () => {
+    expect(wordLengthStats("hi hello hey")).toEqual({
+      2: 1,
+      3: 1,
+      5: 1,
+    });
+  });
+
+  it("should call Array.prototype.reduce", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+    wordLengthStats("hello world");
+    expect(Array.prototype.reduce).toHaveBeenCalled();
   });
 });
