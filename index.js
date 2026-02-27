@@ -27,7 +27,13 @@ function characterFrequency(str) {
       return acc;
     }, {});
 }
-console.log(characterFrequency(""));
-console.log(characterFrequency("aab"));
-console.log(characterFrequency("a a b"));
-console.log(characterFrequency("Aa"));
+
+function wordLengthStats(str) {
+  if (str === "") return {};
+  return str.split(" ").reduce((acc, char) => {
+    acc[char.length] = (acc[char.length] || 0) + 1;
+
+    return acc;
+  }, {});
+}
+console.log(wordLengthStats("hello hi kk"));
