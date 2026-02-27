@@ -32,4 +32,23 @@ function secondMostFrequentChar(str) {
   }
   return secondChar;
 }
-console.log(secondMostFrequentChar("aabbbbcc"));
+
+function groupByLength(str) {
+  if (str === "") {
+    return {};
+  }
+
+  return str
+    .toLowerCase()
+    .split(" ")
+    .reduce((acc, char) => {
+      if (!acc[char.length]) {
+        acc[char.length] = [char];
+      } else {
+        acc[char.length].push(char);
+      }
+      return acc;
+    }, {});
+}
+
+console.log(groupByLength("hi hello hey hi"));
