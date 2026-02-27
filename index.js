@@ -51,4 +51,27 @@ function groupByLength(str) {
     }, {});
 }
 
-console.log(groupByLength("hi hello hey hi"));
+function frequencySortedString(str) {
+  if (str === "") return "";
+
+  const freq = str
+    .toLowerCase()
+    .split("")
+    .reduce((acc, char) => {
+      if (char !== " ") acc[char] = (acc[char] || 0) + 1;
+      return acc;
+    }, {});
+
+  const resultArray = [];
+  for (let char in freq) {
+    for (let i = 0; i < freq[char]; i++) {
+      resultArray.push(char);
+    }
+  }
+
+  resultArray.sort((a, b) => freq[b] - freq[a]);
+
+  return resultArray.join("");
+}
+
+console.log(frequencySortedString("aabbbbcc"));
