@@ -1,28 +1,35 @@
-function mostFrequentChar(str) {
+function secondMostFrequentChar(str) {
   if (str === "") {
     return "";
   }
-  const counts = str
+  let count = str
     .toLowerCase()
     .split("")
     .reduce((acc, char) => {
       if (char !== " ") {
         acc[char] = (acc[char] || 0) + 1;
       }
+
       return acc;
     }, {});
 
-  let maxchar = "";
-  let maxCount = 0;
-  for (let keys in counts) {
-    if (maxCount < counts[keys]) {
-      maxCount = counts[keys];
-      maxchar = keys;
+  let firstMax = 0;
+  let secondMax = 0;
+  let firstChar = "";
+  let secondChar = "";
+
+  for (let key in count) {
+    if (count[key] > firstMax) {
+      secondMax = firstMax;
+      secondChar = firstChar;
+
+      firstMax = count[key];
+      firstChar = key;
+    } else if (count[key] > secondMax) {
+      secondMax = count[key];
+      secondChar = key;
     }
   }
-  return maxchar;
+  return secondChar;
 }
-console.log(mostFrequentChar("aabbbccccc"));
-console.log(mostFrequentChar(""));
-console.log(mostFrequentChar("aabbbbcc"));
-console.log(mostFrequentChar("AaBBb"));
+console.log(secondMostFrequentChar("aabbbbcc"));
