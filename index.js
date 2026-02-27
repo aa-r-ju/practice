@@ -1,23 +1,8 @@
-function consonantsCount(str) {
-  let vowels = "aeiou";
-
-  return str
-    .toLowerCase()
-    .split("")
-    .reduce(
-      (acc, char) => {
-        if (char >= "a" && char <= "z" && !vowels.includes(char)) {
-          acc[char] = (acc[char] || 0) + 1;
-          acc.total++;
-        }
-        return acc;
-      },
-      { total: 0 },
-    );
-}
-
-function characterFrequency(str) {
-  return str
+function mostFrequentChar(str) {
+  if (str === "") {
+    return "";
+  }
+  const counts = str
     .toLowerCase()
     .split("")
     .reduce((acc, char) => {
@@ -26,14 +11,18 @@ function characterFrequency(str) {
       }
       return acc;
     }, {});
-}
 
-function wordLengthStats(str) {
-  if (str === "") return {};
-  return str.split(" ").reduce((acc, char) => {
-    acc[char.length] = (acc[char.length] || 0) + 1;
-
-    return acc;
-  }, {});
+  let maxchar = "";
+  let maxCount = 0;
+  for (let keys in counts) {
+    if (maxCount < counts[keys]) {
+      maxCount = counts[keys];
+      maxchar = keys;
+    }
+  }
+  return maxchar;
 }
-console.log(wordLengthStats("hello hi kk"));
+console.log(mostFrequentChar("aabbbccccc"));
+console.log(mostFrequentChar(""));
+console.log(mostFrequentChar("aabbbbcc"));
+console.log(mostFrequentChar("AaBBb"));
