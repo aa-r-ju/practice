@@ -1,87 +1,49 @@
-//🧪 More Specs for frequencySortedString
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
 
-describe("frequencySortedString", () => {
-  it("handles empty string", () => {
-    expect(frequencySortedString("")).toBe("");
+describe("pigify", () => {
+  it("translates a word beginning with a vowel", () => {
+    const pigLatinString = pigify("apple");
+    expect(pigLatinString).toBe("appleay");
   });
 
-  it("handles single character", () => {
-    expect(frequencySortedString("a")).toBe("a");
+  it("translates a word beginning with a consonant", () => {
+    const pigLatinString = pigify("banana");
+    expect(pigLatinString).toBe("ananabay");
   });
 
-  it("handles all same characters", () => {
-    expect(frequencySortedString("aaaa")).toBe("aaaa");
+  it("translates a word beginning with two consonants", () => {
+    const pigLatinString = pigify("cherry");
+    expect(pigLatinString).toBe("errychay");
   });
 
-  it("sorts characters by frequency", () => {
-    expect(frequencySortedString("aabbbbcc")).toBe("bbbbaacc");
+  it("translates two words", () => {
+    const pigLatinString = pigify("eat pie");
+    expect(pigLatinString).toBe("eatay iepay");
   });
 
-  it("handles mixed case letters", () => {
-    expect(frequencySortedString("AaBBb")).toBe("bbbaa");
+  it("translates a word beginning with three consonants", () => {
+    const pigLatinString = pigify("three");
+    expect(pigLatinString).toBe("eethray");
   });
 
-  it("handles spaces correctly", () => {
-    expect(frequencySortedString("a a bb")).toBe("bbaa");
+  it("counts 'sch' as a single phoneme", () => {
+    const pigLatinString = pigify("school");
+    expect(pigLatinString).toBe("oolschay");
   });
 
-  it("handles numbers", () => {
-    expect(frequencySortedString("1122333")).toBe("3331122");
+  it("counts 'qu' as a single phoneme", () => {
+    const pigLatinString = pigify("quiet");
+    expect(pigLatinString).toBe("ietquay");
   });
 
-  it("handles special characters", () => {
-    expect(frequencySortedString("!!@@@")).toBe("@@@!!");
-  });
-});
-
-//🧪 HARD MODE SPECS
-describe("frequencySortedString - HARD MODE", () => {
-  it("handles empty string", () => {
-    expect(frequencySortedString("")).toBe("");
+  it("counts 'qu' as a consonant even when it's preceded by a consonant", () => {
+    const pigLatinString = pigify("square");
+    expect(pigLatinString).toBe("aresquay");
   });
 
-  it("handles single character", () => {
-    expect(frequencySortedString("x")).toBe("x");
-  });
-
-  it("keeps same order when frequencies are equal", () => {
-    // a and b both appear 2 times
-    // order in input: a first, then b
-    expect(frequencySortedString("aabb")).toBe("aabb");
-  });
-
-  it("correctly sorts when multiple letters have different frequencies", () => {
-    expect(frequencySortedString("cccaaaab")).toBe("aaaacccb");
-  });
-
-  it("handles long string", () => {
-    const input = "aaabbbccccdddde";
-    expect(frequencySortedString(input)).toBe("ccccddddaaabbbbe");
-  });
-
-  it("handles numbers mixed with letters", () => {
-    expect(frequencySortedString("a11bb2222")).toBe("2222bb11a");
-  });
-
-  it("handles special characters", () => {
-    expect(frequencySortedString("!!@@@###")).toBe("@@@###!!");
-  });
-
-  it("does not mutate the original string", () => {
-    const input = "aabbbbcc";
-    frequencySortedString(input);
-    expect(input).toBe("aabbbbcc");
-  });
-
-  it("should call Array.prototype.sort", () => {
-    spyOn(Array.prototype, "sort").and.callThrough();
-    frequencySortedString("aabbbbcc");
-    expect(Array.prototype.sort).toHaveBeenCalled();
-  });
-
-  it("should call Array.prototype.reduce", () => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
-    frequencySortedString("aabbbbcc");
-    expect(Array.prototype.reduce).toHaveBeenCalled();
+  it("translates many words", () => {
+    const pigLatinString = pigify("the quick brown fox");
+    expect(pigLatinString).toBe("ethay ickquay ownbray oxfay");
   });
 });

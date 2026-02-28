@@ -1,32 +1,39 @@
-function frequencySortedString(str) {
-  if (str === "") {
-    return "";
-  }
+function pigify(sentence) {
+  let vowels = "aeiou";
 
-  let newStr = str
+  return sentence
     .toLowerCase()
-    .split("")
-    .reduce((acc, char) => {
-      if (char !== " ") {
-        acc[char] = (acc[char] || 0) + 1;
+    .split(" ")
+    .map((word) => {
+      let cluster = "";
+      if (word.startsWith("sch")) {
+        cluster += "sch";
+      } else if (word.startsWith("qu")) {
+        cluster += "qu";
+      } else if (word.startsWith("squ")) {
+        cluster += "squ";
+      } else {
+        let i = 0;
+        while (i < word.length && !vowels.includes(word[i])) {
+          cluster += word[i];
+          i++;
+        }
       }
-      return acc;
-    }, {});
 
-  let array = [];
-  for (let key in newStr) {
-    for (let i = 0; i < newStr[key]; i++) {
-      array.push(key);
-    }
-  }
-  array.sort((a, b) => newStr[b] - newStr[a]);
+      if (cluster === "") {
+        return word + "ay";
+      }
 
-  return array.join("");
+      return word.slice(cluster.length) + cluster + "ay";
+    })
+    .join();
 }
-console.log(frequencySortedString(""));
-console.log(frequencySortedString("x"));
-console.log(frequencySortedString("aabb"));
-console.log(frequencySortedString("cccaaaab"));
-console.log(frequencySortedString("aaabbbccccdddde"));
-console.log(frequencySortedString("a11bb2222"));
-console.log(frequencySortedString("!!@@@###"));
+
+console.log(pigify("apple"));
+console.log(pigify("banana"));
+console.log(pigify("cherry"));
+console.log(pigify("eat pie"));
+console.log(pigify("three"));
+console.log(pigify("school"));
+console.log(pigify("quiet"));
+console.log(pigify("square"));
