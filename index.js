@@ -3,7 +3,7 @@ function frequencySortedString(str) {
     return "";
   }
 
-  let testing = str
+  let newStr = str
     .toLowerCase()
     .split("")
     .reduce((acc, char) => {
@@ -13,12 +13,20 @@ function frequencySortedString(str) {
       return acc;
     }, {});
 
-  let resultArray = [];
-  for (let key in testing) {
-    for (let i = 0; i < testing[key]; i++) {
-      resultArray.push(key);
+  let array = [];
+  for (let key in newStr) {
+    for (let i = 0; i < newStr[key]; i++) {
+      array.push(key);
     }
   }
-  resultArray.sort((a, b) => testing[b] - testing[a]);
-  return resultArray.join("");
+  array.sort((a, b) => newStr[b] - newStr[a]);
+
+  return array.join("");
 }
+console.log(frequencySortedString(""));
+console.log(frequencySortedString("x"));
+console.log(frequencySortedString("aabb"));
+console.log(frequencySortedString("cccaaaab"));
+console.log(frequencySortedString("aaabbbccccdddde"));
+console.log(frequencySortedString("a11bb2222"));
+console.log(frequencySortedString("!!@@@###"));
