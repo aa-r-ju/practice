@@ -1,49 +1,54 @@
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("pigify", () => {
-  it("translates a word beginning with a vowel", () => {
-    const pigLatinString = pigify("apple");
-    expect(pigLatinString).toBe("appleay");
+// 🧪 Pigify – Extra Challenge Specs
+describe("pigify - EXTRA TESTS", () => {
+  it("handles empty string", () => {
+    expect(pigify("")).toBe("");
   });
 
-  it("translates a word beginning with a consonant", () => {
-    const pigLatinString = pigify("banana");
-    expect(pigLatinString).toBe("ananabay");
+  it("handles single letter vowel", () => {
+    expect(pigify("a")).toBe("aay");
   });
 
-  it("translates a word beginning with two consonants", () => {
-    const pigLatinString = pigify("cherry");
-    expect(pigLatinString).toBe("errychay");
+  it("handles single letter consonant", () => {
+    expect(pigify("b")).toBe("bay");
   });
 
-  it("translates two words", () => {
-    const pigLatinString = pigify("eat pie");
-    expect(pigLatinString).toBe("eatay iepay");
+  it("handles uppercase words", () => {
+    expect(pigify("Apple")).toBe("Appleay");
   });
 
-  it("translates a word beginning with three consonants", () => {
-    const pigLatinString = pigify("three");
-    expect(pigLatinString).toBe("eethray");
+  it("handles mixed case words", () => {
+    expect(pigify("Banana")).toBe("ananaBay");
   });
 
-  it("counts 'sch' as a single phoneme", () => {
-    const pigLatinString = pigify("school");
-    expect(pigLatinString).toBe("oolschay");
+  it("handles words ending in punctuation", () => {
+    expect(pigify("hello!")).toBe("ellohay!");
   });
 
-  it("counts 'qu' as a single phoneme", () => {
-    const pigLatinString = pigify("quiet");
-    expect(pigLatinString).toBe("ietquay");
+  it("handles sentence with punctuation", () => {
+    expect(pigify("Hello world!")).toBe("elloHay orldway!");
   });
 
-  it("counts 'qu' as a consonant even when it's preceded by a consonant", () => {
-    const pigLatinString = pigify("square");
-    expect(pigLatinString).toBe("aresquay");
+  it("handles multiple spaces between words", () => {
+    expect(pigify("eat   pie")).toBe("eatay   iepay");
   });
 
-  it("translates many words", () => {
-    const pigLatinString = pigify("the quick brown fox");
-    expect(pigLatinString).toBe("ethay ickquay ownbray oxfay");
+  it("handles numbers inside words", () => {
+    expect(pigify("h3llo")).toBe("3llohay");
+  });
+
+  it("handles words with no vowels", () => {
+    expect(pigify("rhythms")).toBe("rhythmsay");
+  });
+
+  it("handles long consonant cluster", () => {
+    expect(pigify("strength")).toBe("engthstray");
+  });
+
+  it("handles 'yt' at beginning like vowel", () => {
+    expect(pigify("yttria")).toBe("yttriaay");
+  });
+
+  it("handles 'xr' at beginning like vowel", () => {
+    expect(pigify("xray")).toBe("xrayay");
   });
 });
