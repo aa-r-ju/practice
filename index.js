@@ -15,4 +15,11 @@ function doubleLookup(arr1, arr2, arr3) {
   });
 }
 
-console.log(doubleLookup(["a", "b"], { a: 1, b: 2 }, { 1: "one", 2: "two" }));
+function objectMergeMap(arr1, arr2) {
+  const merged = arr2.reduce((acc, obj) => {
+    return { ...acc, ...obj };
+  }, {});
+
+  return arr1.map((val) => merged[val]);
+}
+console.log(objectMergeMap([1, 2, 3], [{ 1: "a" }, { 2: "b" }, { 3: "c" }]));
