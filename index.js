@@ -8,5 +8,11 @@ function chainLookup(arr1, arr2) {
   });
 }
 
-console.log(chainLookup(["a", "b", "c"], [{ a: 1 }, { b: 2 }, { c: 3 }]));
-console.log(chainLookup(["x"], [{ x: 10 }, { x: 20 }]));
+function doubleLookup(arr1, arr2, arr3) {
+  return arr1.map((val) => {
+    const first = arr2[val];
+    return arr3[first];
+  });
+}
+
+console.log(doubleLookup(["a", "b"], { a: 1, b: 2 }, { 1: "one", 2: "two" }));
