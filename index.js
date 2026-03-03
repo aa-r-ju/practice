@@ -1,23 +1,19 @@
-// function bracketCleaner(array) {
-//   let obj = {
-//     "(": ")",
-//     "[": "]",
-//     "{": "}",
-//   };
-//   return array.reduce((acc, char) => {
-//     let last = acc[acc.length - 1];
-//     if (obj[last] === char) {
-//       acc.pop();
-//     } else {
-//       acc.push(char);
-//     }
-//     return acc;
-//   }, []);
-// }
-// console.log(bracketCleaner(["(", ")"]));
-// console.log(bracketCleaner(["[", "]"]));
-// console.log(bracketCleaner(["{", "}"]));
-// console.log(bracketCleaner(["(", "}"]));
+function bracketCleaner(array) {
+  let obj = {
+    "(": ")",
+    "[": "]",
+    "{": "}",
+  };
+  return array.reduce((acc, char) => {
+    let last = acc[acc.length - 1];
+    if (obj[last] === char) {
+      acc.pop();
+    } else {
+      acc.push(char);
+    }
+    return acc;
+  }, []);
+}
 
 function isValidBrackets(array) {
   let obj = {
@@ -37,7 +33,16 @@ function isValidBrackets(array) {
   return stack.length === 0;
 }
 
-console.log(isValidBrackets(["(", "{", "}", ")"])); //true
-console.log(isValidBrackets(["(", "[", ")", "]"])); //false
-console.log(isValidBrackets(["{", "(", ")", "[", "]", "}"])); //true
-console.log(isValidBrackets(["(", "(", "[", "]", ")"])); // true
+function removeConsecutiveDuplicates(array) {
+  return array.reduce((acc, char) => {
+    let last = acc[acc.length - 1];
+    if (char !== last) {
+      acc.push(char);
+    }
+    return acc;
+  }, []);
+}
+console.log(removeConsecutiveDuplicates([1, 1]));
+console.log(removeConsecutiveDuplicates([1, 1, 2, 2]));
+console.log(removeConsecutiveDuplicates([1, 2, 1]));
+console.log(removeConsecutiveDuplicates([1, 1, 2, 3, 3, 3, 2, 2]));
