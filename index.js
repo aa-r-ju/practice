@@ -22,4 +22,8 @@ function objectMergeMap(arr1, arr2) {
 
   return arr1.map((val) => merged[val]);
 }
-console.log(objectMergeMap([1, 2, 3], [{ 1: "a" }, { 2: "b" }, { 3: "c" }]));
+
+function conditionalMap(arr, obj) {
+  return arr.filter((key) => key in obj).map((key) => obj[key]);
+}
+console.log(conditionalMap(["a", "b", "c"], { a: 1, c: 3 }));
