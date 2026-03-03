@@ -26,4 +26,15 @@ function objectMergeMap(arr1, arr2) {
 function conditionalMap(arr, obj) {
   return arr.filter((key) => key in obj).map((key) => obj[key]);
 }
-console.log(conditionalMap(["a", "b", "c"], { a: 1, c: 3 }));
+
+function nestedLookup(keys, objects) {
+  return keys.map((key) => {
+    const obj = objects.find((o) => key in o);
+
+    return obj[key].value;
+  });
+}
+
+console.log(
+  nestedLookup(["a", "b"], [{ a: { value: 1 } }, { b: { value: 2 } }]),
+);
