@@ -1,101 +1,120 @@
-// 🧠 1️⃣ Bracket Cleaner (Stack Logic)
-describe("bracketCleaner", () => {
+// 🧠 1️⃣ chainLookup
+describe("chainLookup", () => {
   it("returns an array", () => {
-    expect(Array.isArray(bracketCleaner(["(", ")"]))).toBe(true);
+    expect(Array.isArray(chainLookup([], []))).toBe(true);
   });
 
-  it("removes matching adjacent brackets", () => {
-    expect(bracketCleaner(["(", ")"])).toEqual([]);
-    expect(bracketCleaner(["[", "]"])).toEqual([]);
-    expect(bracketCleaner(["{", "}"])).toEqual([]);
+  it("maps values across multiple objects", () => {
+    const result = chainLookup(["a", "b", "c"], [{ a: 1 }, { b: 2 }, { c: 3 }]);
+
+    expect(result).toEqual([1, 2, 3]);
   });
 
-  it("does not remove non-matching brackets", () => {
-    expect(bracketCleaner(["(", "]"])).toEqual(["(", "]"]);
+  it("uses first match if duplicates exist", () => {
+    const result = chainLookup(["x"], [{ x: 10 }, { x: 20 }]);
+
+    expect(result).toEqual([10]);
   });
 
-  it("handles complex cases", () => {
-    expect(bracketCleaner(["(", "(", ")", ")"])).toEqual([]);
-    expect(bracketCleaner(["(", "[", "]", ")"])).toEqual([]);
-    expect(bracketCleaner(["(", "[", "]"])).toEqual(["("]);
-  });
-
-  it("uses reduce", () => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
-    bracketCleaner(["(", ")"]);
-    expect(Array.prototype.reduce).toHaveBeenCalled();
+  it("uses map", () => {
+    spyOn(Array.prototype, "map").and.callThrough();
+    chainLookup(["a"], [{ a: 1 }]);
+    expect(Array.prototype.map).toHaveBeenCalled();
   });
 });
 
-//🧠 2️⃣ Consecutive Duplicate Remover
-describe("removeConsecutiveDuplicates", () => {
+//🧠 2️⃣ doubleLookup
+describe("doubleLookup", () => {
   it("returns an array", () => {
-    expect(Array.isArray(removeConsecutiveDuplicates([1]))).toBe(true);
+    expect(Array.isArray(doubleLookup([], [], []))).toBe(true);
   });
 
-  it("removes consecutive duplicates", () => {
-    expect(removeConsecutiveDuplicates([1, 1])).toEqual([1]);
-    expect(removeConsecutiveDuplicates([1, 1, 2, 2])).toEqual([1, 2]);
+  it("maps using first object then second", () => {
+    const result = doubleLookup(
+      ["a", "b"],
+      { a: 1, b: 2 },
+      { 1: "one", 2: "two" },
+    );
+
+    expect(result).toEqual(["one", "two"]);
   });
 
-  it("does not remove non-consecutive duplicates", () => {
-    expect(removeConsecutiveDuplicates([1, 2, 1])).toEqual([1, 2, 1]);
-  });
-
-  it("handles complex cases", () => {
-    expect(removeConsecutiveDuplicates([1, 1, 2, 3, 3, 3, 2, 2])).toEqual([
-      1, 2, 3, 2,
-    ]);
-  });
-
-  it("uses reduce", () => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
-    removeConsecutiveDuplicates([1, 1]);
-    expect(Array.prototype.reduce).toHaveBeenCalled();
+  it("uses map", () => {
+    spyOn(Array.prototype, "map").and.callThrough();
+    doubleLookup(["a"], { a: 1 }, { 1: "one" });
+    expect(Array.prototype.map).toHaveBeenCalled();
   });
 });
 
-//🧠 3️⃣ Cancel Out Numbers
-describe("cancelOutZeroSum", () => {
+//🧠 3️⃣ objectMergeMap
+describe("objectMergeMap", () => {
   it("returns an array", () => {
-    expect(Array.isArray(cancelOutZeroSum([1]))).toBe(true);
+    expect(Array.isArray(objectMergeMap([], []))).toBe(true);
   });
 
-  it("removes adjacent numbers that sum to zero", () => {
-    expect(cancelOutZeroSum([3, -3])).toEqual([]);
-    expect(cancelOutZeroSum([2, -2, 5])).toEqual([5]);
+  it("merges objects before mapping", () => {
+    const result = objectMergeMap(
+      [1, 2, 3],
+      [{ 1: "a" }, { 2: "b" }, { 3: "c" }],
+    );
+
+    expect(result).toEqual(["a", "b", "c"]);
   });
 
-  it("handles complex cases", () => {
-    expect(cancelOutZeroSum([1, 2, -2, -1])).toEqual([]);
-    expect(cancelOutZeroSum([5, 3, -3, 2])).toEqual([5, 2]);
-  });
-
-  it("uses reduce", () => {
+  it("uses reduce and map", () => {
     spyOn(Array.prototype, "reduce").and.callThrough();
-    cancelOutZeroSum([3, -3]);
+    spyOn(Array.prototype, "map").and.callThrough();
+
+    objectMergeMap([1], [{ 1: "a" }]);
+
     expect(Array.prototype.reduce).toHaveBeenCalled();
+    expect(Array.prototype.map).toHaveBeenCalled();
   });
 });
 
-//🧠 4️⃣ Word Canceller
-describe("wordCanceller", () => {
+//🧠 4️⃣ conditionalMap
+
+describe("conditionalMap", () => {
   it("returns an array", () => {
-    expect(Array.isArray(wordCanceller(["GO"]))).toBe(true);
+    expect(Array.isArray(conditionalMap([], {}))).toBe(true);
   });
 
-  it("removes previous word when STOP appears", () => {
-    expect(wordCanceller(["GO", "STOP"])).toEqual([]);
-    expect(wordCanceller(["GO", "LEFT", "STOP"])).toEqual(["GO"]);
+  it("maps only existing keys", () => {
+    const result = conditionalMap(["a", "b", "c"], { a: 1, c: 3 });
+
+    expect(result).toEqual([1, 3]);
   });
 
-  it("handles multiple STOPs", () => {
-    expect(wordCanceller(["A", "B", "STOP", "STOP"])).toEqual([]);
+  it("uses filter and map", () => {
+    spyOn(Array.prototype, "filter").and.callThrough();
+    spyOn(Array.prototype, "map").and.callThrough();
+
+    conditionalMap(["a"], { a: 1 });
+
+    expect(Array.prototype.filter).toHaveBeenCalled();
+    expect(Array.prototype.map).toHaveBeenCalled();
+  });
+});
+
+// 🧠 5️⃣ nestedLookup
+
+describe("nestedLookup", () => {
+  it("returns an array", () => {
+    expect(Array.isArray(nestedLookup([], []))).toBe(true);
   });
 
-  it("uses reduce", () => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
-    wordCanceller(["GO", "STOP"]);
-    expect(Array.prototype.reduce).toHaveBeenCalled();
+  it("retrieves nested values", () => {
+    const result = nestedLookup(
+      ["a", "b"],
+      [{ a: { value: 1 } }, { b: { value: 2 } }],
+    );
+
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("uses map", () => {
+    spyOn(Array.prototype, "map").and.callThrough();
+    nestedLookup(["a"], [{ a: { value: 1 } }]);
+    expect(Array.prototype.map).toHaveBeenCalled();
   });
 });
