@@ -56,7 +56,18 @@ function cancelOutZeroSum(array) {
   }, []);
 }
 
-console.log(cancelOutZeroSum([3, -3]));
-console.log(cancelOutZeroSum([2, -2, 5]));
-console.log(cancelOutZeroSum([1, 2, -2, -1]));
-console.log(cancelOutZeroSum([5, 3, -3, 2]));
+function wordCanceller(array) {
+  return array.reduce((acc, char) => {
+    let last = acc[acc.length - 1];
+    if (char === "STOP") {
+      acc.pop();
+    } else {
+      acc.push(char);
+    }
+    return acc;
+  }, []);
+}
+
+console.log(wordCanceller(["GO", "STOP"]));
+console.log(wordCanceller(["GO", "LEFT", "STOP"]));
+console.log(wordCanceller(["A", "B", "STOP", "STOP"]));
