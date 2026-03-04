@@ -1,120 +1,77 @@
-// 🧠 1️⃣ chainLookup
-describe("chainLookup", () => {
-  it("returns an array", () => {
-    expect(Array.isArray(chainLookup([], []))).toBe(true);
+//🧠 1️⃣ zipStrings
+describe("zipStrings", () => {
+  it("is a function", () => {
+    expect(typeof zipStrings).toBe("function");
   });
 
-  it("maps values across multiple objects", () => {
-    const result = chainLookup(["a", "b", "c"], [{ a: 1 }, { b: 2 }, { c: 3 }]);
-
-    expect(result).toEqual([1, 2, 3]);
+  it("zips two equal strings", () => {
+    expect(zipStrings("abc", "123")).toBe("a1b2c3");
   });
 
-  it("uses first match if duplicates exist", () => {
-    const result = chainLookup(["x"], [{ x: 10 }, { x: 20 }]);
-
-    expect(result).toEqual([10]);
+  it("stops at shortest string", () => {
+    expect(zipStrings("hello", "12")).toBe("h1e2");
   });
 
-  it("uses map", () => {
-    spyOn(Array.prototype, "map").and.callThrough();
-    chainLookup(["a"], [{ a: 1 }]);
-    expect(Array.prototype.map).toHaveBeenCalled();
+  it("works with three strings", () => {
+    expect(zipStrings("abc", "XYZ", "123")).toBe("aX1bY2cZ3");
   });
 });
 
-//🧠 2️⃣ doubleLookup
-describe("doubleLookup", () => {
-  it("returns an array", () => {
-    expect(Array.isArray(doubleLookup([], [], []))).toBe(true);
+//🧠 2️⃣ alternateCaseMerge
+describe("alternateCaseMerge", () => {
+  it("is a function", () => {
+    expect(typeof alternateCaseMerge).toBe("function");
   });
 
-  it("maps using first object then second", () => {
-    const result = doubleLookup(
-      ["a", "b"],
-      { a: 1, b: 2 },
-      { 1: "one", 2: "two" },
-    );
-
-    expect(result).toEqual(["one", "two"]);
+  it("merges and forces case", () => {
+    expect(alternateCaseMerge("HELLO", "world")).toBe("hWeOlRlLoD");
   });
 
-  it("uses map", () => {
-    spyOn(Array.prototype, "map").and.callThrough();
-    doubleLookup(["a"], { a: 1 }, { 1: "one" });
-    expect(Array.prototype.map).toHaveBeenCalled();
+  it("adds leftovers from longer string", () => {
+    expect(alternateCaseMerge("abcde", "XY")).toBe("aXbYcde");
   });
 });
 
-//🧠 3️⃣ objectMergeMap
-describe("objectMergeMap", () => {
-  it("returns an array", () => {
-    expect(Array.isArray(objectMergeMap([], []))).toBe(true);
+//🧠 3️⃣ columnRead
+
+describe("columnRead", () => {
+  it("is a function", () => {
+    expect(typeof columnRead).toBe("function");
   });
 
-  it("merges objects before mapping", () => {
-    const result = objectMergeMap(
-      [1, 2, 3],
-      [{ 1: "a" }, { 2: "b" }, { 3: "c" }],
-    );
-
-    expect(result).toEqual(["a", "b", "c"]);
+  it("joins two strings fully", () => {
+    expect(columnRead("abc", "XYZ")).toBe("abcXYZ");
   });
 
-  it("uses reduce and map", () => {
-    spyOn(Array.prototype, "reduce").and.callThrough();
-    spyOn(Array.prototype, "map").and.callThrough();
-
-    objectMergeMap([1], [{ 1: "a" }]);
-
-    expect(Array.prototype.reduce).toHaveBeenCalled();
-    expect(Array.prototype.map).toHaveBeenCalled();
+  it("joins multiple strings", () => {
+    expect(columnRead("a", "b", "c")).toBe("abc");
   });
 });
 
-//🧠 4️⃣ conditionalMap
+//🧠 4️⃣ reverseInterleave
 
-describe("conditionalMap", () => {
-  it("returns an array", () => {
-    expect(Array.isArray(conditionalMap([], {}))).toBe(true);
+describe("reverseInterleave", () => {
+  it("is a function", () => {
+    expect(typeof reverseInterleave).toBe("function");
   });
 
-  it("maps only existing keys", () => {
-    const result = conditionalMap(["a", "b", "c"], { a: 1, c: 3 });
-
-    expect(result).toEqual([1, 3]);
+  it("interleaves and reverses", () => {
+    expect(reverseInterleave("ab", "12")).toBe("2b1a");
   });
 
-  it("uses filter and map", () => {
-    spyOn(Array.prototype, "filter").and.callThrough();
-    spyOn(Array.prototype, "map").and.callThrough();
-
-    conditionalMap(["a"], { a: 1 });
-
-    expect(Array.prototype.filter).toHaveBeenCalled();
-    expect(Array.prototype.map).toHaveBeenCalled();
+  it("works with three strings", () => {
+    expect(reverseInterleave("abc", "XYZ", "123")).toBe("3Zc2Yb1Xa");
   });
 });
 
-// 🧠 5️⃣ nestedLookup
+//🧠 5️⃣ 🔥 Harder One — diagonalMerge
 
-describe("nestedLookup", () => {
-  it("returns an array", () => {
-    expect(Array.isArray(nestedLookup([], []))).toBe(true);
+describe("diagonalMerge", () => {
+  it("is a function", () => {
+    expect(typeof diagonalMerge).toBe("function");
   });
 
-  it("retrieves nested values", () => {
-    const result = nestedLookup(
-      ["a", "b"],
-      [{ a: { value: 1 } }, { b: { value: 2 } }],
-    );
-
-    expect(result).toEqual([1, 2]);
-  });
-
-  it("uses map", () => {
-    spyOn(Array.prototype, "map").and.callThrough();
-    nestedLookup(["a"], [{ a: { value: 1 } }]);
-    expect(Array.prototype.map).toHaveBeenCalled();
+  it("merges diagonally", () => {
+    expect(diagonalMerge("abcd", "1234")).toBe("a12b23c34d4");
   });
 });
