@@ -34,5 +34,12 @@ function alternateCaseMerge(str1, str2) {
   return result;
 }
 
-console.log(alternateCaseMerge("HELLO", "world"));
-console.log(alternateCaseMerge("abcde", "XY"));
+function columnRead(...string) {
+  let result = "";
+  for (let i = 0; i < string.length; i++) {
+    result += string[i];
+  }
+  return result;
+}
+console.log(columnRead("abc", "XYZ"));
+console.log(columnRead("a", "b", "c"));
