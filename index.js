@@ -41,3 +41,25 @@ class Phone extends Device {
     return "Charging...";
   }
 }
+
+class Person {
+  constructor(arr) {
+    this.name = arr[0];
+    this.age = arr[1];
+  }
+  getDetail(param) {
+    return this[param];
+  }
+}
+
+class Student extends Person {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.major = arr[0];
+    this.gpa = arr[1];
+  }
+
+  study() {
+    return "Studying...";
+  }
+}
