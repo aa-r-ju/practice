@@ -64,5 +64,21 @@ function reverseInterleave(...strings) {
   return result;
 }
 
-console.log(reverseInterleave("ab", "12"));
-console.log(reverseInterleave("abc", "XYZ", "123"));
+function diagonalMerge(str1, str2) {
+  let result = "";
+
+  for (let i = 0; i < str1.length; i++) {
+    result += str1[i];
+
+    if (str2[i] !== undefined) {
+      result += str2[i];
+    }
+
+    if (str2[i + 1] !== undefined) {
+      result += str2[i + 1];
+    }
+  }
+
+  return result;
+}
+console.log(diagonalMerge("abcd", "1234"));
