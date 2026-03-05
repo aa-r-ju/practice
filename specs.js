@@ -1,77 +1,216 @@
-//🧠 1️⃣ zipStrings
-describe("zipStrings", () => {
-  it("is a function", () => {
-    expect(typeof zipStrings).toBe("function");
+//🧠 1️⃣ Animal → Dog
+describe("Animal", () => {
+  let animal;
+
+  beforeEach(() => {
+    animal = new Animal(["Dog", 5]);
   });
 
-  it("zips two equal strings", () => {
-    expect(zipStrings("abc", "123")).toBe("a1b2c3");
+  it("sets name and age", () => {
+    expect(animal.name).toBe("Dog");
+    expect(animal.age).toBe(5);
   });
 
-  it("stops at shortest string", () => {
-    expect(zipStrings("hello", "12")).toBe("h1e2");
+  it("has getInfo method on prototype", () => {
+    expect(animal.hasOwnProperty("getInfo")).toBe(false);
+    expect(Animal.prototype.hasOwnProperty("getInfo")).toBe(true);
   });
 
-  it("works with three strings", () => {
-    expect(zipStrings("abc", "XYZ", "123")).toBe("aX1bY2cZ3");
-  });
-});
-
-//🧠 2️⃣ alternateCaseMerge
-describe("alternateCaseMerge", () => {
-  it("is a function", () => {
-    expect(typeof alternateCaseMerge).toBe("function");
-  });
-
-  it("merges and forces case", () => {
-    expect(alternateCaseMerge("HELLO", "world")).toBe("hWeOlRlLoD");
-  });
-
-  it("adds leftovers from longer string", () => {
-    expect(alternateCaseMerge("abcde", "XY")).toBe("aXbYcde");
+  it("returns property value", () => {
+    expect(animal.getInfo("name")).toBe("Dog");
+    expect(animal.getInfo("age")).toBe(5);
   });
 });
 
-//🧠 3️⃣ columnRead
+describe("Dog", () => {
+  let dog;
 
-describe("columnRead", () => {
-  it("is a function", () => {
-    expect(typeof columnRead).toBe("function");
+  beforeEach(() => {
+    dog = new Dog(["Bulldog", true, [["Dog", 5]]]);
   });
 
-  it("joins two strings fully", () => {
-    expect(columnRead("abc", "XYZ")).toBe("abcXYZ");
+  it("extends Animal", () => {
+    expect(dog instanceof Animal).toBe(true);
   });
 
-  it("joins multiple strings", () => {
-    expect(columnRead("a", "b", "c")).toBe("abc");
-  });
-});
-
-//🧠 4️⃣ reverseInterleave
-
-describe("reverseInterleave", () => {
-  it("is a function", () => {
-    expect(typeof reverseInterleave).toBe("function");
+  it("adds breed and isPet", () => {
+    expect(dog.breed).toBe("Bulldog");
+    expect(dog.isPet).toBe(true);
   });
 
-  it("interleaves and reverses", () => {
-    expect(reverseInterleave("ab", "12")).toBe("2b1a");
+  it("inherits Animal properties", () => {
+    expect(dog.name).toBe("Dog");
+    expect(dog.age).toBe(5);
   });
 
-  it("works with three strings", () => {
-    expect(reverseInterleave("abc", "XYZ", "123")).toBe("3Zc2Yb1Xa");
+  it("has bark method", () => {
+    expect(dog.bark()).toBe("Woof!");
   });
 });
 
-//🧠 5️⃣ 🔥 Harder One — diagonalMerge
+//🧠 2️⃣ Device → Phone
+describe("Device", () => {
+  let device;
 
-describe("diagonalMerge", () => {
-  it("is a function", () => {
-    expect(typeof diagonalMerge).toBe("function");
+  beforeEach(() => {
+    device = new Device(["Apple", "iOS"]);
   });
 
-  it("merges diagonally", () => {
-    expect(diagonalMerge("abcd", "1234")).toBe("a12b23c34d4");
+  it("sets brand and os", () => {
+    expect(device.brand).toBe("Apple");
+    expect(device.os).toBe("iOS");
+  });
+
+  it("has getSpec method", () => {
+    expect(device.getSpec("brand")).toBe("Apple");
+  });
+});
+
+describe("Phone", () => {
+  let phone;
+
+  beforeEach(() => {
+    phone = new Phone(["iPhone 15", 90, [["Apple", "iOS"]]]);
+  });
+
+  it("extends Device", () => {
+    expect(phone instanceof Device).toBe(true);
+  });
+
+  it("adds model and battery", () => {
+    expect(phone.model).toBe("iPhone 15");
+    expect(phone.battery).toBe(90);
+  });
+
+  it("inherits Device properties", () => {
+    expect(phone.brand).toBe("Apple");
+  });
+
+  it("has charge method", () => {
+    expect(phone.charge()).toBe("Charging...");
+  });
+});
+
+//🧠 3️⃣ Person → Student
+describe("Person", () => {
+  let person;
+
+  beforeEach(() => {
+    person = new Person(["John", 25]);
+  });
+
+  it("sets name and age", () => {
+    expect(person.name).toBe("John");
+    expect(person.age).toBe(25);
+  });
+
+  it("has getDetail method", () => {
+    expect(person.getDetail("name")).toBe("John");
+  });
+});
+
+describe("Student", () => {
+  let student;
+
+  beforeEach(() => {
+    student = new Student(["Computer Science", 3.8, [["John", 25]]]);
+  });
+
+  it("extends Person", () => {
+    expect(student instanceof Person).toBe(true);
+  });
+
+  it("adds major and gpa", () => {
+    expect(student.major).toBe("Computer Science");
+    expect(student.gpa).toBe(3.8);
+  });
+
+  it("inherits Person properties", () => {
+    expect(student.name).toBe("John");
+  });
+
+  it("has study method", () => {
+    expect(student.study()).toBe("Studying...");
+  });
+});
+
+//🧠 4️⃣ Shape → Rectangle
+describe("Shape", () => {
+  let shape;
+
+  beforeEach(() => {
+    shape = new Shape(["rectangle"]);
+  });
+
+  it("sets type", () => {
+    expect(shape.type).toBe("rectangle");
+  });
+
+  it("has getType method", () => {
+    expect(shape.getType()).toBe("rectangle");
+  });
+});
+
+describe("Rectangle", () => {
+  let rect;
+
+  beforeEach(() => {
+    rect = new Rectangle([10, 5, [["rectangle"]]]);
+  });
+
+  it("extends Shape", () => {
+    expect(rect instanceof Shape).toBe(true);
+  });
+
+  it("sets width and height", () => {
+    expect(rect.width).toBe(10);
+    expect(rect.height).toBe(5);
+  });
+
+  it("calculates area", () => {
+    expect(rect.area()).toBe(50);
+  });
+});
+
+//🧠 5️⃣ Employee → Manager
+describe("Employee", () => {
+  let emp;
+
+  beforeEach(() => {
+    emp = new Employee(["Alice", 50000]);
+  });
+
+  it("sets name and salary", () => {
+    expect(emp.name).toBe("Alice");
+    expect(emp.salary).toBe(50000);
+  });
+
+  it("has getInfo method", () => {
+    expect(emp.getInfo("name")).toBe("Alice");
+  });
+});
+
+describe("Manager", () => {
+  let manager;
+
+  beforeEach(() => {
+    manager = new Manager(["HR", 5, [["Alice", 50000]]]);
+  });
+
+  it("extends Employee", () => {
+    expect(manager instanceof Employee).toBe(true);
+  });
+
+  it("adds department and teamSize", () => {
+    expect(manager.department).toBe("HR");
+    expect(manager.teamSize).toBe(5);
+  });
+
+  it("inherits Employee properties", () => {
+    expect(manager.name).toBe("Alice");
+  });
+
+  it("has manage method", () => {
+    expect(manager.manage()).toBe("Managing team...");
   });
 });

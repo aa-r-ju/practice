@@ -1,84 +1,13 @@
-function zipStrings(...strings) {
-  let miniString = strings[0].length;
-  for (let s of strings) {
-    if (s.length < miniString) {
-      miniString = s.length;
-    }
+class Animal {
+  constructor(arr) {
+    this.name = arr[0];
+    this.age = arr[1];
   }
 
-  let result = "";
-  for (let i = 0; i < miniString; i++) {
-    for (let s of strings) {
-      if (i < s.length) {
-        result += s[i];
-      }
-    }
+  getInfo(param) {
+    return this[param];
   }
-  return result;
 }
-
-function alternateCaseMerge(str1, str2) {
-  let maxLength = Math.max(str1.length, str2.length);
-  let result = "";
-
-  for (let i = 0; i < maxLength; i++) {
-    if (i < str1.length) {
-      result += str1[i].toLowerCase();
-    }
-
-    if (i < str2.length) {
-      result += str2[i].toUpperCase();
-    }
-  }
-
-  return result;
-}
-
-function columnRead(...string) {
-  let result = "";
-  for (let i = 0; i < string.length; i++) {
-    result += string[i];
-  }
-  return result;
-}
-
-function reverseInterleave(...strings) {
-  let maxLength = 0;
-  for (let s of strings) {
-    if (s.length > maxLength) {
-      maxLength = s.length;
-    }
-  }
-  let testing = "";
-  let result = "";
-  for (let i = 0; i < maxLength; i++) {
-    for (let s of strings) {
-      if (s.length > i) {
-        testing += s[i];
-      }
-    }
-  }
-  for (let j = testing.length - 1; j >= 0; j--) {
-    result += testing[j];
-  }
-  return result;
-}
-
-function diagonalMerge(str1, str2) {
-  let result = "";
-
-  for (let i = 0; i < str1.length; i++) {
-    result += str1[i];
-
-    if (str2[i] !== undefined) {
-      result += str2[i];
-    }
-
-    if (str2[i + 1] !== undefined) {
-      result += str2[i + 1];
-    }
-  }
-
-  return result;
-}
-console.log(diagonalMerge("abcd", "1234"));
+let uuu = new Animal(["Dog", 5]);
+console.log(uuu.getInfo("name"));
+console.log(uuu.getInfo("age"));
