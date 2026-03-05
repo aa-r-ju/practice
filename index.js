@@ -8,6 +8,16 @@ class Animal {
     return this[param];
   }
 }
-let uuu = new Animal(["Dog", 5]);
-console.log(uuu.getInfo("name"));
-console.log(uuu.getInfo("age"));
+
+class Dog extends Animal {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.breed = arr[0];
+    this.isPet = arr[1];
+  }
+  bark() {
+    return "Woof!";
+  }
+}
+let kk = new Dog(["Bulldog", true, [["Dog", 5]]]);
+console.log(kk.bark());
