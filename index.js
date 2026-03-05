@@ -41,5 +41,28 @@ function columnRead(...string) {
   }
   return result;
 }
-console.log(columnRead("abc", "XYZ"));
-console.log(columnRead("a", "b", "c"));
+
+function reverseInterleave(...strings) {
+  let maxLength = 0;
+  for (let s of strings) {
+    if (s.length > maxLength) {
+      maxLength = s.length;
+    }
+  }
+  let testing = "";
+  let result = "";
+  for (let i = 0; i < maxLength; i++) {
+    for (let s of strings) {
+      if (s.length > i) {
+        testing += s[i];
+      }
+    }
+  }
+  for (let j = testing.length - 1; j >= 0; j--) {
+    result += testing[j];
+  }
+  return result;
+}
+
+console.log(reverseInterleave("ab", "12"));
+console.log(reverseInterleave("abc", "XYZ", "123"));
