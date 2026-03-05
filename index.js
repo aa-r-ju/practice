@@ -17,6 +17,22 @@ function zipStrings(...strings) {
   return result;
 }
 
-console.log(zipStrings("hello", "12"));
-console.log(zipStrings("abc", "123"));
-console.log(zipStrings("abc", "XYZ", "123"));
+function alternateCaseMerge(str1, str2) {
+  let maxLength = Math.max(str1.length, str2.length);
+  let result = "";
+
+  for (let i = 0; i < maxLength; i++) {
+    if (i < str1.length) {
+      result += str1[i].toLowerCase();
+    }
+
+    if (i < str2.length) {
+      result += str2[i].toUpperCase();
+    }
+  }
+
+  return result;
+}
+
+console.log(alternateCaseMerge("HELLO", "world"));
+console.log(alternateCaseMerge("abcde", "XY"));
