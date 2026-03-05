@@ -19,5 +19,25 @@ class Dog extends Animal {
     return "Woof!";
   }
 }
-let kk = new Dog(["Bulldog", true, [["Dog", 5]]]);
-console.log(kk.bark());
+
+class Device {
+  constructor(arr) {
+    this.brand = arr[0];
+    this.os = arr[1];
+  }
+
+  getSpec(param) {
+    return this[param];
+  }
+}
+
+class Phone extends Device {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.model = arr[0];
+    this.battery = arr[1];
+  }
+  charge() {
+    return "Charging...";
+  }
+}
