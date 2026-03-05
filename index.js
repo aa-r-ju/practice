@@ -84,5 +84,24 @@ class Rectangle extends Shape {
   }
 }
 
-let hh = new Rectangle([10, 5, [["rectangle"]]]);
-console.log(hh.area());
+class Employee {
+  constructor(arr) {
+    this.name = arr[0];
+    this.salary = arr[1];
+  }
+  getInfo(param) {
+    return this[param];
+  }
+}
+
+class Manager extends Employee {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.department = arr[0];
+    this.teamSize = arr[1];
+  }
+
+  manage() {
+    return "Managing team...";
+  }
+}
