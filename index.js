@@ -63,3 +63,26 @@ class Student extends Person {
     return "Studying...";
   }
 }
+
+class Shape {
+  constructor(arr) {
+    this.type = arr[0];
+  }
+  getType() {
+    return this.type;
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(arr) {
+    super(arr[2]);
+    this.width = arr[0];
+    this.height = arr[1];
+  }
+  area() {
+    return this.width * this.height;
+  }
+}
+
+let hh = new Rectangle([10, 5, [["rectangle"]]]);
+console.log(hh.area());
