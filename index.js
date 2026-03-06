@@ -36,3 +36,21 @@ class Cat extends Animal {
     return "Meow!";
   }
 }
+
+class Device {
+  constructor(arr) {
+    this.brand = arr[0];
+    this.os = arr[1];
+  }
+}
+
+class Laptop extends Device {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.model = arr[0];
+    this.ram = arr[1];
+  }
+  start() {
+    return "Laptop starting...";
+  }
+}
