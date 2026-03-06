@@ -16,5 +16,23 @@ Array.prototype.onlyStrings = function () {
   return newArr;
 };
 
-console.log([1, "hi", true, "hello", 5].onlyStrings());
-console.log([1, 2, 3].onlyStrings());
+class Animal {
+  constructor(arr) {
+    this.name = arr[0];
+    this.age = arr[1];
+  }
+  getInfo(para) {
+    return this[para];
+  }
+}
+
+class Cat extends Animal {
+  constructor(arr) {
+    super(arr[2][0]);
+    this.breed = arr[0];
+    this.isPet = arr[1];
+  }
+  meow() {
+    return "Meow!";
+  }
+}
