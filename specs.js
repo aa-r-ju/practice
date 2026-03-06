@@ -1,216 +1,117 @@
-//🧠 1️⃣ Animal → Dog
+//1️⃣ Array → squareNumbers
+describe("Array.prototype.squareNumbers", () => {
+  it("squares all numbers in the array", () => {
+    const nums = [1, 2, 3, 4];
+    expect(nums.squareNumbers()).toEqual([1, 4, 9, 16]);
+  });
+
+  it("does nothing for an empty array", () => {
+    expect([].squareNumbers()).toEqual([]);
+  });
+});
+
+//2️⃣ Array → onlyStrings
+describe("Array.prototype.onlyStrings", () => {
+  it("returns a new array with only string elements", () => {
+    const arr = [1, "hi", true, "hello", 5];
+    expect(arr.onlyStrings()).toEqual(["hi", "hello"]);
+  });
+
+  it("returns empty array if no strings", () => {
+    expect([1, 2, 3].onlyStrings()).toEqual([]);
+  });
+});
+
+//3️⃣ Class → Animal → Cat
 describe("Animal", () => {
   let animal;
-
   beforeEach(() => {
-    animal = new Animal(["Dog", 5]);
+    animal = new Animal(["Elephant", 10]);
   });
 
   it("sets name and age", () => {
-    expect(animal.name).toBe("Dog");
-    expect(animal.age).toBe(5);
-  });
-
-  it("has getInfo method on prototype", () => {
-    expect(animal.hasOwnProperty("getInfo")).toBe(false);
-    expect(Animal.prototype.hasOwnProperty("getInfo")).toBe(true);
-  });
-
-  it("returns property value", () => {
-    expect(animal.getInfo("name")).toBe("Dog");
-    expect(animal.getInfo("age")).toBe(5);
-  });
-});
-
-describe("Dog", () => {
-  let dog;
-
-  beforeEach(() => {
-    dog = new Dog(["Bulldog", true, [["Dog", 5]]]);
-  });
-
-  it("extends Animal", () => {
-    expect(dog instanceof Animal).toBe(true);
-  });
-
-  it("adds breed and isPet", () => {
-    expect(dog.breed).toBe("Bulldog");
-    expect(dog.isPet).toBe(true);
-  });
-
-  it("inherits Animal properties", () => {
-    expect(dog.name).toBe("Dog");
-    expect(dog.age).toBe(5);
-  });
-
-  it("has bark method", () => {
-    expect(dog.bark()).toBe("Woof!");
-  });
-});
-
-//🧠 2️⃣ Device → Phone
-describe("Device", () => {
-  let device;
-
-  beforeEach(() => {
-    device = new Device(["Apple", "iOS"]);
-  });
-
-  it("sets brand and os", () => {
-    expect(device.brand).toBe("Apple");
-    expect(device.os).toBe("iOS");
-  });
-
-  it("has getSpec method", () => {
-    expect(device.getSpec("brand")).toBe("Apple");
-  });
-});
-
-describe("Phone", () => {
-  let phone;
-
-  beforeEach(() => {
-    phone = new Phone(["iPhone 15", 90, [["Apple", "iOS"]]]);
-  });
-
-  it("extends Device", () => {
-    expect(phone instanceof Device).toBe(true);
-  });
-
-  it("adds model and battery", () => {
-    expect(phone.model).toBe("iPhone 15");
-    expect(phone.battery).toBe(90);
-  });
-
-  it("inherits Device properties", () => {
-    expect(phone.brand).toBe("Apple");
-  });
-
-  it("has charge method", () => {
-    expect(phone.charge()).toBe("Charging...");
-  });
-});
-
-//🧠 3️⃣ Person → Student
-describe("Person", () => {
-  let person;
-
-  beforeEach(() => {
-    person = new Person(["John", 25]);
-  });
-
-  it("sets name and age", () => {
-    expect(person.name).toBe("John");
-    expect(person.age).toBe(25);
-  });
-
-  it("has getDetail method", () => {
-    expect(person.getDetail("name")).toBe("John");
-  });
-});
-
-describe("Student", () => {
-  let student;
-
-  beforeEach(() => {
-    student = new Student(["Computer Science", 3.8, [["John", 25]]]);
-  });
-
-  it("extends Person", () => {
-    expect(student instanceof Person).toBe(true);
-  });
-
-  it("adds major and gpa", () => {
-    expect(student.major).toBe("Computer Science");
-    expect(student.gpa).toBe(3.8);
-  });
-
-  it("inherits Person properties", () => {
-    expect(student.name).toBe("John");
-  });
-
-  it("has study method", () => {
-    expect(student.study()).toBe("Studying...");
-  });
-});
-
-//🧠 4️⃣ Shape → Rectangle
-describe("Shape", () => {
-  let shape;
-
-  beforeEach(() => {
-    shape = new Shape(["rectangle"]);
-  });
-
-  it("sets type", () => {
-    expect(shape.type).toBe("rectangle");
-  });
-
-  it("has getType method", () => {
-    expect(shape.getType()).toBe("rectangle");
-  });
-});
-
-describe("Rectangle", () => {
-  let rect;
-
-  beforeEach(() => {
-    rect = new Rectangle([10, 5, [["rectangle"]]]);
-  });
-
-  it("extends Shape", () => {
-    expect(rect instanceof Shape).toBe(true);
-  });
-
-  it("sets width and height", () => {
-    expect(rect.width).toBe(10);
-    expect(rect.height).toBe(5);
-  });
-
-  it("calculates area", () => {
-    expect(rect.area()).toBe(50);
-  });
-});
-
-//🧠 5️⃣ Employee → Manager
-describe("Employee", () => {
-  let emp;
-
-  beforeEach(() => {
-    emp = new Employee(["Alice", 50000]);
-  });
-
-  it("sets name and salary", () => {
-    expect(emp.name).toBe("Alice");
-    expect(emp.salary).toBe(50000);
+    expect(animal.name).toBe("Elephant");
+    expect(animal.age).toBe(10);
   });
 
   it("has getInfo method", () => {
-    expect(emp.getInfo("name")).toBe("Alice");
+    expect(animal.getInfo("name")).toBe("Elephant");
   });
 });
 
-describe("Manager", () => {
-  let manager;
-
+describe("Cat", () => {
+  let cat;
   beforeEach(() => {
-    manager = new Manager(["HR", 5, [["Alice", 50000]]]);
+    cat = new Cat(["Persian", true, [["Elephant", 10]]]);
   });
 
-  it("extends Employee", () => {
-    expect(manager instanceof Employee).toBe(true);
+  it("extends Animal", () => {
+    expect(cat instanceof Animal).toBe(true);
   });
 
-  it("adds department and teamSize", () => {
-    expect(manager.department).toBe("HR");
-    expect(manager.teamSize).toBe(5);
+  it("adds breed and isPet properties", () => {
+    expect(cat.breed).toBe("Persian");
+    expect(cat.isPet).toBe(true);
   });
 
-  it("inherits Employee properties", () => {
-    expect(manager.name).toBe("Alice");
+  it("inherits Animal properties", () => {
+    expect(cat.name).toBe("Elephant");
+    expect(cat.age).toBe(10);
   });
 
-  it("has manage method", () => {
-    expect(manager.manage()).toBe("Managing team...");
+  it("has meow method", () => {
+    expect(cat.meow()).toBe("Meow!");
+  });
+});
+
+//4️⃣ Class → Device → Laptop
+describe("Device", () => {
+  let device;
+  beforeEach(() => {
+    device = new Device(["Dell", "Windows"]);
+  });
+
+  it("sets brand and os", () => {
+    expect(device.brand).toBe("Dell");
+    expect(device.os).toBe("Windows");
+  });
+});
+
+describe("Laptop", () => {
+  let laptop;
+  beforeEach(() => {
+    laptop = new Laptop(["XPS 15", 16, [["Dell", "Windows"]]]);
+  });
+
+  it("extends Device", () => {
+    expect(laptop instanceof Device).toBe(true);
+  });
+
+  it("adds model and ram properties", () => {
+    expect(laptop.model).toBe("XPS 15");
+    expect(laptop.ram).toBe(16);
+  });
+
+  it("inherits Device properties", () => {
+    expect(laptop.brand).toBe("Dell");
+    expect(laptop.os).toBe("Windows");
+  });
+
+  it("has start method", () => {
+    expect(laptop.start()).toBe("Laptop starting...");
+  });
+});
+
+//5️⃣ Array → reverseStrings
+
+describe("Array.prototype.reverseStrings", () => {
+  it("reverses each string in the array", () => {
+    const arr = ["dog", "cat", "bird"];
+    expect(arr.reverseStrings()).toEqual(["god", "tac", "drib"]);
+  });
+
+  it("does nothing for non-string elements", () => {
+    const arr = ["dog", 123, true];
+    expect(arr.reverseStrings()).toEqual(["god", 123, true]);
   });
 });
