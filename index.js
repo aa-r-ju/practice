@@ -54,3 +54,22 @@ class Laptop extends Device {
     return "Laptop starting...";
   }
 }
+
+Array.prototype.reverseStrings = function () {
+  let newStr = [];
+  this.forEach((element) => {
+    if (typeof element === "string") {
+      let str = "";
+      for (let i = element.length - 1; i >= 0; i--) {
+        str += element[i];
+      }
+      newStr.push(str);
+    } else {
+      newStr.push(element);
+    }
+  });
+  return newStr;
+};
+
+console.log(["dog", 123, true].reverseStrings());
+console.log(["dog", "cat", "bird"].reverseStrings());
