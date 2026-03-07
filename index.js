@@ -33,7 +33,15 @@ class Vehicle {
   }
 }
 
-let kk = new Vehicle("Toyota", 2020);
+class Car extends Vehicle {
+  constructor(brand, year, model, fuelType) {
+    super(brand, year);
+    this.model = model;
+    this.fuelType = fuelType;
+  }
+}
+
+let kk = new Car("Tesla", 2022, "Model S", "Electric");
 console.log(kk.addSpeed(90));
 console.log(kk.addSpeed(100));
 console.log(kk.addSpeed(300));
