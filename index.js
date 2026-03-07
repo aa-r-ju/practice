@@ -41,11 +41,27 @@ class Car extends Vehicle {
   }
 }
 
-let kk = new Car("Tesla", 2022, "Model S", "Electric");
-console.log(kk.addSpeed(90));
-console.log(kk.addSpeed(100));
-console.log(kk.addSpeed(300));
-console.log(kk.getAverageSpeed());
-console.log(kk.getBrand());
-console.log(kk.getYear());
+class Employee {
+  constructor(name, salary) {
+    this.name = name;
+    this.salary = salary;
+    this.bonuses = [];
+  }
+  addBonus(val) {
+    this.bonuses.push(val);
+  }
+  getTotalBonus() {
+    let sum =
+      this.bonuses.reduce((acc, char) => {
+        acc += char;
+        return acc;
+      }, 0) || 0;
+    return sum;
+  }
+}
+
+let kk = new Employee("John", 5000);
+console.log(kk.addBonus());
+console.log(kk.addBonus());
+console.log(kk.getTotalBonus(), "ppp");
 console.log(kk);
