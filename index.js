@@ -60,8 +60,11 @@ class Employee {
   }
 }
 
-let kk = new Employee("John", 5000);
-console.log(kk.addBonus());
-console.log(kk.addBonus());
-console.log(kk.getTotalBonus(), "ppp");
+class Manager extends Employee {
+  constructor(name, salary, department) {
+    super(name, salary);
+    this.department = department;
+  }
+}
+let kk = new Manager("Alice", 9000, "HR");
 console.log(kk);
