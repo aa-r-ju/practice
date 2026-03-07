@@ -66,5 +66,25 @@ class Manager extends Employee {
     this.department = department;
   }
 }
-let kk = new Manager("Alice", 9000, "HR");
-console.log(kk);
+
+class Course {
+  constructor(name, duration) {
+    this.name = name;
+    this.duration = duration;
+    this.students = [];
+  }
+
+  addStudent(name) {
+    this.students.push(name);
+  }
+
+  getStudentCount() {
+    return this.students.length;
+  }
+}
+let kkk = new Course("JavaScript", 50);
+console.log(kkk.addStudent("Aarju"));
+console.log(kkk.addStudent("Ram"));
+console.log(kkk.addStudent("Shyam"));
+console.log(kkk.getStudentCount());
+console.log(kkk);
