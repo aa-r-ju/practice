@@ -82,7 +82,15 @@ class Course {
     return this.students.length;
   }
 }
-let kkk = new Course("JavaScript", 50);
+
+class OnlineCourse extends Course {
+  constructor(name, duration, platform) {
+    super(name, duration);
+    this.platform = platform;
+  }
+}
+
+let kkk = new OnlineCourse("React", 30, "Zoom");
 console.log(kkk.addStudent("Aarju"));
 console.log(kkk.addStudent("Ram"));
 console.log(kkk.addStudent("Shyam"));
