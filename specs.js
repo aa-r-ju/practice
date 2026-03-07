@@ -1,117 +1,163 @@
-//1️⃣ Array → squareNumbers
-describe("Array.prototype.squareNumbers", () => {
-  it("squares all numbers in the array", () => {
-    const nums = [1, 2, 3, 4];
-    expect(nums.squareNumbers()).toEqual([1, 4, 9, 16]);
-  });
+// 1️⃣ Practice Spec — Vehicle → Car
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
 
-  it("does nothing for an empty array", () => {
-    expect([].squareNumbers()).toEqual([]);
-  });
-});
+describe("Vehicle", () => {
+  let vehicle;
 
-//2️⃣ Array → onlyStrings
-describe("Array.prototype.onlyStrings", () => {
-  it("returns a new array with only string elements", () => {
-    const arr = [1, "hi", true, "hello", 5];
-    expect(arr.onlyStrings()).toEqual(["hi", "hello"]);
-  });
-
-  it("returns empty array if no strings", () => {
-    expect([1, 2, 3].onlyStrings()).toEqual([]);
-  });
-});
-
-//3️⃣ Class → Animal → Cat
-describe("Animal", () => {
-  let animal;
   beforeEach(() => {
-    animal = new Animal(["Elephant", 10]);
+    vehicle = new Vehicle("Toyota", 2020);
   });
 
-  it("sets name and age", () => {
-    expect(animal.name).toBe("Elephant");
-    expect(animal.age).toBe(10);
+  it("Vehicle is a class", () => {
+    expect(vehicle instanceof Vehicle).toBe(true);
   });
 
-  it("has getInfo method", () => {
-    expect(animal.getInfo("name")).toBe("Elephant");
+  it("has properties brand, year, and speeds", () => {
+    expect(vehicle.brand).toBe("Toyota");
+    expect(vehicle.year).toBe(2020);
+    expect(vehicle.speeds).toEqual([]);
+
+    expect(Object.keys(vehicle).sort()).toEqual(
+      ["brand", "year", "speeds"].sort(),
+    );
+  });
+
+  it("has methods getBrand, getYear, addSpeed, getAverageSpeed", () => {
+    expect(vehicle.getBrand).toEqual(Vehicle.prototype.getBrand);
+    expect(vehicle.getYear).toEqual(Vehicle.prototype.getYear);
+    expect(vehicle.addSpeed).toEqual(Vehicle.prototype.addSpeed);
+    expect(vehicle.getAverageSpeed).toEqual(Vehicle.prototype.getAverageSpeed);
+  });
+
+  it("addSpeed adds speeds to array", () => {
+    vehicle.addSpeed(60);
+    vehicle.addSpeed(80);
+    vehicle.addSpeed(100);
+
+    expect(vehicle.speeds).toEqual([60, 80, 100]);
+  });
+
+  it("speed must be between 1-300", () => {
+    expect(vehicle.addSpeed(400)).toBe("400 is not a valid speed");
+  });
+
+  it("getAverageSpeed returns average speed", () => {
+    vehicle.addSpeed(60);
+    vehicle.addSpeed(80);
+    vehicle.addSpeed(100);
+
+    expect(vehicle.getAverageSpeed()).toBe(80);
   });
 });
 
-describe("Cat", () => {
-  let cat;
+describe("Car", () => {
+  let car;
+
   beforeEach(() => {
-    cat = new Cat(["Persian", true, [["Elephant", 10]]]);
+    car = new Car("Tesla", 2022, "Model S", "Electric");
   });
 
-  it("extends Animal", () => {
-    expect(cat instanceof Animal).toBe(true);
+  it("extends Vehicle", () => {
+    expect(car instanceof Vehicle).toBe(true);
   });
 
-  it("adds breed and isPet properties", () => {
-    expect(cat.breed).toBe("Persian");
-    expect(cat.isPet).toBe(true);
-  });
-
-  it("inherits Animal properties", () => {
-    expect(cat.name).toBe("Elephant");
-    expect(cat.age).toBe(10);
-  });
-
-  it("has meow method", () => {
-    expect(cat.meow()).toBe("Meow!");
+  it("has model and fuelType properties", () => {
+    expect(car.model).toBe("Model S");
+    expect(car.fuelType).toBe("Electric");
   });
 });
 
-//4️⃣ Class → Device → Laptop
-describe("Device", () => {
-  let device;
+//2️⃣ Practice Spec — Employee → Manager
+describe("Employee", () => {
+  let emp;
+
   beforeEach(() => {
-    device = new Device(["Dell", "Windows"]);
+    emp = new Employee("John", 5000);
   });
 
-  it("sets brand and os", () => {
-    expect(device.brand).toBe("Dell");
-    expect(device.os).toBe("Windows");
+  it("Employee is a class", () => {
+    expect(emp instanceof Employee).toBe(true);
+  });
+
+  it("has properties name, salary, bonuses", () => {
+    expect(emp.name).toBe("John");
+    expect(emp.salary).toBe(5000);
+    expect(emp.bonuses).toEqual([]);
+  });
+
+  it("addBonus adds bonuses", () => {
+    emp.addBonus(500);
+    emp.addBonus(300);
+
+    expect(emp.bonuses).toEqual([500, 300]);
+  });
+
+  it("getTotalBonus returns total bonuses", () => {
+    emp.addBonus(500);
+    emp.addBonus(300);
+
+    expect(emp.getTotalBonus()).toBe(800);
   });
 });
 
-describe("Laptop", () => {
-  let laptop;
+describe("Manager", () => {
+  let manager;
+
   beforeEach(() => {
-    laptop = new Laptop(["XPS 15", 16, [["Dell", "Windows"]]]);
+    manager = new Manager("Alice", 9000, "HR");
   });
 
-  it("extends Device", () => {
-    expect(laptop instanceof Device).toBe(true);
+  it("extends Employee", () => {
+    expect(manager instanceof Employee).toBe(true);
   });
 
-  it("adds model and ram properties", () => {
-    expect(laptop.model).toBe("XPS 15");
-    expect(laptop.ram).toBe(16);
-  });
-
-  it("inherits Device properties", () => {
-    expect(laptop.brand).toBe("Dell");
-    expect(laptop.os).toBe("Windows");
-  });
-
-  it("has start method", () => {
-    expect(laptop.start()).toBe("Laptop starting...");
+  it("has department property", () => {
+    expect(manager.department).toBe("HR");
   });
 });
 
-//5️⃣ Array → reverseStrings
+//3️⃣ Practice Spec — Course → OnlineCourse
+describe("Course", () => {
+  let course;
 
-describe("Array.prototype.reverseStrings", () => {
-  it("reverses each string in the array", () => {
-    const arr = ["dog", "cat", "bird"];
-    expect(arr.reverseStrings()).toEqual(["god", "tac", "drib"]);
+  beforeEach(() => {
+    course = new Course("JavaScript", 50);
   });
 
-  it("does nothing for non-string elements", () => {
-    const arr = ["dog", 123, true];
-    expect(arr.reverseStrings()).toEqual(["god", 123, true]);
+  it("has properties name, duration, students", () => {
+    expect(course.name).toBe("JavaScript");
+    expect(course.duration).toBe(50);
+    expect(course.students).toEqual([]);
+  });
+
+  it("addStudent adds student names", () => {
+    course.addStudent("Aarju");
+    course.addStudent("Ram");
+
+    expect(course.students).toEqual(["Aarju", "Ram"]);
+  });
+
+  it("getStudentCount returns number of students", () => {
+    course.addStudent("Aarju");
+    course.addStudent("Ram");
+
+    expect(course.getStudentCount()).toBe(2);
+  });
+});
+
+describe("OnlineCourse", () => {
+  let online;
+
+  beforeEach(() => {
+    online = new OnlineCourse("React", 30, "Zoom");
+  });
+
+  it("extends Course", () => {
+    expect(online instanceof Course).toBe(true);
+  });
+
+  it("has platform property", () => {
+    expect(online.platform).toBe("Zoom");
   });
 });

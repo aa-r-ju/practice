@@ -1,75 +1,43 @@
-Array.prototype.squareNumbers = function () {
-  let newArr = [];
-  this.forEach((element) => {
-    newArr.push(element * element);
-  });
-  return newArr;
-};
+class Vehicle {
+  constructor(brand, year) {
+    this.brand = brand;
+    this.year = year;
+    this.speeds = [];
+  }
 
-Array.prototype.onlyStrings = function () {
-  let newArr = [];
-  this.forEach((element) => {
-    if (typeof element === "string") {
-      newArr.push(element);
-    }
-  });
-  return newArr;
-};
+  getBrand() {
+    return this.brand;
+  }
 
-class Animal {
-  constructor(arr) {
-    this.name = arr[0];
-    this.age = arr[1];
+  getYear() {
+    return this.year;
   }
-  getInfo(para) {
-    return this[para];
-  }
-}
 
-class Cat extends Animal {
-  constructor(arr) {
-    super(arr[2][0]);
-    this.breed = arr[0];
-    this.isPet = arr[1];
-  }
-  meow() {
-    return "Meow!";
-  }
-}
-
-class Device {
-  constructor(arr) {
-    this.brand = arr[0];
-    this.os = arr[1];
-  }
-}
-
-class Laptop extends Device {
-  constructor(arr) {
-    super(arr[2][0]);
-    this.model = arr[0];
-    this.ram = arr[1];
-  }
-  start() {
-    return "Laptop starting...";
-  }
-}
-
-Array.prototype.reverseStrings = function () {
-  let newStr = [];
-  this.forEach((element) => {
-    if (typeof element === "string") {
-      let str = "";
-      for (let i = element.length - 1; i >= 0; i--) {
-        str += element[i];
-      }
-      newStr.push(str);
+  addSpeed(val) {
+    if (val < 1 || val > 300) {
+      return `${val} is not a valid speed`;
     } else {
-      newStr.push(element);
+      this.speeds.push(val);
     }
-  });
-  return newStr;
-};
+  }
 
-console.log(["dog", 123, true].reverseStrings());
-console.log(["dog", "cat", "bird"].reverseStrings());
+  getAverageSpeed() {
+    if (this.speeds.length === 0) {
+      return `There is no speeds`;
+    }
+    let sum = this.speeds.reduce((acc, char) => {
+      acc += char;
+      return acc;
+    }, 0);
+    return sum / this.speeds.length;
+  }
+}
+
+let kk = new Vehicle("Toyota", 2020);
+console.log(kk.addSpeed(90));
+console.log(kk.addSpeed(100));
+console.log(kk.addSpeed(300));
+console.log(kk.getAverageSpeed());
+console.log(kk.getBrand());
+console.log(kk.getYear());
+console.log(kk);
