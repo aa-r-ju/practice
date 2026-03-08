@@ -1,163 +1,155 @@
-// 1️⃣ Practice Spec — Vehicle → Car
+// 1️⃣ Counter Class
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("Vehicle", () => {
-  let vehicle;
+describe("Counter Class", () => {
+  let counter;
 
   beforeEach(() => {
-    vehicle = new Vehicle("Toyota", 2020);
+    counter = new Counter();
   });
 
-  it("Vehicle is a class", () => {
-    expect(vehicle instanceof Vehicle).toBe(true);
+  it("is an object", () => {
+    expect(typeof counter).toBe("object");
   });
 
-  it("has properties brand, year, and speeds", () => {
-    expect(vehicle.brand).toBe("Toyota");
-    expect(vehicle.year).toBe(2020);
-    expect(vehicle.speeds).toEqual([]);
-
-    expect(Object.keys(vehicle).sort()).toEqual(
-      ["brand", "year", "speeds"].sort(),
-    );
+  it("has a count property starting at 0", () => {
+    expect(counter.count).toBe(0);
   });
 
-  it("has methods getBrand, getYear, addSpeed, getAverageSpeed", () => {
-    expect(vehicle.getBrand).toEqual(Vehicle.prototype.getBrand);
-    expect(vehicle.getYear).toEqual(Vehicle.prototype.getYear);
-    expect(vehicle.addSpeed).toEqual(Vehicle.prototype.addSpeed);
-    expect(vehicle.getAverageSpeed).toEqual(Vehicle.prototype.getAverageSpeed);
+  it("has increment, decrement and reset methods on prototype", () => {
+    expect(typeof Counter.prototype.increment).toBe("function");
+    expect(typeof Counter.prototype.decrement).toBe("function");
+    expect(typeof Counter.prototype.reset).toBe("function");
   });
 
-  it("addSpeed adds speeds to array", () => {
-    vehicle.addSpeed(60);
-    vehicle.addSpeed(80);
-    vehicle.addSpeed(100);
+  it("increment increases the count", () => {
+    counter.increment();
+    counter.increment();
 
-    expect(vehicle.speeds).toEqual([60, 80, 100]);
+    expect(counter.count).toBe(2);
   });
 
-  it("speed must be between 1-300", () => {
-    expect(vehicle.addSpeed(400)).toBe("400 is not a valid speed");
+  it("decrement decreases the count", () => {
+    counter.increment();
+    counter.increment();
+    counter.decrement();
+
+    expect(counter.count).toBe(1);
   });
 
-  it("getAverageSpeed returns average speed", () => {
-    vehicle.addSpeed(60);
-    vehicle.addSpeed(80);
-    vehicle.addSpeed(100);
+  it("reset sets the count back to 0", () => {
+    counter.increment();
+    counter.increment();
 
-    expect(vehicle.getAverageSpeed()).toBe(80);
+    counter.reset();
+
+    expect(counter.count).toBe(0);
   });
 });
 
-describe("Car", () => {
-  let car;
+// 2️⃣ ShoppingCart Class
+describe("ShoppingCart Class", () => {
+  let cart;
 
   beforeEach(() => {
-    car = new Car("Tesla", 2022, "Model S", "Electric");
+    cart = new ShoppingCart();
   });
 
-  it("extends Vehicle", () => {
-    expect(car instanceof Vehicle).toBe(true);
+  it("has an items property", () => {
+    expect(Array.isArray(cart.items)).toBe(true);
   });
 
-  it("has model and fuelType properties", () => {
-    expect(car.model).toBe("Model S");
-    expect(car.fuelType).toBe("Electric");
+  it("addItem adds products", () => {
+    cart.addItem("Laptop", 1000);
+    cart.addItem("Mouse", 50);
+
+    expect(cart.items.length).toBe(2);
+  });
+
+  it("getTotal returns total price", () => {
+    cart.addItem("Laptop", 1000);
+    cart.addItem("Mouse", 50);
+
+    expect(cart.getTotal()).toBe(1050);
+  });
+
+  it("removeItem removes an item", () => {
+    cart.addItem("Laptop", 1000);
+    cart.addItem("Mouse", 50);
+
+    cart.removeItem("Mouse");
+
+    expect(cart.items.length).toBe(1);
   });
 });
 
-//2️⃣ Practice Spec — Employee → Manager
-describe("Employee", () => {
-  let emp;
+// 3️⃣ TaskManager Class
+describe("TaskManager Class", () => {
+  let taskManager;
 
   beforeEach(() => {
-    emp = new Employee("John", 5000);
+    taskManager = new TaskManager();
   });
 
-  it("Employee is a class", () => {
-    expect(emp instanceof Employee).toBe(true);
+  it("starts with an empty tasks array", () => {
+    expect(taskManager.tasks).toEqual([]);
   });
 
-  it("has properties name, salary, bonuses", () => {
-    expect(emp.name).toBe("John");
-    expect(emp.salary).toBe(5000);
-    expect(emp.bonuses).toEqual([]);
+  it("addTask adds a task", () => {
+    taskManager.addTask("Learn JS");
+
+    expect(taskManager.tasks.length).toBe(1);
   });
 
-  it("addBonus adds bonuses", () => {
-    emp.addBonus(500);
-    emp.addBonus(300);
+  it("completeTask marks task as completed", () => {
+    taskManager.addTask("Learn JS");
 
-    expect(emp.bonuses).toEqual([500, 300]);
+    taskManager.completeTask(0);
+
+    expect(taskManager.tasks[0].completed).toBe(true);
   });
 
-  it("getTotalBonus returns total bonuses", () => {
-    emp.addBonus(500);
-    emp.addBonus(300);
+  it("getCompletedTasks returns completed tasks", () => {
+    taskManager.addTask("Learn JS");
+    taskManager.addTask("Practice coding");
 
-    expect(emp.getTotalBonus()).toBe(800);
+    taskManager.completeTask(0);
+
+    expect(taskManager.getCompletedTasks().length).toBe(1);
   });
 });
 
-describe("Manager", () => {
-  let manager;
+// 4️⃣ BankAccount Class (Harder)
+describe("BankAccount Class", () => {
+  let account;
 
   beforeEach(() => {
-    manager = new Manager("Alice", 9000, "HR");
+    account = new BankAccount("Aarju", 1000);
   });
 
-  it("extends Employee", () => {
-    expect(manager instanceof Employee).toBe(true);
+  it("stores owner and balance", () => {
+    expect(account.owner).toBe("Aarju");
+    expect(account.balance).toBe(1000);
   });
 
-  it("has department property", () => {
-    expect(manager.department).toBe("HR");
-  });
-});
+  it("deposit increases balance", () => {
+    account.deposit(500);
 
-//3️⃣ Practice Spec — Course → OnlineCourse
-describe("Course", () => {
-  let course;
-
-  beforeEach(() => {
-    course = new Course("JavaScript", 50);
+    expect(account.balance).toBe(1500);
   });
 
-  it("has properties name, duration, students", () => {
-    expect(course.name).toBe("JavaScript");
-    expect(course.duration).toBe(50);
-    expect(course.students).toEqual([]);
+  it("withdraw decreases balance", () => {
+    account.withdraw(200);
+
+    expect(account.balance).toBe(800);
   });
 
-  it("addStudent adds student names", () => {
-    course.addStudent("Aarju");
-    course.addStudent("Ram");
-
-    expect(course.students).toEqual(["Aarju", "Ram"]);
+  it("cannot withdraw more than balance", () => {
+    expect(account.withdraw(2000)).toBe("Insufficient funds");
   });
 
-  it("getStudentCount returns number of students", () => {
-    course.addStudent("Aarju");
-    course.addStudent("Ram");
-
-    expect(course.getStudentCount()).toBe(2);
-  });
-});
-
-describe("OnlineCourse", () => {
-  let online;
-
-  beforeEach(() => {
-    online = new OnlineCourse("React", 30, "Zoom");
-  });
-
-  it("extends Course", () => {
-    expect(online instanceof Course).toBe(true);
-  });
-
-  it("has platform property", () => {
-    expect(online.platform).toBe("Zoom");
+  it("getBalance returns balance", () => {
+    expect(account.getBalance()).toBe(1000);
   });
 });
