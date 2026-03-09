@@ -37,9 +37,25 @@ class ShoppingCart {
   }
 }
 
-let kk = new ShoppingCart();
-console.log(kk.addItem("Laptop", 1000), "lll");
-console.log(kk.addItem("Mouse", 50));
-console.log(kk.getTotal());
-console.log(kk.removeItem("Mouse"));
-console.log(kk);
+class TaskManager {
+  constructor() {
+    this.tasks = [];
+  }
+
+  addTask(name) {
+    this.tasks.push({
+      name: name,
+      completed: false,
+    });
+  }
+
+  completeTask(index) {
+    if (this.tasks[index]) {
+      this.tasks[index].completed = true;
+    }
+  }
+
+  getCompletedTasks() {
+    return this.tasks.filter((task) => task.completed);
+  }
+}
