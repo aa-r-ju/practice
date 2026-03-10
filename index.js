@@ -59,3 +59,34 @@ class TaskManager {
     return this.tasks.filter((task) => task.completed);
   }
 }
+
+class BankAccount {
+  constructor(owner, balance) {
+    this.owner = owner;
+    this.balance = balance;
+  }
+
+  deposit(paisa) {
+    this.balance += paisa;
+  }
+
+  withdraw(paisa) {
+    if (this.balance >= paisa) {
+      this.balance -= paisa;
+    } else {
+      return "Insufficient funds";
+    }
+  }
+
+  getBalance() {
+    return this.balance;
+  }
+}
+
+let kkk = new BankAccount("Aarju", 1000);
+console.log(kkk);
+console.log(kkk.deposit(500));
+console.log(kkk);
+console.log(kkk.withdraw(200));
+console.log(kkk);
+console.log(kkk.getBalance());
