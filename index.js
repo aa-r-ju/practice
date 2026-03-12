@@ -18,9 +18,15 @@ function counterFactory() {
   };
 }
 
-let coo = counterFactory();
-console.log(coo());
-console.log(coo());
-console.log(coo());
-console.log(coo());
-console.log(coo());
+function keyRemover(para) {
+  return function (obj) {
+    delete obj[para];
+    return obj;
+  };
+}
+
+const removeAge = keyRemover("age");
+const obj = { name: "Aarju", age: 25 };
+console.log(obj);
+console.log(removeAge(obj));
+console.log(obj);
