@@ -1,56 +1,119 @@
+// 1️⃣ multiplier (Closure Practice)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("Library Class", () => {
-  let library;
-
-  beforeEach(() => {
-    library = new Library();
+describe("multiplier", () => {
+  it("returns a function", () => {
+    const result = multiplier(5);
+    expect(typeof result).toBe("function");
   });
 
-  it("starts with an empty books array", () => {
-    expect(library.books).toEqual([]);
+  it("multiplies numbers by the given value", () => {
+    const double = multiplier(2);
+    const triple = multiplier(3);
+
+    expect(double(5)).toBe(10);
+    expect(double(10)).toBe(20);
+
+    expect(triple(5)).toBe(15);
+  });
+});
+
+//2️⃣ propertyChecker
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("propertyChecker", () => {
+  it("returns a function", () => {
+    const check = propertyChecker("name");
+    expect(typeof check).toBe("function");
   });
 
-  it("addBook adds a book", () => {
-    library.addBook("Clean Code", "Robert Martin");
+  it("checks if object contains property", () => {
+    const checkName = propertyChecker("name");
 
-    expect(library.books.length).toBe(1);
+    expect(checkName({ name: "Aarju" })).toBe(true);
+    expect(checkName({ age: 20 })).toBe(false);
+  });
+});
+
+///* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("propertyChecker", () => {
+  it("returns a function", () => {
+    const check = propertyChecker("name");
+    expect(typeof check).toBe("function");
   });
 
-  it("books store title, author and borrowed status", () => {
-    library.addBook("Clean Code", "Robert Martin");
+  it("checks if object contains property", () => {
+    const checkName = propertyChecker("name");
 
-    expect(library.books[0]).toEqual({
-      title: "Clean Code",
-      author: "Robert Martin",
-      borrowed: false,
+    expect(checkName({ name: "Aarju" })).toBe(true);
+    expect(checkName({ age: 20 })).toBe(false);
+  });
+});
+
+// 3️⃣ counterFactory
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("counterFactory", () => {
+  it("returns a function", () => {
+    const counter = counterFactory();
+    expect(typeof counter).toBe("function");
+  });
+
+  it("increments the counter each time it runs", () => {
+    const counter = counterFactory();
+
+    expect(counter()).toBe(1);
+    expect(counter()).toBe(2);
+    expect(counter()).toBe(3);
+  });
+});
+
+//4️⃣ keyRemover
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("keyRemover", () => {
+  it("returns a function", () => {
+    const removeAge = keyRemover("age");
+    expect(typeof removeAge).toBe("function");
+  });
+
+  it("removes a key from an object", () => {
+    const removeAge = keyRemover("age");
+
+    const obj = { name: "Aarju", age: 25 };
+
+    removeAge(obj);
+
+    expect(obj.age).toBe(undefined);
+  });
+});
+
+//5️⃣ once (Interview Classic)
+/* eslint-env jasmine */
+/* eslint-disable no-undef */
+
+describe("once", () => {
+  it("returns a function", () => {
+    const fn = once(() => 5);
+    expect(typeof fn).toBe("function");
+  });
+
+  it("runs the function only once", () => {
+    let count = 0;
+
+    const increment = once(() => {
+      count++;
+      return count;
     });
-  });
 
-  it("borrowBook marks book as borrowed", () => {
-    library.addBook("Clean Code", "Robert Martin");
-
-    library.borrowBook("Clean Code");
-
-    expect(library.books[0].borrowed).toBe(true);
-  });
-
-  it("returnBook marks book as not borrowed", () => {
-    library.addBook("Clean Code", "Robert Martin");
-
-    library.borrowBook("Clean Code");
-    library.returnBook("Clean Code");
-
-    expect(library.books[0].borrowed).toBe(false);
-  });
-
-  it("getBorrowedBooks returns only borrowed books", () => {
-    library.addBook("Clean Code", "Robert Martin");
-    library.addBook("JS Guide", "MDN");
-
-    library.borrowBook("Clean Code");
-
-    expect(library.getBorrowedBooks().length).toBe(1);
+    expect(increment()).toBe(1);
+    expect(increment()).toBe(1);
+    expect(increment()).toBe(1);
   });
 });
