@@ -25,8 +25,25 @@ function keyRemover(para) {
   };
 }
 
-const removeAge = keyRemover("age");
-const obj = { name: "Aarju", age: 25 };
-console.log(obj);
-console.log(removeAge(obj));
-console.log(obj);
+function once(fn) {
+  let called = false;
+  let result;
+
+  return function () {
+    if (!called) {
+      result = fn();
+      called = true;
+    }
+
+    return result;
+  };
+}
+let count = 0;
+
+const increment = once(() => {
+  count++;
+  return count;
+});
+
+console.log(increment());
+console.log(increment());
