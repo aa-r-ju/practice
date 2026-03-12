@@ -37,23 +37,6 @@ describe("propertyChecker", () => {
   });
 });
 
-///* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("propertyChecker", () => {
-  it("returns a function", () => {
-    const check = propertyChecker("name");
-    expect(typeof check).toBe("function");
-  });
-
-  it("checks if object contains property", () => {
-    const checkName = propertyChecker("name");
-
-    expect(checkName({ name: "Aarju" })).toBe(true);
-    expect(checkName({ age: 20 })).toBe(false);
-  });
-});
-
 // 3️⃣ counterFactory
 /* eslint-env jasmine */
 /* eslint-disable no-undef */

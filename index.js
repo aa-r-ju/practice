@@ -10,6 +10,17 @@ function propertyChecker(para) {
   };
 }
 
-let check = propertyChecker("name");
-console.log(check({ name: "Aarju" }));
-console.log(check({ age: 99 }));
+function counterFactory() {
+  let counter = 0;
+  return function () {
+    counter++;
+    return counter;
+  };
+}
+
+let coo = counterFactory();
+console.log(coo());
+console.log(coo());
+console.log(coo());
+console.log(coo());
+console.log(coo());
