@@ -4,10 +4,12 @@ function multiplier(num) {
   };
 }
 
-let double = multiplier(2);
-let triple = multiplier(3);
+function propertyChecker(para) {
+  return function (obj) {
+    return para in obj;
+  };
+}
 
-console.log(double(5));
-console.log(double(10));
-
-console.log(triple(5));
+let check = propertyChecker("name");
+console.log(check({ name: "Aarju" }));
+console.log(check({ age: 99 }));
