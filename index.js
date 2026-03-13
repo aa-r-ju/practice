@@ -29,10 +29,23 @@ function increment() {
   return counter;
 }
 
-let myFunc = after(3, increment);
+function limitCalls(fn, num) {
+  let count = 0;
+  return function (...args) {
+    count++;
 
-console.log(myFunc()); // undefined
-console.log(myFunc()); // undefined
-console.log(myFunc()); // 1
-console.log(myFunc()); // 2
-console.log(myFunc()); // 3
+    if (count <= num) {
+      return fn(...args);
+    } else {
+      return "Limit reached";
+    }
+  };
+}
+let myFunc;
+let add = (a, b) => a + b;
+
+myFunc = limitCalls(add, 3);
+console.log(myFunc(2, 3));
+console.log(myFunc(5, 3));
+console.log(myFunc(5, 4));
+console.log(myFunc(55, 88));
