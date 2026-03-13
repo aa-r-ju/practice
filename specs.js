@@ -1,102 +1,107 @@
-// 1️⃣ multiplier (Closure Practice)
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("multiplier", () => {
-  it("returns a function", () => {
-    const result = multiplier(5);
-    expect(typeof result).toBe("function");
-  });
-
-  it("multiplies numbers by the given value", () => {
-    const double = multiplier(2);
-    const triple = multiplier(3);
-
-    expect(double(5)).toBe(10);
-    expect(double(10)).toBe(20);
-
-    expect(triple(5)).toBe(15);
-  });
-});
-
-//2️⃣ propertyChecker
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("propertyChecker", () => {
-  it("returns a function", () => {
-    const check = propertyChecker("name");
-    expect(typeof check).toBe("function");
-  });
-
-  it("checks if object contains property", () => {
-    const checkName = propertyChecker("name");
-
-    expect(checkName({ name: "Aarju" })).toBe(true);
-    expect(checkName({ age: 20 })).toBe(false);
-  });
-});
-
-// 3️⃣ counterFactory
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("counterFactory", () => {
-  it("returns a function", () => {
-    const counter = counterFactory();
-    expect(typeof counter).toBe("function");
-  });
-
-  it("increments the counter each time it runs", () => {
-    const counter = counterFactory();
-
-    expect(counter()).toBe(1);
-    expect(counter()).toBe(2);
-    expect(counter()).toBe(3);
-  });
-});
-
-//4️⃣ keyRemover
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("keyRemover", () => {
-  it("returns a function", () => {
-    const removeAge = keyRemover("age");
-    expect(typeof removeAge).toBe("function");
-  });
-
-  it("removes a key from an object", () => {
-    const removeAge = keyRemover("age");
-
-    const obj = { name: "Aarju", age: 25 };
-
-    removeAge(obj);
-
-    expect(obj.age).toBe(undefined);
-  });
-});
-
-//5️⃣ once (Interview Classic)
+// 1️⃣ once function
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
 describe("once", () => {
-  it("returns a function", () => {
-    const fn = once(() => 5);
-    expect(typeof fn).toBe("function");
+  let myFunc;
+  let add = (a, b) => a + b;
+
+  beforeEach(() => {
+    myFunc = once(add);
   });
 
-  it("runs the function only once", () => {
-    let count = 0;
+  it("should return a function", () => {
+    expect(typeof myFunc).toBe("function");
+  });
 
-    const increment = once(() => {
-      count++;
-      return count;
-    });
+  it("should run the function the first time", () => {
+    expect(myFunc(2, 3)).toBe(5);
+  });
 
-    expect(increment()).toBe(1);
-    expect(increment()).toBe(1);
-    expect(increment()).toBe(1);
+  it("should not run the function again", () => {
+    myFunc(2, 3);
+    expect(myFunc(10, 10)).toBe(5);
+  });
+
+  it("should always return the first result", () => {
+    myFunc(1, 2);
+    expect(myFunc(5, 6)).toBe(3);
+    expect(myFunc(100, 200)).toBe(3);
+  });
+});
+
+//2️⃣ after function
+describe("after", () => {
+  let myFunc;
+  let counter;
+
+  beforeEach(() => {
+    counter = 0;
+
+    function increment() {
+      counter++;
+      return counter;
+    }
+
+    myFunc = after(3, increment);
+  });
+
+  it("should return a function", () => {
+    expect(typeof myFunc).toBe("function");
+  });
+
+  it("should not run the function before 3 calls", () => {
+    expect(myFunc()).toBeUndefined();
+    expect(myFunc()).toBeUndefined();
+  });
+
+  it("should run the function on the 3rd call", () => {
+    myFunc();
+    myFunc();
+    expect(myFunc()).toBe(1);
+  });
+
+  it("should run the function normally after that", () => {
+    myFunc();
+    myFunc();
+    myFunc();
+    expect(myFunc()).toBe(2);
+  });
+});
+
+//3️⃣ limitCalls
+describe("limitCalls", () => {
+  let myFunc;
+  let add = (a, b) => a + b;
+
+  beforeEach(() => {
+    myFunc = limitCalls(add, 3);
+  });
+
+  it("should return a function", () => {
+    expect(typeof myFunc).toBe("function");
+  });
+
+  it("should run the function first 3 times", () => {
+    expect(myFunc(1, 2)).toBe(3);
+    expect(myFunc(2, 3)).toBe(5);
+    expect(myFunc(3, 4)).toBe(7);
+  });
+
+  it("should stop after limit", () => {
+    myFunc(1, 2);
+    myFunc(2, 3);
+    myFunc(3, 4);
+
+    expect(myFunc(5, 6)).toBe("Limit reached");
+  });
+
+  it("should always return 'Limit reached' after that", () => {
+    myFunc(1, 2);
+    myFunc(2, 3);
+    myFunc(3, 4);
+    myFunc(5, 6);
+
+    expect(myFunc(7, 8)).toBe("Limit reached");
   });
 });
