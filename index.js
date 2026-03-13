@@ -10,9 +10,29 @@ function once(fn) {
   };
 }
 
-let myFunc;
-let add = (a, b) => a + b;
-myFunc = once(add);
-console.log(myFunc(2, 3));
-console.log(myFunc(9, 3));
-console.log(myFunc(4, 9));
+function after(num, fn) {
+  let count = 0;
+
+  return function (...args) {
+    count++;
+
+    if (count >= num) {
+      return fn(...args);
+    }
+  };
+}
+
+let counter = 0;
+
+function increment() {
+  counter++;
+  return counter;
+}
+
+let myFunc = after(3, increment);
+
+console.log(myFunc()); // undefined
+console.log(myFunc()); // undefined
+console.log(myFunc()); // 1
+console.log(myFunc()); // 2
+console.log(myFunc()); // 3
