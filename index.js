@@ -30,8 +30,18 @@ function makeStack() {
   };
 }
 
-let stack = makeStack();
-console.log(stack.push(9));
-console.log(stack.push(11));
-console.log(stack.pop());
-console.log(stack.size());
+function makeRangeIterator(start, end) {
+  let current = start;
+
+  return {
+    getNext() {
+      if (current <= end) {
+        let value = current;
+        current++;
+        return { value: value, done: false };
+      }
+
+      return { value: undefined, done: true };
+    },
+  };
+}
