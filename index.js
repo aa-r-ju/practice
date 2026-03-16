@@ -45,3 +45,20 @@ function makeRangeIterator(start, end) {
     },
   };
 }
+
+function makeMultiplier() {
+  let value = 1;
+  return {
+    multiply(val) {
+      value *= val;
+    },
+    getTotal() {
+      return value;
+    },
+  };
+}
+const kk = makeMultiplier();
+console.log(kk.multiply(2));
+console.log(kk.multiply(3));
+console.log(kk.multiply(4));
+console.log(kk.getTotal());
