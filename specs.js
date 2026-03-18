@@ -1,141 +1,90 @@
-//1️⃣ makeCounter
+// 🧪 1️⃣ toggler
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("makeCounter", () => {
-  it("is a function", () => {
-    expect(typeof makeCounter).toBe("function");
+describe("toggler", () => {
+  it("returns a function", () => {
+    const toggle = toggler("on", "off");
+    expect(typeof toggle).toBe("function");
   });
 
-  it("returns an object", () => {
-    expect(typeof makeCounter()).toBe("object");
+  it("cycles through given values", () => {
+    const toggle = toggler("on", "off");
+
+    expect(toggle()).toBe("on");
+    expect(toggle()).toBe("off");
+    expect(toggle()).toBe("on");
+    expect(toggle()).toBe("off");
   });
 
-  it("has increment, decrement, and getValue methods", () => {
-    const counter = makeCounter();
+  it("works with multiple values", () => {
+    const toggle = toggler(1, 2, 3);
 
-    expect(typeof counter.increment).toBe("function");
-    expect(typeof counter.decrement).toBe("function");
-    expect(typeof counter.getValue).toBe("function");
-  });
-
-  it("starts at 0", () => {
-    const counter = makeCounter();
-    expect(counter.getValue()).toBe(0);
-  });
-
-  it("increment increases the value", () => {
-    const counter = makeCounter();
-    counter.increment();
-    counter.increment();
-    expect(counter.getValue()).toBe(2);
-  });
-
-  it("decrement decreases the value", () => {
-    const counter = makeCounter();
-    counter.increment();
-    counter.increment();
-    counter.decrement();
-    expect(counter.getValue()).toBe(1);
+    expect(toggle()).toBe(1);
+    expect(toggle()).toBe(2);
+    expect(toggle()).toBe(3);
+    expect(toggle()).toBe(1);
   });
 });
 
-//2️⃣ makeStack
+//🧪 2️⃣ accumulator
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("makeStack", () => {
-  it("is a function", () => {
-    expect(typeof makeStack).toBe("function");
+describe("accumulator", () => {
+  it("returns a function", () => {
+    const acc = accumulator(0);
+    expect(typeof acc).toBe("function");
   });
 
-  it("returns an object with push, pop and size", () => {
-    const stack = makeStack();
+  it("accumulates values", () => {
+    const acc = accumulator(5);
 
-    expect(typeof stack.push).toBe("function");
-    expect(typeof stack.pop).toBe("function");
-    expect(typeof stack.size).toBe("function");
+    expect(acc(1)).toBe(6);
+    expect(acc(2)).toBe(8);
+    expect(acc(3)).toBe(11);
   });
 
-  it("push adds elements", () => {
-    const stack = makeStack();
+  it("maintains state independently", () => {
+    const acc1 = accumulator(0);
+    const acc2 = accumulator(10);
 
-    stack.push(1);
-    stack.push(2);
+    acc1(5);
+    acc2(5);
 
-    expect(stack.size()).toBe(2);
-  });
-
-  it("pop removes last element", () => {
-    const stack = makeStack();
-
-    stack.push(10);
-    stack.push(20);
-
-    expect(stack.pop()).toBe(20);
-    expect(stack.size()).toBe(1);
+    expect(acc1(5)).toBe(10);
+    expect(acc2(5)).toBe(20);
   });
 });
 
-//3️⃣ makeRangeIterator
+//🧪 3️⃣ callLimiterWithReset (🔥 advanced)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("makeRangeIterator", () => {
-  it("is a function", () => {
-    expect(typeof makeRangeIterator).toBe("function");
+describe("callLimiterWithReset", () => {
+  it("returns an object with call and reset", () => {
+    const obj = callLimiterWithReset(() => "hi", 2);
+
+    expect(typeof obj.call).toBe("function");
+    expect(typeof obj.reset).toBe("function");
   });
 
-  it("returns numbers in sequence", () => {
-    const iterator = makeRangeIterator(3, 5);
+  it("limits function calls", () => {
+    const obj = callLimiterWithReset((x) => x * 2, 2);
 
-    expect(iterator.getNext()).toEqual({ value: 3, done: false });
-    expect(iterator.getNext()).toEqual({ value: 4, done: false });
-    expect(iterator.getNext()).toEqual({ value: 5, done: false });
+    expect(obj.call(2)).toBe(4);
+    expect(obj.call(3)).toBe(6);
+    expect(obj.call(4)).toBe("Limit reached");
   });
 
-  it("returns done true when finished", () => {
-    const iterator = makeRangeIterator(1, 2);
+  it("resets count correctly", () => {
+    const obj = callLimiterWithReset((x) => x + 1, 1);
 
-    iterator.getNext();
-    iterator.getNext();
+    obj.call(5);
+    expect(obj.call(6)).toBe("Limit reached");
 
-    expect(iterator.getNext()).toEqual({ value: undefined, done: true });
-  });
-});
+    obj.reset();
 
-//4️⃣ makeMultiplier
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("makeMultiplier", () => {
-  it("is a function", () => {
-    expect(typeof makeMultiplier).toBe("function");
-  });
-
-  it("returns an object with multiply and getTotal", () => {
-    const m = makeMultiplier();
-
-    expect(typeof m.multiply).toBe("function");
-    expect(typeof m.getTotal).toBe("function");
-  });
-
-  it("multiplies values cumulatively", () => {
-    const m = makeMultiplier();
-
-    m.multiply(2);
-    m.multiply(3);
-
-    expect(m.getTotal()).toBe(6);
-  });
-
-  it("continues multiplying", () => {
-    const m = makeMultiplier();
-
-    m.multiply(2);
-    m.multiply(3);
-    m.multiply(4);
-
-    expect(m.getTotal()).toBe(24);
+    expect(obj.call(10)).toBe(11);
   });
 });
