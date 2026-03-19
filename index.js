@@ -7,3 +7,16 @@ function toggler(...args) {
     return value;
   };
 }
+
+function accumulator(num) {
+  let result = num;
+  return function (val = 0) {
+    result += val;
+    return result;
+  };
+}
+
+const kk = accumulator(0);
+console.log(kk(5));
+console.log(kk(5));
+console.log(kk(5));
