@@ -1,90 +1,143 @@
-// 🧪 1️⃣ toggler
+//🧪 1️⃣ memoize(fn) (🔥 VERY IMPORTANT)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("toggler", () => {
+describe("memoize", () => {
   it("returns a function", () => {
-    const toggle = toggler("on", "off");
-    expect(typeof toggle).toBe("function");
+    const fn = memoize((x) => x);
+    expect(typeof fn).toBe("function");
   });
 
-  it("cycles through given values", () => {
-    const toggle = toggler("on", "off");
+  it("returns correct result", () => {
+    const square = memoize((x) => x * x);
 
-    expect(toggle()).toBe("on");
-    expect(toggle()).toBe("off");
-    expect(toggle()).toBe("on");
-    expect(toggle()).toBe("off");
+    expect(square(2)).toBe(4);
+    expect(square(3)).toBe(9);
   });
 
-  it("works with multiple values", () => {
-    const toggle = toggler(1, 2, 3);
+  it("caches results (function should not run again for same input)", () => {
+    let count = 0;
 
-    expect(toggle()).toBe(1);
-    expect(toggle()).toBe(2);
-    expect(toggle()).toBe(3);
-    expect(toggle()).toBe(1);
+    const square = memoize((x) => {
+      count++;
+      return x * x;
+    });
+
+    square(2);
+    square(2);
+    square(2);
+
+    expect(count).toBe(1); // should only run once
+  });
+
+  it("works with different inputs", () => {
+    let count = 0;
+
+    const addOne = memoize((x) => {
+      count++;
+      return x + 1;
+    });
+
+    addOne(1);
+    addOne(2);
+    addOne(1);
+
+    expect(count).toBe(2);
   });
 });
 
-//🧪 2️⃣ accumulator
+//🧪 2️⃣ debounce(fn, delay)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("accumulator", () => {
+describe("debounce", () => {
+  jasmine.clock().install();
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it("returns a function", () => {
-    const acc = accumulator(0);
-    expect(typeof acc).toBe("function");
+    const fn = debounce(() => {}, 100);
+    expect(typeof fn).toBe("function");
   });
 
-  it("accumulates values", () => {
-    const acc = accumulator(5);
+  it("delays function execution", () => {
+    let count = 0;
 
-    expect(acc(1)).toBe(6);
-    expect(acc(2)).toBe(8);
-    expect(acc(3)).toBe(11);
+    const debounced = debounce(() => {
+      count++;
+    }, 100);
+
+    debounced();
+    expect(count).toBe(0);
+
+    jasmine.clock().tick(100);
+    expect(count).toBe(1);
   });
 
-  it("maintains state independently", () => {
-    const acc1 = accumulator(0);
-    const acc2 = accumulator(10);
+  it("resets timer if called again before delay", () => {
+    let count = 0;
 
-    acc1(5);
-    acc2(5);
+    const debounced = debounce(() => {
+      count++;
+    }, 100);
 
-    expect(acc1(5)).toBe(10);
-    expect(acc2(5)).toBe(20);
+    debounced();
+    jasmine.clock().tick(50);
+
+    debounced(); // resets timer
+    jasmine.clock().tick(50);
+    expect(count).toBe(0);
+
+    jasmine.clock().tick(50);
+    expect(count).toBe(1);
   });
 });
 
-//🧪 3️⃣ callLimiterWithReset (🔥 advanced)
+//🧪 3️⃣ throttle(fn, delay)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("callLimiterWithReset", () => {
-  it("returns an object with call and reset", () => {
-    const obj = callLimiterWithReset(() => "hi", 2);
+describe("throttle", () => {
+  jasmine.clock().install();
 
-    expect(typeof obj.call).toBe("function");
-    expect(typeof obj.reset).toBe("function");
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
-  it("limits function calls", () => {
-    const obj = callLimiterWithReset((x) => x * 2, 2);
-
-    expect(obj.call(2)).toBe(4);
-    expect(obj.call(3)).toBe(6);
-    expect(obj.call(4)).toBe("Limit reached");
+  it("returns a function", () => {
+    const fn = throttle(() => {}, 100);
+    expect(typeof fn).toBe("function");
   });
 
-  it("resets count correctly", () => {
-    const obj = callLimiterWithReset((x) => x + 1, 1);
+  it("runs function immediately first time", () => {
+    let count = 0;
 
-    obj.call(5);
-    expect(obj.call(6)).toBe("Limit reached");
+    const throttled = throttle(() => {
+      count++;
+    }, 100);
 
-    obj.reset();
+    throttled();
+    expect(count).toBe(1);
+  });
 
-    expect(obj.call(10)).toBe(11);
+  it("prevents repeated calls within delay", () => {
+    let count = 0;
+
+    const throttled = throttle(() => {
+      count++;
+    }, 100);
+
+    throttled(); // run
+    throttled(); // ignored
+    throttled(); // ignored
+
+    expect(count).toBe(1);
+
+    jasmine.clock().tick(100);
+
+    throttled(); // allowed again
+    expect(count).toBe(2);
   });
 });
