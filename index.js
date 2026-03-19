@@ -11,6 +11,14 @@ function memoize(fn) {
   };
 }
 
-const square = memoize((x) => x * x);
-console.log(square(2));
-console.log(square(3));
+function debounce(fn, delay) {
+  let timer;
+
+  return function (...args) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+}
