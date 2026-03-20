@@ -22,3 +22,27 @@ function debounce(fn, delay) {
     }, delay);
   };
 }
+
+function throttle(fn, delay) {
+  let isThrottled = false;
+
+  return function (...args) {
+    if (isThrottled) return;
+
+    const result = fn.apply(this, args);
+    isThrottled = true;
+
+    setTimeout(() => {
+      isThrottled = false;
+    }, delay);
+
+    return result;
+  };
+}
+
+let count = 0;
+
+let kk = throttle(() => {
+  count++;
+}, 100);
+console.log(kk());
