@@ -1,143 +1,47 @@
-//🧪 1️⃣ memoize(fn) (🔥 VERY IMPORTANT)
+// 🧪 🔥 Advanced Throttle Spec (with return value)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("memoize", () => {
-  it("returns a function", () => {
-    const fn = memoize((x) => x);
-    expect(typeof fn).toBe("function");
-  });
-
-  it("returns correct result", () => {
-    const square = memoize((x) => x * x);
-
-    expect(square(2)).toBe(4);
-    expect(square(3)).toBe(9);
-  });
-
-  it("caches results (function should not run again for same input)", () => {
-    let count = 0;
-
-    const square = memoize((x) => {
-      count++;
-      return x * x;
-    });
-
-    square(2);
-    square(2);
-    square(2);
-
-    expect(count).toBe(1); // should only run once
-  });
-
-  it("works with different inputs", () => {
-    let count = 0;
-
-    const addOne = memoize((x) => {
-      count++;
-      return x + 1;
-    });
-
-    addOne(1);
-    addOne(2);
-    addOne(1);
-
-    expect(count).toBe(2);
-  });
-});
-
-//🧪 2️⃣ debounce(fn, delay)
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("debounce", () => {
+describe("throttle (advanced)", () => {
   jasmine.clock().install();
 
   afterEach(() => {
     jasmine.clock().uninstall();
   });
 
-  it("returns a function", () => {
-    const fn = debounce(() => {}, 100);
-    expect(typeof fn).toBe("function");
+  it("returns the result of fn when allowed", () => {
+    const throttled = throttle((x) => x * 2, 100);
+
+    expect(throttled(2)).toBe(4);
   });
 
-  it("delays function execution", () => {
-    let count = 0;
+  it("returns last result when throttled", () => {
+    const throttled = throttle((x) => x * 2, 100);
 
-    const debounced = debounce(() => {
-      count++;
-    }, 100);
-
-    debounced();
-    expect(count).toBe(0);
-
-    jasmine.clock().tick(100);
-    expect(count).toBe(1);
+    throttled(2); // 4
+    expect(throttled(3)).toBe(4); // should return last result
   });
 
-  it("resets timer if called again before delay", () => {
-    let count = 0;
+  it("updates result after delay", () => {
+    const throttled = throttle((x) => x * 2, 100);
 
-    const debounced = debounce(() => {
-      count++;
-    }, 100);
-
-    debounced();
-    jasmine.clock().tick(50);
-
-    debounced(); // resets timer
-    jasmine.clock().tick(50);
-    expect(count).toBe(0);
-
-    jasmine.clock().tick(50);
-    expect(count).toBe(1);
-  });
-});
-
-//🧪 3️⃣ throttle(fn, delay)
-/* eslint-env jasmine */
-/* eslint-disable no-undef */
-
-describe("throttle", () => {
-  jasmine.clock().install();
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
-  });
-
-  it("returns a function", () => {
-    const fn = throttle(() => {}, 100);
-    expect(typeof fn).toBe("function");
-  });
-
-  it("runs function immediately first time", () => {
-    let count = 0;
-
-    const throttled = throttle(() => {
-      count++;
-    }, 100);
-
-    throttled();
-    expect(count).toBe(1);
-  });
-
-  it("prevents repeated calls within delay", () => {
-    let count = 0;
-
-    const throttled = throttle(() => {
-      count++;
-    }, 100);
-
-    throttled(); // run
-    throttled(); // ignored
-    throttled(); // ignored
-
-    expect(count).toBe(1);
+    throttled(2); // 4
 
     jasmine.clock().tick(100);
 
-    throttled(); // allowed again
-    expect(count).toBe(2);
+    expect(throttled(3)).toBe(6); // new execution
+  });
+
+  it("continues returning last result while throttled", () => {
+    const throttled = throttle((x) => x + 1, 100);
+
+    expect(throttled(1)).toBe(2); // run
+
+    expect(throttled(5)).toBe(2); // still old result
+    expect(throttled(10)).toBe(2); // still old result
+
+    jasmine.clock().tick(100);
+
+    expect(throttled(7)).toBe(8); // new result
   });
 });
