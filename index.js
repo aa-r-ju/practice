@@ -4,5 +4,11 @@ Array.prototype.onlyNumbers = function () {
   });
 };
 
-console.log([1, "a", 2, "b", 3].onlyNumbers());
-console.log(["x", true, {}, 10].onlyNumbers());
+Array.prototype.doubleValues = function () {
+  return this.map((val) => {
+    return typeof val === "number" ? val * 2 : val;
+  });
+};
+
+console.log([1, 2, 3].doubleValues());
+console.log([2, "a", 4, 6].doubleValues());
