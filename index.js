@@ -1,19 +1,8 @@
-function throttle(fn, delay) {
-  let isThrottled = false;
-  let lastResult;
+Array.prototype.onlyNumbers = function () {
+  return this.filter((curr) => {
+    return typeof curr === "number";
+  });
+};
 
-  return function (...args) {
-    if (isThrottled) {
-      return lastResult;
-    }
-
-    lastResult = fn.apply(this, args);
-    isThrottled = true;
-
-    setTimeout(() => {
-      isThrottled = false;
-    }, delay);
-
-    return lastResult;
-  };
-}
+console.log([1, "a", 2, "b", 3].onlyNumbers());
+console.log(["x", true, {}, 10].onlyNumbers());
