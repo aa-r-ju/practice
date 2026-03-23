@@ -10,5 +10,11 @@ Array.prototype.doubleValues = function () {
   });
 };
 
-console.log([1, 2, 3].doubleValues());
-console.log([2, "a", 4, 6].doubleValues());
+Array.prototype.sumValues = function () {
+  return this.reduce((acc, char) => {
+    acc += char;
+    return acc;
+  }, 0);
+};
+
+console.log([1, 2, 3, 4].sumValues());
