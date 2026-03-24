@@ -41,7 +41,18 @@ function everyOther(fn) {
     }
   };
 }
-let kk = everyOther(() => 66);
+
+function after(times, fn) {
+  let count = 0;
+  return function () {
+    count++;
+    if (count >= times) {
+      return fn();
+    }
+  };
+}
+
+let kk = after(3, () => 10);
 console.log(kk());
 console.log(kk());
 console.log(kk());
