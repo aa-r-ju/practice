@@ -17,4 +17,8 @@ Array.prototype.sumValues = function () {
   }, 0);
 };
 
-console.log([1, 2, 3, 4].sumValues());
+Array.prototype.findByKey = function (key) {
+  return this.filter((cur) => key in cur);
+};
+
+console.log([{ a: 0 }, { b: 2 }, { a: 3 }].findByKey("a"));
