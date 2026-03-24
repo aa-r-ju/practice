@@ -21,8 +21,21 @@ function thrice(fn) {
   };
 }
 
-const fn = thrice(() => 5);
-console.log(fn());
-console.log(fn());
-console.log(fn());
-console.log(fn());
+function limit(fn, times) {
+  let count = 0;
+  return function () {
+    if (count < times) {
+      count++;
+      return fn();
+    }
+    return 0;
+  };
+}
+
+let kk = limit(() => 10, 5);
+console.log(kk());
+console.log(kk());
+console.log(kk());
+console.log(kk());
+console.log(kk());
+console.log(kk());
