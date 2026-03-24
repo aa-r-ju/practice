@@ -9,7 +9,20 @@ function once(fn) {
     return result;
   };
 }
-let kk = once(() => 5);
-console.log(kk());
-console.log(kk());
-console.log(kk());
+
+function thrice(fn) {
+  let count = 0;
+  return function () {
+    if (count < 3) {
+      count++;
+      return fn();
+    }
+    return 0;
+  };
+}
+
+const fn = thrice(() => 5);
+console.log(fn());
+console.log(fn());
+console.log(fn());
+console.log(fn());
