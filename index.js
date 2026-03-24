@@ -32,9 +32,16 @@ function limit(fn, times) {
   };
 }
 
-let kk = limit(() => 10, 5);
-console.log(kk());
-console.log(kk());
+function everyOther(fn) {
+  let count = 0;
+  return function () {
+    count++;
+    if (count % 2 === 0) {
+      return fn();
+    }
+  };
+}
+let kk = everyOther(() => 66);
 console.log(kk());
 console.log(kk());
 console.log(kk());
