@@ -25,4 +25,8 @@ Array.prototype.extractValue = function (key) {
   return this.map((val) => val[key]);
 };
 
-console.log([{ a: 1 }, { b: 2 }, { a: 3 }].extractValue("a"));
+Array.prototype.filterByValue = function (key, val) {
+  return this.filter((curr) => key in curr && curr[key] === val);
+};
+
+console.log([{ a: 1 }, { a: 2 }, { a: 1 }].filterByValue("a", 1));
