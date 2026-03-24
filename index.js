@@ -52,8 +52,17 @@ function after(times, fn) {
   };
 }
 
-let kk = after(3, () => 10);
-console.log(kk());
-console.log(kk());
-console.log(kk());
-console.log(kk());
+function before(times, fn) {
+  let count = 0;
+  return function () {
+    if (count < times) {
+      count++;
+      return fn();
+    }
+  };
+}
+
+let kkk = before(2, () => 88);
+console.log(kkk());
+console.log(kkk());
+console.log(kkk());
