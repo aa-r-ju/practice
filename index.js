@@ -21,4 +21,8 @@ Array.prototype.findByKey = function (key) {
   return this.filter((cur) => key in cur);
 };
 
-console.log([{ a: 0 }, { b: 2 }, { a: 3 }].findByKey("a"));
+Array.prototype.extractValue = function (key) {
+  return this.map((val) => val[key]);
+};
+
+console.log([{ a: 1 }, { b: 2 }, { a: 3 }].extractValue("a"));
