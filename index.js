@@ -1,68 +1,10 @@
-function once(fn) {
-  let value = false;
-  let result;
-  return function () {
-    if (!value) {
-      value = true;
-      result = fn();
-    }
-    return result;
-  };
+function reduceRight(arr, start, fn) {
+  let acc = start;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    acc = fn(acc, arr[i]);
+  }
+  return acc;
 }
 
-function thrice(fn) {
-  let count = 0;
-  return function () {
-    if (count < 3) {
-      count++;
-      return fn();
-    }
-    return 0;
-  };
-}
-
-function limit(fn, times) {
-  let count = 0;
-  return function () {
-    if (count < times) {
-      count++;
-      return fn();
-    }
-    return 0;
-  };
-}
-
-function everyOther(fn) {
-  let count = 0;
-  return function () {
-    count++;
-    if (count % 2 === 0) {
-      return fn();
-    }
-  };
-}
-
-function after(times, fn) {
-  let count = 0;
-  return function () {
-    count++;
-    if (count >= times) {
-      return fn();
-    }
-  };
-}
-
-function before(times, fn) {
-  let count = 0;
-  return function () {
-    if (count < times) {
-      count++;
-      return fn();
-    }
-  };
-}
-
-let kkk = before(2, () => 88);
-console.log(kkk());
-console.log(kkk());
-console.log(kkk());
+let result = reduceRight([1, 2, 3, 4], 0, (acc, val) => acc + val);
+console.log(result);
