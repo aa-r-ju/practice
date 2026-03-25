@@ -22,7 +22,25 @@ function reduceRightFlatten(arr, con, fn) {
   return acc;
 }
 
-let kk = reduceRightFlatten([1, [2, 3], 4], [], (acc, val) => {
-  return Array.isArray(val) ? acc.concat(val) : acc.concat(val);
-});
+function reduceRightObj(arr, obj, fn) {
+  let acc = obj;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    acc = fn(acc, arr[i]);
+  }
+
+  return acc;
+}
+
+let kk = reduceRightObj(
+  [
+    ["a", 1],
+    ["b", 2],
+    ["c", 3],
+  ],
+  {},
+  (acc, val) => {
+    acc[val[0]] = val[1];
+    return acc;
+  },
+);
 console.log(kk);
