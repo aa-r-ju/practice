@@ -47,7 +47,14 @@ function reduceRightCountEvens(arr, start, fn) {
   return result;
 }
 
-let kk = reduceRightCountEvens([1, 2, 3, 4, 6], 0, (acc, val) => {
-  return val % 2 === 0 ? acc + 1 : acc;
+function reduceRightSenteceBuilder(arr, str, fn) {
+  let result = str;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    result = fn(result, arr[i]);
+  }
+  return result;
+}
+let kk = reduceRightSenteceBuilder(["world", "hello"], "", (acc, val) => {
+  return acc + " " + val;
 });
 console.log(kk);
