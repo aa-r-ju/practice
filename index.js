@@ -31,16 +31,16 @@ function reduceRightObj(arr, obj, fn) {
   return acc;
 }
 
-let kk = reduceRightObj(
-  [
-    ["a", 1],
-    ["b", 2],
-    ["c", 3],
-  ],
-  {},
-  (acc, val) => {
-    acc[val[0]] = val[1];
-    return acc;
-  },
-);
+function reduceRightlastOccurance(arr, st, fn) {
+  let acc = st;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    acc = fn(acc, arr[i], i, arr);
+  }
+  return acc;
+}
+
+let kk = reduceRightlastOccurance([1, 2, 3, 2, 1], null, (acc, val) => {
+  if (acc !== null) return acc;
+  return val === 2 ? val : null;
+});
 console.log(kk);
