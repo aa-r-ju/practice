@@ -18,8 +18,24 @@ class BankAccount {
     return this.balance;
   }
 }
-let kk = new BankAccount("aarju", 1000);
-console.log(kk.deposit(50));
-console.log(kk);
-console.log(kk.withdraw(100));
+
+class ShoppingCart {
+  constructor() {
+    this.item = [];
+  }
+  addItem(name, price) {
+    this.item.push({ name, price });
+    return this.item.length;
+  }
+
+  getTotal() {
+    return this.item.reduce((acc, char) => {
+      return acc + char.price;
+    }, 0);
+  }
+}
+let kk = new ShoppingCart();
+console.log(kk.addItem("apple", 100));
+console.log(kk.addItem("mango", 120));
+console.log(kk.getTotal());
 console.log(kk);
