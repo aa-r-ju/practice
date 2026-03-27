@@ -1,74 +1,25 @@
-function reduceRight(arr, start, fn) {
-  let acc = start;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    acc = fn(acc, arr[i]);
-  }
-  return acc;
-}
-
-function reduceRightReverse(arr, container, fn) {
-  let acc = container;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    acc = fn(acc, arr[i]);
-  }
-  return acc;
-}
-
-function reduceRightFlatten(arr, con, fn) {
-  let acc = con;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    acc = fn(acc, arr[i]);
-  }
-  return acc;
-}
-
-function reduceRightObj(arr, obj, fn) {
-  let acc = obj;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    acc = fn(acc, arr[i]);
+class BankAccount {
+  constructor(name, balance) {
+    this.name = name;
+    this.balance = balance;
   }
 
-  return acc;
-}
-
-function reduceRightlastOccurance(arr, st, fn) {
-  let acc = st;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    acc = fn(acc, arr[i], i, arr);
+  deposit(amount) {
+    if (amount <= 0) return "Invalid amount";
+    this.balance += amount;
+    return this.balance;
   }
-  return acc;
-}
 
-function reduceRightCountEvens(arr, start, fn) {
-  let result = start;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    result = fn(result, arr[i]);
+  withdraw(amount) {
+    if (amount <= 0) return "Invalid amount";
+    if (amount > this.balance) return "Insufficient funds";
+
+    this.balance -= amount;
+    return this.balance;
   }
-  return result;
 }
-
-function reduceRightSenteceBuilder(arr, str, fn) {
-  let result = str;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    result = fn(result, arr[i]);
-  }
-  return result;
-}
-function reduceRightGroupByLength(arr, obj, fn) {
-  let result = obj;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    result = fn(result, arr[i]);
-  }
-  return result;
-}
-
-let kk = reduceRightGroupByLength(["a", "bb", "c", "dd"], {}, (acc, val) => {
-  const len = val.length;
-  console.log(len);
-
-  if (!acc[len]) acc[len] = [];
-  acc[len].push(val);
-
-  return acc;
-});
+let kk = new BankAccount("aarju", 1000);
+console.log(kk.deposit(50));
+console.log(kk);
+console.log(kk.withdraw(100));
 console.log(kk);

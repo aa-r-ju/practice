@@ -1,117 +1,150 @@
-//🔥 1. Sum from right (basic)
+//🔥 1. Bank Account Class (VERY COMMON)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("reduceRight - sum numbers", () => {
-  it("adds numbers from right to left", () => {
-    const result = reduceRight([1, 2, 3, 4], 0, (acc, val) => {
-      return acc + val;
-    });
+describe("BankAccount class", () => {
+  let account;
 
-    expect(result).toBe(10);
+  beforeEach(() => {
+    account = new BankAccount("Aarju", 100);
+  });
+
+  it("creates an instance", () => {
+    expect(account instanceof BankAccount).toBe(true);
+  });
+
+  it("stores name and balance", () => {
+    expect(account.name).toBe("Aarju");
+    expect(account.balance).toBe(100);
+  });
+
+  it("deposit increases balance", () => {
+    account.deposit(50);
+    expect(account.balance).toBe(150);
+  });
+
+  it("withdraw decreases balance", () => {
+    account.withdraw(30);
+    expect(account.balance).toBe(70);
+  });
+
+  it("withdraw should not allow negative balance", () => {
+    expect(account.withdraw(200)).toBe("Insufficient funds");
+    expect(account.balance).toBe(100);
   });
 });
 
-//🔥 2. Reverse array using reduceRight
-describe("reduceRight - reverse array", () => {
-  it("reverses an array", () => {
-    const result = reduceRight([1, 2, 3], [], (acc, val) => {
-      acc.push(val);
-      return acc;
-    });
+//🔥 2. Shopping Cart (USES REDUCE 😈)
+describe("ShoppingCart class", () => {
+  let cart;
 
-    expect(result).toEqual([3, 2, 1]);
+  beforeEach(() => {
+    cart = new ShoppingCart();
+  });
+
+  it("adds items to cart", () => {
+    cart.addItem("apple", 100);
+    cart.addItem("banana", 50);
+
+    expect(cart.items.length).toBe(2);
+  });
+
+  it("calculates total using reduce", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+
+    cart.addItem("apple", 100);
+    cart.addItem("banana", 50);
+
+    expect(cart.getTotal()).toBe(150);
+    expect(Array.prototype.reduce).toHaveBeenCalled();
+  });
+
+  it("returns 0 if cart is empty", () => {
+    expect(cart.getTotal()).toBe(0);
   });
 });
 
-//🔥 3. Flatten array (IMPORTANT 😈)
-describe("reduceRight - flatten array", () => {
-  it("flattens one level of nested arrays", () => {
-    const arr = [1, [2, 3], 4];
+//🔥 3. Todo List (INTERVIEW FAVORITE)
+describe("TodoList class", () => {
+  let todos;
 
-    const result = reduceRight(arr, [], (acc, val) => {
-      return Array.isArray(val) ? acc.concat(val) : acc.concat(val);
-    });
+  beforeEach(() => {
+    todos = new TodoList();
+  });
 
-    expect(result).toEqual([4, 2, 3, 1]);
+  it("adds a todo", () => {
+    todos.add("Learn JS");
+    expect(todos.list.length).toBe(1);
+  });
+
+  it("marks todo as completed", () => {
+    todos.add("Learn JS");
+    todos.complete(0);
+
+    expect(todos.list[0].completed).toBe(true);
+  });
+
+  it("filters completed todos", () => {
+    todos.add("Task 1");
+    todos.add("Task 2");
+
+    todos.complete(0);
+
+    const completed = todos.getCompleted();
+    expect(completed.length).toBe(1);
   });
 });
 
-//🔥 4. Build object from array
-describe("reduceRight - build object", () => {
-  it("creates object from key-value pairs", () => {
-    const arr = [
-      ["a", 1],
-      ["b", 2],
-      ["c", 3],
+//🔥 4. User Statistics (MAP + FILTER + REDUCE)
+describe("UserStats class", () => {
+  let users;
+  let stats;
+
+  beforeEach(() => {
+    users = [
+      { name: "A", age: 20 },
+      { name: "B", age: 17 },
+      { name: "C", age: 25 },
     ];
+    stats = new UserStats(users);
+  });
 
-    const result = reduceRight(arr, {}, (acc, val) => {
-      acc[val[0]] = val[1];
-      return acc;
-    });
+  it("filters adults", () => {
+    const result = stats.getAdults();
+    expect(result.length).toBe(2);
+  });
 
-    expect(result).toEqual({ c: 3, b: 2, a: 1 });
+  it("calculates average age using reduce", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+
+    const avg = stats.getAverageAge();
+    expect(avg).toBeGreaterThan(0);
+    expect(Array.prototype.reduce).toHaveBeenCalled();
   });
 });
 
-//🔥 5. Find last occurrence
-describe("reduceRight - find last occurrence", () => {
-  it("finds last matching value", () => {
-    const arr = [1, 2, 3, 2, 1];
+//🔥 5. Inventory Manager (UPGRADE OF YOUR VM 😈)
+describe("InventoryManager class", () => {
+  let manager;
 
-    const result = reduceRight(arr, null, (acc, val) => {
-      if (acc !== null) return acc;
-      return val === 2 ? val : null;
-    });
-
-    expect(result).toBe(2);
+  beforeEach(() => {
+    manager = new InventoryManager([
+      { name: "apple", qty: 10 },
+      { name: "banana", qty: 5 },
+      { name: "apple", qty: 3 },
+    ]);
   });
-});
 
-//🔥 6. Count even numbers
-describe("reduceRight - count evens", () => {
-  it("counts even numbers", () => {
-    const arr = [1, 2, 3, 4, 6];
+  it("groups items by name", () => {
+    const grouped = manager.groupByName();
 
-    const result = reduceRight(arr, 0, (acc, val) => {
-      return val % 2 === 0 ? acc + 1 : acc;
-    });
-
-    expect(result).toBe(3);
+    expect(grouped.apple).toBe(13);
+    expect(grouped.banana).toBe(5);
   });
-});
 
-//🔥 7. String builder (harder)
-describe("reduceRight - sentence builder", () => {
-  it("builds sentence from words", () => {
-    const words = ["world", "hello"];
-
-    const result = reduceRight(words, "", (acc, val) => {
-      return acc + " " + val;
-    });
-
-    expect(result.trim()).toBe("hello world");
-  });
-});
-
-//🔥 8. Group by length (INTERVIEW LEVEL 😈)
-describe("reduceRight - group by length", () => {
-  it("groups strings by length", () => {
-    const arr = ["a", "bb", "c", "dd"];
-
-    const result = reduceRight(arr, {}, (acc, val) => {
-      const len = val.length;
-
-      if (!acc[len]) acc[len] = [];
-      acc[len].push(val);
-
-      return acc;
-    });
-
-    expect(result).toEqual({
-      1: ["c", "a"],
-      2: ["dd", "bb"],
-    });
+  it("uses reduce for grouping", () => {
+    spyOn(Array.prototype, "reduce").and.callThrough();
+    manager.groupByName();
+    expect(Array.prototype.reduce).toHaveBeenCalled();
   });
 });
