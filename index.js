@@ -55,8 +55,30 @@ class TodoList {
     return this.list.filter((val) => val.completed);
   }
 }
-let kk = new TodoList();
-console.log(kk.add("hello"));
-console.log(kk);
-console.log(kk.complete(0));
-console.log(kk);
+
+class UserStats {
+  constructor(arr) {
+    this.arr = arr;
+  }
+
+  getAdults() {
+    return this.arr.filter((val) => val.age > 18);
+  }
+
+  getAverageAge() {
+    if (this.arr.length === 0) return 0;
+    let total = this.arr.reduce((acc, char) => {
+      acc += char.age;
+      return acc;
+    }, 0);
+    return total / this.arr.length;
+  }
+}
+
+let kk = new UserStats([
+  { name: "A", age: 20 },
+  { name: "B", age: 17 },
+  { name: "C", age: 25 },
+]);
+console.log(kk.getAdults());
+console.log(kk.getAverageAge());
