@@ -75,10 +75,25 @@ class UserStats {
   }
 }
 
-let kk = new UserStats([
-  { name: "A", age: 20 },
-  { name: "B", age: 17 },
-  { name: "C", age: 25 },
+class InventoryManager {
+  constructor(arr) {
+    this.arr = arr;
+  }
+
+  groupByName() {
+    return this.arr.reduce((acc, char) => {
+      if (!acc[char.name]) {
+        acc[char.name] = 0;
+      }
+      acc[char.name] += char.qty;
+      return acc;
+    }, {});
+  }
+}
+
+let kk = new InventoryManager([
+  { name: "apple", qty: 10 },
+  { name: "banana", qty: 5 },
+  { name: "apple", qty: 3 },
 ]);
-console.log(kk.getAdults());
-console.log(kk.getAverageAge());
+console.log(kk.groupByName());
