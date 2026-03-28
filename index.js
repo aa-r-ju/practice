@@ -34,8 +34,29 @@ class ShoppingCart {
     }, 0);
   }
 }
-let kk = new ShoppingCart();
-console.log(kk.addItem("apple", 100));
-console.log(kk.addItem("mango", 120));
-console.log(kk.getTotal());
+
+class TodoList {
+  constructor() {
+    this.list = [];
+  }
+
+  add(text) {
+    let completed = false;
+    this.list.push({ text, completed });
+  }
+
+  complete(index) {
+    if (this.list[index]) {
+      this.list[index].completed = true;
+    }
+  }
+
+  getCompleted() {
+    return this.list.filter((val) => val.completed);
+  }
+}
+let kk = new TodoList();
+console.log(kk.add("hello"));
+console.log(kk);
+console.log(kk.complete(0));
 console.log(kk);
