@@ -49,16 +49,28 @@ function sumEvenNumbers() {
   return sum;
 }
 
-const result = sumEvenNumbers.call({
-  a: 2,
-  b: 3,
-  c: 4,
-  d: 5,
-});
+function groupByType() {
+  let result = {};
 
-const result1 = sumEvenNumbers.call({
+  for (let key in this) {
+    if (this.hasOwnProperty(key)) {
+      const type = typeof this[key];
+
+      if (!result[type]) {
+        result[type] = [];
+      }
+
+      result[type].push(this[key]);
+    }
+  }
+
+  return result;
+}
+
+const result = groupByType.call({
   a: 1,
-  b: 3,
+  b: "hello",
+  c: true,
+  d: 2,
 });
-console.log(result1);
 console.log(result);
