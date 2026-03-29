@@ -1,21 +1,19 @@
-function transformData(data) {
-  return data.reduce((acc, item) => {
-    const user = item.user;
+function keyMultiplier() {
+  let result = 1;
+  let hasNum = false;
 
-    if (!acc[user]) {
-      acc[user] = {
-        totalSpent: 0,
-        products: {},
-      };
+  for (let keys in this) {
+    if (this.hasOwnProperty(keys) && typeof this[keys] === "number") {
+      result *= this[keys];
+      hasNum = true;
     }
-
-    item.orders.forEach((order) => {
-      acc[user].totalSpent += order.price;
-
-      acc[user].products[order.product] =
-        (acc[user].products[order.product] || 0) + order.price;
-    });
-
-    return acc;
-  }, {});
+  }
+  return hasNum ? result : 0;
 }
+
+const result = keyMultiplier.call({
+  a: "hi",
+  b: [1, 2],
+  c: 5,
+});
+console.log(result);
