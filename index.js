@@ -11,9 +11,25 @@ function keyMultiplier() {
   return hasNum ? result : 0;
 }
 
-const result = keyMultiplier.call({
-  a: "hi",
-  b: [1, 2],
-  c: 5,
+function countStrings() {
+  let totalStr = 0;
+  for (let keys in this) {
+    if (this.hasOwnProperty(keys) && typeof this[keys] === "string") {
+      totalStr++;
+    }
+  }
+  return totalStr;
+}
+
+// const result = countStrings.call({
+//   a: "hello",
+//   b: 2,
+//   c: "world",
+//   d: true,
+// });
+
+const result = countStrings.call({
+  a: 1,
+  b: 2,
 });
 console.log(result);
