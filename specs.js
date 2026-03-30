@@ -1,119 +1,100 @@
-//🔥 1. keyMultiplier
+// 🔥 1. onceEvery(n, fn) (UPGRADE)
 /* eslint-env jasmine */
 /* eslint-disable no-undef */
 
-describe("keyMultiplier", () => {
-  it("is a function", () => {
-    expect(typeof keyMultiplier).toBe("function");
+describe("onceEvery", () => {
+  it("runs function every nth call", () => {
+    const fn = onceEvery(3, (x) => x * 2);
+
+    expect(fn(2)).toBe("Not yet");
+    expect(fn(2)).toBe("Not yet");
+    expect(fn(2)).toBe(4);
+
+    expect(fn(3)).toBe("Not yet");
+    expect(fn(3)).toBe("Not yet");
+    expect(fn(3)).toBe(6);
   });
 
-  it("returns a number", () => {
-    const result = keyMultiplier.call({ a: 2, b: 3 });
-    expect(typeof result).toBe("number");
-  });
+  it("works repeatedly", () => {
+    const fn = onceEvery(2, (x) => x + 1);
 
-  it("multiplies all numeric values", () => {
-    const result = keyMultiplier.call({
-      a: 2,
-      b: 3,
-      c: "hello",
-      d: 4,
-    });
-    expect(result).toBe(24); // 2 * 3 * 4
-  });
+    expect(fn(1)).toBe("Not yet");
+    expect(fn(1)).toBe(2);
 
-  it("ignores non-number values", () => {
-    const result = keyMultiplier.call({
-      a: "hi",
-      b: [1, 2],
-      c: 5,
-    });
-    expect(result).toBe(5);
+    expect(fn(5)).toBe("Not yet");
+    expect(fn(5)).toBe(6);
   });
 });
 
-//🔥 2. countStrings
-describe("countStrings", () => {
-  it("counts string values only", () => {
-    const result = countStrings.call({
-      a: "hello",
-      b: 2,
-      c: "world",
-      d: true,
-    });
-    expect(result).toBe(2);
-  });
+// 🔥 2. limitCalls(fn, n)
+describe("limitCalls", () => {
+  it("runs only n times", () => {
+    const fn = limitCalls((x) => x * 2, 2);
 
-  it("returns 0 if no strings", () => {
-    const result = countStrings.call({
-      a: 1,
-      b: 2,
-    });
-    expect(result).toBe(0);
+    expect(fn(2)).toBe(4);
+    expect(fn(3)).toBe(6);
+    expect(fn(4)).toBe("Limit reached");
+    expect(fn(5)).toBe("Limit reached");
   });
 });
 
-//🔥 3. getLongestString
-describe("getLongestString", () => {
-  it("returns the longest string", () => {
-    const result = getLongestString.call({
-      a: "hi",
-      b: "hello",
-      c: "hey",
-    });
-    expect(result).toBe("hello");
-  });
+//🔥 3. after(n, fn)
+describe("after", () => {
+  it("runs only after n calls", () => {
+    const fn = after(3, (x) => x + 10);
 
-  it("ignores non-string values", () => {
-    const result = getLongestString.call({
-      a: 123,
-      b: "JavaScript",
-      c: [1, 2],
-    });
-    expect(result).toBe("JavaScript");
+    expect(fn(1)).toBe(undefined);
+    expect(fn(1)).toBe(undefined);
+    expect(fn(1)).toBe(11);
+    expect(fn(2)).toBe(12);
   });
 });
 
-//🔥 4. sumEvenNumbers
-describe("sumEvenNumbers", () => {
-  it("sums only even numbers", () => {
-    const result = sumEvenNumbers.call({
-      a: 2,
-      b: 3,
-      c: 4,
-      d: 5,
-    });
-    expect(result).toBe(6); // 2 + 4
-  });
+//🔥 4. cycle(fn1, fn2, fn3)
+describe("cycle", () => {
+  it("cycles through functions", () => {
+    const fn = cycle(
+      (x) => x + 1,
+      (x) => x * 2,
+      (x) => x - 3,
+    );
 
-  it("returns 0 if no even numbers", () => {
-    const result = sumEvenNumbers.call({
-      a: 1,
-      b: 3,
-    });
-    expect(result).toBe(0);
+    expect(fn(5)).toBe(6); // fn1
+    expect(fn(5)).toBe(10); // fn2
+    expect(fn(5)).toBe(2); // fn3
+    expect(fn(5)).toBe(6); // fn1 again
   });
 });
 
-//🔥 5. HARD: groupByType 😈
-describe("groupByType", () => {
-  it("groups values by their type", () => {
-    const result = groupByType.call({
-      a: 1,
-      b: "hello",
-      c: true,
-      d: 2,
+//🔥 5. HARD: memoize(fn) 😈
+describe("memoize", () => {
+  it("caches results", () => {
+    let count = 0;
+
+    const fn = memoize((x) => {
+      count++;
+      return x * 2;
     });
 
-    expect(result).toEqual({
-      number: [1, 2],
-      string: ["hello"],
-      boolean: [true],
-    });
+    expect(fn(2)).toBe(4);
+    expect(fn(2)).toBe(4);
+    expect(fn(2)).toBe(4);
+
+    expect(count).toBe(1); // only ran once
   });
+});
 
-  it("handles empty object", () => {
-    const result = groupByType.call({});
-    expect(result).toEqual({});
+//🔥 6. VERY HARD: throttle(fn, n) 😈💣
+describe("throttle (call-based)", () => {
+  it("only runs every nth call", () => {
+    const fn = throttle((x) => x * 2, 3);
+
+    expect(fn(2)).toBe("Throttled");
+    expect(fn(2)).toBe("Throttled");
+    expect(fn(2)).toBe(4);
+
+    expect(fn(3)).toBe("Throttled");
+    expect(fn(3)).toBe("Throttled");
+    expect(fn(3)).toBe(6);
   });
 });
