@@ -69,7 +69,20 @@ function throttle(fn, times) {
     return fn(...arg);
   };
 }
-const fn = throttle((x) => x * 2, 3);
+
+function debounce(fn, n) {
+  let count = 0;
+  return function (...arg) {
+    count++;
+    if (count === n) {
+      count = 0;
+      return fn(...arg);
+    }
+    return;
+  };
+}
+
+const fn = debounce((x) => x * 2, 3);
 console.log(fn(2));
 console.log(fn(2));
 console.log(fn(2));

@@ -98,3 +98,18 @@ describe("throttle (call-based)", () => {
     expect(fn(3)).toBe(6);
   });
 });
+
+//🔥 debounce(fn, n) (CALL-BASED VERSION)
+describe("debounce (call-based)", () => {
+  it("runs only after n calls stop", () => {
+    const fn = debounce((x) => x * 2, 3);
+
+    expect(fn(2)).toBe(undefined);
+    expect(fn(2)).toBe(undefined);
+    expect(fn(2)).toBe(4); // runs here
+
+    expect(fn(3)).toBe(undefined);
+    expect(fn(3)).toBe(undefined);
+    expect(fn(3)).toBe(6);
+  });
+});
