@@ -45,12 +45,24 @@ function cycle(...fns) {
   };
 }
 
-const fn = cycle(
-  (x) => x + 1,
-  (x) => x * 2,
-  (x) => x - 3,
-);
-console.log(fn(5));
-console.log(fn(5));
-console.log(fn(5));
-console.log(fn(5));
+function memoize(fn) {
+  const cache = {};
+
+  return function (val) {
+    if (cache.hasOwnProperty(val)) {
+      return cache[val];
+    }
+
+    const result = fn(val);
+    cache[val] = result;
+    return result;
+  };
+}
+const fn = memoize((x) => {
+  return x * 2;
+});
+console.log(fn(2));
+console.log(fn(2));
+console.log(fn(2));
+console.log(fn(2));
+console.log(fn(2));
