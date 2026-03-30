@@ -58,9 +58,19 @@ function memoize(fn) {
     return result;
   };
 }
-const fn = memoize((x) => {
-  return x * 2;
-});
+
+function throttle(fn, times) {
+  let count = 0;
+  return function (...arg) {
+    count++;
+    if (count % times !== 0) {
+      return "Throttled";
+    }
+    return fn(...arg);
+  };
+}
+const fn = throttle((x) => x * 2, 3);
+console.log(fn(2));
 console.log(fn(2));
 console.log(fn(2));
 console.log(fn(2));
