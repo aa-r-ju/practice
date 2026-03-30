@@ -23,10 +23,20 @@ function limitCalls(fn, limit) {
   };
 }
 
-const fn = limitCalls((x) => x * 2, 2);
-console.log(fn(7));
-console.log(fn(9));
-console.log(fn(6));
-console.log(fn(6));
-console.log(fn(6));
-console.log(fn(6));
+function after(n, fn) {
+  let count = 0;
+
+  return function (num) {
+    count++;
+    if (count < n) {
+      return;
+    }
+    return fn(num);
+  };
+}
+
+const fn = after(3, (x) => x + 10);
+console.log(fn(1));
+console.log(fn(1));
+console.log(fn(1));
+console.log(fn(2));
