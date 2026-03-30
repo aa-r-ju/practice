@@ -35,8 +35,22 @@ function after(n, fn) {
   };
 }
 
-const fn = after(3, (x) => x + 10);
-console.log(fn(1));
-console.log(fn(1));
-console.log(fn(1));
-console.log(fn(2));
+function cycle(...fns) {
+  let count = 0;
+
+  return function (num) {
+    const fn = fns[count % fns.length];
+    count++;
+    return fn(num);
+  };
+}
+
+const fn = cycle(
+  (x) => x + 1,
+  (x) => x * 2,
+  (x) => x - 3,
+);
+console.log(fn(5));
+console.log(fn(5));
+console.log(fn(5));
+console.log(fn(5));
