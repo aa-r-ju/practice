@@ -5,8 +5,14 @@ class Shape {
   }
 
   getArea() {
-    return undefined;
+    return;
   }
 }
-const s = new Shape(10, 20);
-console.log(s.getArea());
+
+class Rectangle extends Shape {
+  getArea() {
+    return this.width * this.height;
+  }
+}
+const r = new Rectangle(10, 5);
+console.log(r.getArea());
