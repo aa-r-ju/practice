@@ -54,11 +54,25 @@ class Counter {
     return this.value;
   }
 }
-const c = new Counter(5);
-console.log(c.increment());
-console.log(c.increment());
-console.log(c.increment());
-console.log(c);
-console.log(c.decrement());
-console.log(c);
-console.log(c.getValue());
+
+class BankAccount {
+  constructor(balance) {
+    this.balance = balance;
+  }
+
+  deposit(amount) {
+    this.balance += amount;
+  }
+
+  withdraw(amount) {
+    if (amount < 0 || this.balance <= amount) {
+      return this.balance;
+    }
+    return (this.balance -= amount);
+  }
+}
+const acc = new BankAccount(100);
+console.log(acc.deposit(100));
+console.log(acc);
+console.log(acc.withdraw(0));
+console.log(acc);
