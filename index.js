@@ -85,3 +85,31 @@ class Temperature {
     this.celsius = value;
   }
 }
+
+class Password {
+  constructor(value) {
+    this.value = value;
+  }
+
+  isValid() {
+    if (this.value.length < 6) return false;
+
+    let hasNumber = false;
+    for (let i = 0; i < this.value.length; i++) {
+      if (!isNaN(Number(this.value[i])) && this.value[i] !== " ") {
+        hasNumber = true;
+        break;
+      }
+    }
+
+    return hasNumber;
+  }
+}
+const p = new Password("abc123");
+console.log(p);
+console.log(p.isValid());
+const l = new Password("abc");
+
+console.log(l.isValid());
+const k = new Password("abcdef");
+console.log(k.isValid());
