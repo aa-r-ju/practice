@@ -14,5 +14,29 @@ class Rectangle extends Shape {
     return this.width * this.height;
   }
 }
-const r = new Rectangle(10, 5);
-console.log(r.getArea());
+
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  introduce() {
+    return `Hi, I am ${this.name}`;
+  }
+}
+
+class Student extends Person {
+  constructor(name, age, course) {
+    super(name, age);
+    this.course = course;
+  }
+
+  study() {
+    return `Studying ${this.course}`;
+  }
+}
+const p = new Person("Aarju", 22);
+const s = new Student("Ram", 20, "BBS");
+console.log(p.introduce());
+console.log(s.study());
