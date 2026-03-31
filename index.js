@@ -71,8 +71,17 @@ class BankAccount {
     return (this.balance -= amount);
   }
 }
-const acc = new BankAccount(100);
-console.log(acc.deposit(100));
-console.log(acc);
-console.log(acc.withdraw(0));
-console.log(acc);
+
+class Temperature {
+  constructor(celsius) {
+    this.celsius = celsius;
+  }
+
+  toFahrenheit() {
+    return (this.celsius * 9) / 5 + 32;
+  }
+
+  setCelsius(value) {
+    this.celsius = value;
+  }
+}
