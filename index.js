@@ -36,7 +36,29 @@ class Student extends Person {
     return `Studying ${this.course}`;
   }
 }
-const p = new Person("Aarju", 22);
-const s = new Student("Ram", 20, "BBS");
-console.log(p.introduce());
-console.log(s.study());
+
+class Counter {
+  constructor(value) {
+    this.value = value;
+  }
+
+  increment() {
+    this.value++;
+  }
+
+  decrement() {
+    this.value--;
+  }
+
+  getValue() {
+    return this.value;
+  }
+}
+const c = new Counter(5);
+console.log(c.increment());
+console.log(c.increment());
+console.log(c.increment());
+console.log(c);
+console.log(c.decrement());
+console.log(c);
+console.log(c.getValue());
