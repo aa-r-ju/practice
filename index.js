@@ -76,12 +76,9 @@ function limitCalls(fn, n) {
     }
   };
 }
-let count = 0;
 
-const fn = limitCalls(() => {
-  count++;
-  return count;
-}, 2);
-console.log(fn());
-console.log(fn());
-console.log(fn());
+function pipe(...fns) {
+  return function (initialValue) {
+    return fns.reduce((acc, fn) => fn(acc), initialValue);
+  };
+}
