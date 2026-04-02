@@ -37,9 +37,24 @@ function debounce(fn, delay) {
     }, delay);
   };
 }
-let count = 0;
 
-const fn = debounce(() => {
-  count++;
-}, 100);
-console.log(fn(50));
+// 🔥 4. flatten function (arrays)
+
+function flatten(arr) {
+  let newArr = [];
+  if (arr.length === 0) {
+    return arr;
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      newArr = newArr.concat(flatten(arr[i]));
+    } else {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
+let arrk = [1, [2, 3], 4];
+console.log(flatten(arrk));
