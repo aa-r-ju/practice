@@ -25,9 +25,21 @@ function memoize(fn) {
     }
   };
 }
+
+// 🔥 3. debounce function (timing logic)
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer); // cancel previous timer
+    timer = setTimeout(() => {
+      // set a new timer
+      fn.apply(this, args); // call the original function
+    }, delay);
+  };
+}
 let count = 0;
 
-const square = memoize((x) => {
+const fn = debounce(() => {
   count++;
-  return x * x;
-});
+}, 100);
+console.log(fn(50));
