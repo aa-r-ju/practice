@@ -1,176 +1,170 @@
-//🔥 1. Shape → Rectangle
-describe("Shape Class", () => {
-  it("has properties width and height", () => {
-    const s = new Shape(10, 20);
-
-    expect(s.width).toBe(10);
-    expect(s.height).toBe(20);
+// 🔥 1. once function (closure + state)
+describe("once", () => {
+  it("returns a function", () => {
+    const fn = once(() => 5);
+    expect(typeof fn).toBe("function");
   });
 
-  it("has a method getArea", () => {
-    const s = new Shape(5, 5);
+  it("runs the function only once", () => {
+    let count = 0;
 
-    expect(typeof s.getArea).toBe("function");
-    expect(s.hasOwnProperty("getArea")).toBe(false);
-  });
-});
+    const increment = once(() => {
+      count++;
+      return count;
+    });
 
-describe("Rectangle Class", () => {
-  it("extends Shape", () => {
-    const r = new Rectangle(10, 5);
-
-    expect(r instanceof Rectangle).toBe(true);
-    expect(r instanceof Shape).toBe(true);
+    expect(increment()).toBe(1);
+    expect(increment()).toBe(1);
+    expect(increment()).toBe(1);
   });
 
-  it("getArea returns width * height", () => {
-    const r = new Rectangle(10, 5);
-
-    expect(r.getArea()).toBe(50);
+  it("returns the same result after first call", () => {
+    const fn = once(() => Math.random());
+    const first = fn();
+    expect(fn()).toBe(first);
+    expect(fn()).toBe(first);
   });
 });
 
-//🔥 2. Person → Student
-describe("Person Class", () => {
-  it("has name and age", () => {
-    const p = new Person("Aarju", 22);
-
-    expect(p.name).toBe("Aarju");
-    expect(p.age).toBe(22);
+// 🔥 2. memoize function (INTERVIEW LEVEL 😈)
+describe("memoize", () => {
+  it("returns a function", () => {
+    const fn = memoize((x) => x);
+    expect(typeof fn).toBe("function");
   });
 
-  it("has introduce method", () => {
-    const p = new Person("Aarju", 22);
+  it("caches results for same input", () => {
+    let count = 0;
 
-    expect(p.introduce()).toBe("Hi, I am Aarju");
-  });
-});
+    const square = memoize((x) => {
+      count++;
+      return x * x;
+    });
 
-describe("Student Class", () => {
-  it("extends Person", () => {
-    const s = new Student("Ram", 20, "BBS");
-
-    expect(s instanceof Student).toBe(true);
-    expect(s instanceof Person).toBe(true);
+    expect(square(2)).toBe(4);
+    expect(square(2)).toBe(4);
+    expect(count).toBe(1);
   });
 
-  it("has course property", () => {
-    const s = new Student("Ram", 20, "BBS");
+  it("computes again for different inputs", () => {
+    let count = 0;
 
-    expect(s.course).toBe("BBS");
-  });
+    const square = memoize((x) => {
+      count++;
+      return x * x;
+    });
 
-  it("has study method", () => {
-    const s = new Student("Ram", 20, "BBS");
-
-    expect(s.study()).toBe("Studying BBS");
+    square(2);
+    square(3);
+    expect(count).toBe(2);
   });
 });
 
-//🔥 3. Counter (State + Methods)
-describe("Counter Class", () => {
-  it("starts from initial value", () => {
-    const c = new Counter(5);
+// 🔥 3. debounce function (timing logic)
+describe("debounce", () => {
+  jasmine.clock().install();
 
-    expect(c.value).toBe(5);
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
-  it("increment increases value", () => {
-    const c = new Counter(5);
+  it("delays function execution", () => {
+    let count = 0;
 
-    c.increment();
-    expect(c.value).toBe(6);
+    const fn = debounce(() => {
+      count++;
+    }, 100);
+
+    fn();
+    jasmine.clock().tick(50);
+    expect(count).toBe(0);
+
+    jasmine.clock().tick(50);
+    expect(count).toBe(1);
   });
 
-  it("decrement decreases value", () => {
-    const c = new Counter(5);
+  it("resets timer if called again", () => {
+    let count = 0;
 
-    c.decrement();
-    expect(c.value).toBe(4);
-  });
+    const fn = debounce(() => {
+      count++;
+    }, 100);
 
-  it("getValue returns current value", () => {
-    const c = new Counter(10);
+    fn();
+    jasmine.clock().tick(50);
+    fn();
+    jasmine.clock().tick(50);
+    expect(count).toBe(0);
 
-    expect(c.getValue()).toBe(10);
-  });
-});
-
-//🔥 4. BankAccount (Real Interview Type)
-describe("BankAccount Class", () => {
-  it("has balance", () => {
-    const acc = new BankAccount(100);
-
-    expect(acc.balance).toBe(100);
-  });
-
-  it("deposit adds money", () => {
-    const acc = new BankAccount(100);
-
-    acc.deposit(50);
-    expect(acc.balance).toBe(150);
-  });
-
-  it("withdraw subtracts money", () => {
-    const acc = new BankAccount(100);
-
-    acc.withdraw(30);
-    expect(acc.balance).toBe(70);
-  });
-
-  it("does not allow negative balance", () => {
-    const acc = new BankAccount(50);
-
-    acc.withdraw(100);
-    expect(acc.balance).toBe(50);
+    jasmine.clock().tick(50);
+    expect(count).toBe(1);
   });
 });
 
-// 🔥 5. Temperature Class
-describe("Temperature Class", () => {
-  it("stores value in celsius", () => {
-    const t = new Temperature(0);
-
-    expect(t.celsius).toBe(0);
+// 🔥 4. flatten function (arrays)
+describe("flatten", () => {
+  it("flattens a single level array", () => {
+    expect(flatten([1, [2, 3], 4])).toEqual([1, 2, 3, 4]);
   });
 
-  it("converts to fahrenheit", () => {
-    const t = new Temperature(0);
-
-    expect(t.toFahrenheit()).toBe(32);
+  it("flattens deeply nested arrays", () => {
+    expect(flatten([1, [2, [3, [4]]]])).toEqual([1, 2, 3, 4]);
   });
 
-  it("updates temperature", () => {
-    const t = new Temperature(0);
-
-    t.setCelsius(100);
-    expect(t.celsius).toBe(100);
+  it("returns empty array if input is empty", () => {
+    expect(flatten([])).toEqual([]);
   });
 });
 
-//🔥 6. Password Class (VERY GOOD FOR INTERVIEW)
-describe("Password Class", () => {
-  it("stores password", () => {
-    const p = new Password("abc123");
+// 🔥 5. groupBy function (OBJECT + REDUCE)
+describe("groupBy", () => {
+  it("groups numbers by even and odd", () => {
+    const result = groupBy([1, 2, 3, 4], (num) =>
+      num % 2 === 0 ? "even" : "odd",
+    );
 
-    expect(p.value).toBe("abc123");
+    expect(result).toEqual({
+      odd: [1, 3],
+      even: [2, 4],
+    });
   });
 
-  it("has isValid method", () => {
-    const p = new Password("abc123");
+  it("groups strings by length", () => {
+    const result = groupBy(["a", "bb", "ccc"], (str) => str.length);
 
-    expect(p.isValid()).toBe(true);
+    expect(result).toEqual({
+      1: ["a"],
+      2: ["bb"],
+      3: ["ccc"],
+    });
   });
+});
 
-  it("invalid if less than 6 chars", () => {
-    const p = new Password("abc");
+//🔥 6. limitCalls (ADVANCED 🔥🔥)
+describe("limitCalls", () => {
+  it("limits function calls", () => {
+    let count = 0;
 
-    expect(p.isValid()).toBe(false);
+    const fn = limitCalls(() => {
+      count++;
+      return count;
+    }, 2);
+
+    expect(fn()).toBe(1);
+    expect(fn()).toBe(2);
+    expect(fn()).toBe(null);
+    expect(fn()).toBe(null);
   });
+});
 
-  it("invalid if no number", () => {
-    const p = new Password("abcdef");
+// 🔥 7. pipe function (FUNCTION COMPOSITION)
+describe("pipe", () => {
+  it("pipes functions left to right", () => {
+    const add2 = (x) => x + 2;
+    const multiply3 = (x) => x * 3;
 
-    expect(p.isValid()).toBe(false);
+    const fn = pipe(add2, multiply3);
+
+    expect(fn(2)).toBe(12); // (2+2)*3
   });
 });
