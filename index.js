@@ -42,9 +42,6 @@ function debounce(fn, delay) {
 
 function flatten(arr) {
   let newArr = [];
-  if (arr.length === 0) {
-    return arr;
-  }
 
   for (let i = 0; i < arr.length; i++) {
     if (Array.isArray(arr[i])) {
@@ -56,5 +53,17 @@ function flatten(arr) {
   return newArr;
 }
 
-let arrk = [1, [2, 3], 4];
-console.log(flatten(arrk));
+// 🔥 5. groupBy function (OBJECT + REDUCE)
+function groupBy(arr, fn) {
+  return arr.reduce((acc, char) => {
+    let key = fn(char);
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(char);
+    return acc;
+  }, {});
+}
+
+const result = groupBy([1, 2, 3, 4], (num) => (num % 2 === 0 ? "even" : "odd"));
+console.log(result);
