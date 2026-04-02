@@ -65,5 +65,23 @@ function groupBy(arr, fn) {
   }, {});
 }
 
-const result = groupBy([1, 2, 3, 4], (num) => (num % 2 === 0 ? "even" : "odd"));
-console.log(result);
+function limitCalls(fn, n) {
+  let count = 0;
+  return function () {
+    if (count < n) {
+      count++;
+      return fn();
+    } else {
+      return null;
+    }
+  };
+}
+let count = 0;
+
+const fn = limitCalls(() => {
+  count++;
+  return count;
+}, 2);
+console.log(fn());
+console.log(fn());
+console.log(fn());
