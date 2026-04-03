@@ -38,3 +38,27 @@ function memoize(fn) {
     return result;
   };
 }
+
+//🔥 3. EventEmitter (REAL INTERVIEW STYLE 😈)
+class EventEmitter {
+  constructor() {
+    this.events = {};
+  }
+
+  on(event, listener) {
+    if (!this.events[event]) this.events[event] = [];
+    this.events[event].push(listener);
+  }
+
+  emit(event, ...args) {
+    if (this.events[event]) {
+      this.events[event].forEach((fn) => fn(...args));
+    }
+  }
+
+  off(event, listener) {
+    if (this.events[event]) {
+      this.events[event] = this.events[event].filter((fn) => fn !== listener);
+    }
+  }
+}
