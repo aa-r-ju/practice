@@ -1,64 +1,13 @@
-//🔥 1. range + sum challenge
-function range(start, end) {
-  let arr = [];
-  if (start > end) {
-    return arr;
-  }
+function flattenArray(arr) {
+  if (arr.length === 0) return [];
 
-  for (let i = start; i <= end; i++) {
-    arr.push(i);
-  }
-  return arr;
-}
+  let firstValue = arr[0];
+  let rest = arr.slice(1);
 
-function sum(array) {
-  let sum = 0;
-
-  for (let i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-
-  return sum;
-}
-
-// 🔥 2. memoize (INTERVIEW LEVEL)
-function memoize(fn) {
-  const cache = {};
-
-  return function (...args) {
-    const key = JSON.stringify(args);
-
-    if (cache.hasOwnProperty(key)) {
-      return cache[key];
-    }
-
-    const result = fn(...args);
-    cache[key] = result;
-
-    return result;
-  };
-}
-
-//🔥 3. EventEmitter (REAL INTERVIEW STYLE 😈)
-class EventEmitter {
-  constructor() {
-    this.events = {};
-  }
-
-  on(event, listener) {
-    if (!this.events[event]) this.events[event] = [];
-    this.events[event].push(listener);
-  }
-
-  emit(event, ...args) {
-    if (this.events[event]) {
-      this.events[event].forEach((fn) => fn(...args));
-    }
-  }
-
-  off(event, listener) {
-    if (this.events[event]) {
-      this.events[event] = this.events[event].filter((fn) => fn !== listener);
-    }
+  if (Array.isArray(firstValue)) {
+    return flattenArray(firstValue).concat(flattenArray(rest));
+  } else {
+    return [firstValue].concat(flattenArray(rest));
   }
 }
+console.log(flattenArray([1, [2, 3], [4, [5]]]));
