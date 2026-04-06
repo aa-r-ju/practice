@@ -31,6 +31,20 @@ function reverseString(str) {
 
   return firstval + reverseString(rest);
 }
-console.log(reverseString("Hello"));
-console.log(reverseString("a"));
-console.log(reverseString(""));
+
+function countOccurrences(arr, val) {
+  if (arr.length === 0) return 0;
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  if (Array.isArray(first)) {
+    return countOccurrences(first, val) + countOccurrences(rest, val);
+  } else if (first === val) {
+    return 1 + countOccurrences(rest, val);
+  } else {
+    return countOccurrences(rest, val);
+  }
+}
+console.log(countOccurrences([1, 2, 2, 3, 2], 2));
+console.log(countOccurrences([1, 2, 3], 4));
