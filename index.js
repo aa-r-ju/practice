@@ -10,4 +10,18 @@ function flattenArray(arr) {
     return [firstValue].concat(flattenArray(rest));
   }
 }
-console.log(flattenArray([1, [2, 3], [4, [5]]]));
+
+function sumNested(arr) {
+  if (arr.length === 0) return 0;
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  if (Array.isArray(first)) {
+    return sumNested(first) + sumNested(rest);
+  } else {
+    return first + sumNested(rest);
+  }
+}
+console.log(sumNested([1, [2, 3], [4, [5]]]));
+console.log(sumNested([[[1]], 2, [[3, [4]]]]));
