@@ -23,5 +23,14 @@ function sumNested(arr) {
     return first + sumNested(rest);
   }
 }
-console.log(sumNested([1, [2, 3], [4, [5]]]));
-console.log(sumNested([[[1]], 2, [[3, [4]]]]));
+
+function reverseString(str) {
+  if (str.length === 0) return "";
+  let firstval = str[str.length - 1];
+  let rest = str.slice(0, str.length - 1);
+
+  return firstval + reverseString(rest);
+}
+console.log(reverseString("Hello"));
+console.log(reverseString("a"));
+console.log(reverseString(""));
