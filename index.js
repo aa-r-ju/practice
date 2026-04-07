@@ -46,5 +46,19 @@ function countOccurrences(arr, val) {
     return countOccurrences(rest, val);
   }
 }
-console.log(countOccurrences([1, 2, 2, 3, 2], 2));
-console.log(countOccurrences([1, 2, 3], 4));
+function findMax(arr) {
+  if (arr.length === 1) {
+    return Array.isArray(arr[0]) ? findMax(arr[0]) : arr[0];
+  }
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  let firstMax = Array.isArray(first) ? findMax(first) : first;
+  let restMax = findMax(rest);
+
+  return firstMax < restMax ? restMax : first;
+}
+console.log(findMax([1, 5, 3]));
+console.log(findMax([-10, -5, -20]));
+console.log(findMax([1, [5, 2], [3, [10]]]));
