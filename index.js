@@ -59,6 +59,20 @@ function findMax(arr) {
 
   return firstMax < restMax ? restMax : first;
 }
-console.log(findMax([1, 5, 3]));
-console.log(findMax([-10, -5, -20]));
-console.log(findMax([1, [5, 2], [3, [10]]]));
+
+function everyRecursive(arr, cb) {
+  if (arr.length === 0) return true;
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  if (Array.isArray(first)) {
+    return everyRecursive(first, cb) && everyRecursive(rest, cb);
+  }
+
+  if (!cb(first)) {
+    return false;
+  }
+
+  return everyRecursive(rest, cb);
+}
