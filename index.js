@@ -76,3 +76,21 @@ function everyRecursive(arr, cb) {
 
   return everyRecursive(rest, cb);
 }
+
+function deepClone(value) {
+  if (value === null || typeof value !== "object") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => deepClone(item));
+  }
+
+  let clonedObj = {};
+
+  for (let key in value) {
+    clonedObj[key] = deepClone(value[key]);
+  }
+
+  return clonedObj;
+}
