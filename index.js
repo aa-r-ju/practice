@@ -1,96 +1,22 @@
-function flattenArray(arr) {
-  if (arr.length === 0) return [];
-
-  let firstValue = arr[0];
-  let rest = arr.slice(1);
-
-  if (Array.isArray(firstValue)) {
-    return flattenArray(firstValue).concat(flattenArray(rest));
-  } else {
-    return [firstValue].concat(flattenArray(rest));
-  }
-}
-
-function sumNested(arr) {
-  if (arr.length === 0) return 0;
-
-  let first = arr[0];
-  let rest = arr.slice(1);
-
-  if (Array.isArray(first)) {
-    return sumNested(first) + sumNested(rest);
-  } else {
-    return first + sumNested(rest);
-  }
-}
-
-function reverseString(str) {
-  if (str.length === 0) return "";
-  let firstval = str[str.length - 1];
-  let rest = str.slice(0, str.length - 1);
-
-  return firstval + reverseString(rest);
-}
-
-function countOccurrences(arr, val) {
-  if (arr.length === 0) return 0;
-
-  let first = arr[0];
-  let rest = arr.slice(1);
-
-  if (Array.isArray(first)) {
-    return countOccurrences(first, val) + countOccurrences(rest, val);
-  } else if (first === val) {
-    return 1 + countOccurrences(rest, val);
-  } else {
-    return countOccurrences(rest, val);
-  }
-}
-function findMax(arr) {
-  if (arr.length === 1) {
-    return Array.isArray(arr[0]) ? findMax(arr[0]) : arr[0];
-  }
-
-  let first = arr[0];
-  let rest = arr.slice(1);
-
-  let firstMax = Array.isArray(first) ? findMax(first) : first;
-  let restMax = findMax(rest);
-
-  return firstMax < restMax ? restMax : first;
-}
-
-function everyRecursive(arr, cb) {
-  if (arr.length === 0) return true;
-
-  let first = arr[0];
-  let rest = arr.slice(1);
-
-  if (Array.isArray(first)) {
-    return everyRecursive(first, cb) && everyRecursive(rest, cb);
-  }
-
-  if (!cb(first)) {
+//🧪 8. someRecursive (opposite of every)
+function someRecursive(arr, fn) {
+  if (arr.length === 0) {
     return false;
   }
 
-  return everyRecursive(rest, cb);
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  if (Array.isArray(first)) {
+    return someRecursive(first, fn) || someRecursive(rest, fn);
+  }
+
+  if (fn(first)) {
+    return true;
+  }
+
+  return someRecursive(rest, fn);
 }
-
-function deepClone(value) {
-  if (value === null || typeof value !== "object") {
-    return value;
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((item) => deepClone(item));
-  }
-
-  let clonedObj = {};
-
-  for (let key in value) {
-    clonedObj[key] = deepClone(value[key]);
-  }
-
-  return clonedObj;
-}
+console.log(someRecursive([1, 3, 5], (x) => x % 2 === 0));
+console.log(someRecursive([1, 4, 5], (x) => x % 2 === 0));
+console.log(someRecursive([1, [3, 5], [7, [8]]], (x) => x % 2 === 0));
