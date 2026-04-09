@@ -36,3 +36,22 @@ function filterRecursiv(arr, fn) {
   return filterRecursiv(rest, fn);
 }
 console.log(filterRecursiv([1, 2, 3, 4], (x) => x % 2 === 0));
+
+//🧪 10. flattenDepth (LIMITED flatten)
+function flattenDepth(arr, depth) {
+  if (depth === 0) return arr;
+
+  let result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    let value = arr[i];
+
+    if (Array.isArray(value)) {
+      result = result.concat(flattenDepth(value, depth - 1));
+    } else {
+      result.push(value);
+    }
+  }
+
+  return result;
+}
