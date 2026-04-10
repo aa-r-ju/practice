@@ -55,3 +55,25 @@ function flattenDepth(arr, depth) {
 
   return result;
 }
+
+//🧪 11. findInNested
+
+function findInNested(arr, callback) {
+  for (let i = 0; i < arr.length; i++) {
+    let value = arr[i];
+
+    if (Array.isArray(value)) {
+      let result = findInNested(value, callback);
+
+      if (result !== undefined) {
+        return result;
+      }
+    } else {
+      if (callback(value)) {
+        return value;
+      }
+    }
+  }
+
+  return undefined;
+}
