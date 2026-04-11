@@ -35,7 +35,6 @@ function filterRecursiv(arr, fn) {
   }
   return filterRecursiv(rest, fn);
 }
-console.log(filterRecursiv([1, 2, 3, 4], (x) => x % 2 === 0));
 
 //🧪 10. flattenDepth (LIMITED flatten)
 function flattenDepth(arr, depth) {
@@ -77,3 +76,22 @@ function findInNested(arr, callback) {
 
   return undefined;
 }
+
+// 🧪 12. sumOnlyEven
+function sumOnlyEven(arr) {
+  if (arr.length === 0) return 0;
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  if (Array.isArray(first)) {
+    return sumOnlyEven(first) + sumOnlyEven(rest);
+  } else if (first % 2 === 0) {
+    return first + sumOnlyEven(rest);
+  } else {
+    return sumOnlyEven(rest);
+  }
+}
+console.log(sumOnlyEven([1, 2, 3, 4]));
+console.log(sumOnlyEven([1, [2, 3], [4, [5, 6]]]));
+console.log(sumOnlyEven([]));
