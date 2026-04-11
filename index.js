@@ -92,6 +92,42 @@ function sumOnlyEven(arr) {
     return sumOnlyEven(rest);
   }
 }
-console.log(sumOnlyEven([1, 2, 3, 4]));
-console.log(sumOnlyEven([1, [2, 3], [4, [5, 6]]]));
-console.log(sumOnlyEven([]));
+
+//🧪 13. countTypes (🔥 INTERVIEW LEVEL)
+function countTypes(arr) {
+  if (arr.length === 0) {
+    return { number: 0, string: 0, boolean: 0 };
+  }
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  let result = { number: 0, string: 0, boolean: 0 };
+
+  if (Array.isArray(first)) {
+    let nested = countTypes(first);
+    let restResult = countTypes(rest);
+
+    return {
+      number: nested.number + restResult.number,
+      string: nested.string + restResult.string,
+      boolean: nested.boolean + restResult.boolean,
+    };
+  }
+
+  if (typeof first === "number") result.number++;
+  if (typeof first === "string") result.string++;
+  if (typeof first === "boolean") result.boolean++;
+
+  let restResult = countTypes(rest);
+
+  return {
+    number: result.number + restResult.number,
+    string: result.string + restResult.string,
+    boolean: result.boolean + restResult.boolean,
+  };
+}
+console.log(countTypes([1, ["a", true], [2]]));
+console.log(countTypes([1, "a", true, "pp"]));
+console.log(countTypes([1, ["a", true], [2]]));
+console.log(countTypes([1, [2, [3, [4]]]]));
