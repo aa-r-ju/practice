@@ -127,7 +127,38 @@ function countTypes(arr) {
     boolean: result.boolean + restResult.boolean,
   };
 }
-console.log(countTypes([1, ["a", true], [2]]));
-console.log(countTypes([1, "a", true, "pp"]));
-console.log(countTypes([1, ["a", true], [2]]));
-console.log(countTypes([1, [2, [3, [4]]]]));
+
+// 🧪 14. deepEqual (🔥 HARD)
+function deepEqual(a, b) {
+  if (a === b) return true;
+
+  if (
+    typeof a !== "object" ||
+    typeof b !== "object" ||
+    a === null ||
+    b === null
+  ) {
+    return false;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; i++) {
+      if (!deepEqual(a[i], b[i])) return false;
+    }
+
+    return true;
+  }
+
+  let keysA = Object.keys(a);
+  let keysB = Object.keys(b);
+
+  if (keysA.length !== keysB.length) return false;
+
+  for (let key of keysA) {
+    if (!deepEqual(a[key], b[key])) return false;
+  }
+
+  return true;
+}
