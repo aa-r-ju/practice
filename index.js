@@ -1,15 +1,18 @@
-function targetNum(arr, target) {
-  let map = {};
+//  Longest Common Prefix
 
-  for (let i = 0; i < arr.length; i++) {
-    let remaining = target - arr[i];
+function longestCommonPrefix(strs) {
+  let prefix = strs[0];
 
-    if (map[remaining] !== undefined) {
-      return [map[remaining], i];
+  for (let i = 1; i < strs.length; i++) {
+    while (!strs[i].startsWith(prefix)) {
+      prefix = prefix.slice(0, prefix.length - 1);
+
+      if (prefix === "") return "";
     }
-
-    map[arr[i]] = i;
   }
+
+  return prefix;
 }
-console.log(targetNum([2, 7, 11, 15], 9));
-console.log(targetNum([3, 2, 4], 6));
+
+Input: strs = ["flower", "flow", "flight"];
+console.log(longestCommonPrefix(strs));
