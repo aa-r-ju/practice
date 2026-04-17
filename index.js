@@ -1,18 +1,17 @@
-//  Longest Common Prefix
+//  Remove Duplicates from Sorted Array
+function removeDuplicates(nums) {
+  if (nums.length === 0) return 0;
 
-function longestCommonPrefix(strs) {
-  let prefix = strs[0];
+  let i = 0;
 
-  for (let i = 1; i < strs.length; i++) {
-    while (!strs[i].startsWith(prefix)) {
-      prefix = prefix.slice(0, prefix.length - 1);
-
-      if (prefix === "") return "";
+  for (let j = 1; j < nums.length; j++) {
+    if (nums[j] !== nums[i]) {
+      i++;
+      nums[i] = nums[j];
     }
   }
 
-  return prefix;
+  return i + 1;
 }
 
-Input: strs = ["flower", "flow", "flight"];
-console.log(longestCommonPrefix(strs));
+console.log(removeDuplicates([1, 1, 2, 2, 3, 4, 4, 4, 5]));
